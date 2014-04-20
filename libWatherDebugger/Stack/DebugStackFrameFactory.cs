@@ -10,24 +10,16 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Stack
 {
-    public class DebugStackFrameFactory : DebugItemFactory
+    public class DebugStackFrameFactory : ItemFactory<DebugStackFrame>
     {
         private EnvDTE.Debugger _that = Watcher.Debugger.Debugger.getInstance().VSDebugger;
         private IDebugThread2 _thread;
         private IEnumDebugFrameInfo2 _enumDebugFrameInfo2;
         private uint _currentFrameDepth = 0;
 
-        private List<IDebugItem> _productList;
         public uint CurrentFrameDepth
         {
             get { return _currentFrameDepth; }
-        }
-        public List<IDebugItem> ProductList
-        {
-            get
-            {
-                return _productList;
-            }
         }
         public DebugStackFrameFactory(IDebugThread2 thread)
         {
@@ -47,7 +39,7 @@ namespace libWatherDebugger.Stack
             }
             return VSConstants.S_FALSE;
         }
-        protected override IDebugItem _createProduct()
+        protected DebugStackFrame _createProduct()
         {
             DebugStackFrame stack = new DebugStackFrame();
             stack.Stack = _materials as IDebugStackFrame2;
@@ -109,14 +101,13 @@ namespace libWatherDebugger.Stack
 
             // Get all stack frame.
             FRAMEINFO[] frameInfo = new FRAMEINFO[1];
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugStackFrame>();
             uint fetched = 0;
             while (enumDebugFrameInfo2.Next(1, frameInfo, ref fetched) == VSConstants.S_OK)
             {
                 _initMaterials(frameInfo[0].m_pFrame);
                 _productList.Add(_createProduct());
             }
-
             result = (ProductList.Count != 0) ? VSConstants.S_OK : result;
             return result;
         }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Message
 {
-    public class DebugMessageFactory : DebugItemFactory
+    public class DebugMessageFactory : ItemFactory<DebugMessage>
     {
         public DebugMessageFactory(IDebugMessageEvent2 Event)
         {
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugMessage>();
             _initMaterials(Event);
         }
         public override int CreateProduct()
@@ -29,7 +29,7 @@ namespace libWatherDebugger.Message
         {
             return VSConstants.S_OK;
         }
-        protected override IDebugItem _createProduct()
+        protected DebugMessage _createProduct()
         {
             DebugMessage item = new DebugMessage();
             if (_materials != null)

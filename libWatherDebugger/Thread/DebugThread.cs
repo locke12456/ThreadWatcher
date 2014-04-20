@@ -13,14 +13,12 @@ namespace libWatherDebugger.Thread
     public class DebugThread : IDebugItem
     {
         public IDebugThread2 Thread { get; set; }
+        public DebugStackFrame Stack { get; set; }
         public DebugDocument Document
         {
             get
             {
-                DebugStackFrameFactory factory = new DebugStackFrameFactory(Thread);
-                factory.CreateProduct();
-                DebugStackFrame stack = factory.Product as DebugStackFrame;
-                return stack.Document;
+                return Stack.Document;
             }
         }
         public string ID

@@ -28,6 +28,7 @@ namespace libWatcherDialog.PropertyItem.Logger
             this.ClientSize = new System.Drawing.Size(339, 130);
             this.Name = "ThreadLogger";
             this.ResumeLayout(false);
+
         }
     }
     public class ThreadLoggerRef : Logger<ThreadLog> {

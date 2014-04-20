@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger
 {
-    public interface IDebugItemFactory
+    public interface IDebugItemFactory<T>
     {
-        IDebugItem Product
+        T Product
         {
             get;
         }
-        List<IDebugItem> ProductList
+        List<T> ProductList
         {
             get;
         }

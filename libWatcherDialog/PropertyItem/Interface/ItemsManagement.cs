@@ -24,7 +24,7 @@ namespace libWatcherDialog.PropertyItem
                 if (PropertyChanged != null) PropertyChanged(this, new PropertiesEventArgs<T>(item));
             }
         }
-        public T GetItem(T target)
+        public virtual T GetItem(T target)
         {
             return _findItemRule(target);
         }
@@ -32,7 +32,7 @@ namespace libWatcherDialog.PropertyItem
         {
             return _items;
         }
-        public void AddItem(T target)
+        public virtual void AddItem(T target)
         {
             T item = _findItemRule(target);
             if (item == null)

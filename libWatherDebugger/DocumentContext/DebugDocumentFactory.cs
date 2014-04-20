@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.DocumentContext
 {
-    public class DebugDocumentFactory : DebugItemFactory
+    public class DebugDocumentFactory : ItemFactory<DebugDocument>
     {
         private IDebugCodeContext2 _codeContext;
         private IDebugDocument2 _document;
         private IDebugDocumentContext2 _documentContext;
         public DebugDocumentFactory(IDebugCodeContext2 codeContext) {
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugDocument>();
             _codeContext = codeContext;
         }
         public override int CreateProduct()
@@ -33,7 +33,7 @@ namespace libWatherDebugger.DocumentContext
             }
             return VSConstants.S_FALSE;
         }
-        protected override IDebugItem _createProduct()
+        protected virtual DebugDocument _createProduct()
         {
             DebugDocument document = new DebugDocument();
             document.CodeContext = _codeContext;

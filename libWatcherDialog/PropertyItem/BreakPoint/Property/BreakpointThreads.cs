@@ -12,18 +12,32 @@ namespace libWatcherDialog.PropertyItem.BreakPoint.Property
     {
         private static readonly string Name = "Threads";
         private static readonly string Value = "( ... )";
-        public BreakpointThreads():base(BreakpointThreads.Name,BreakpointThreads.Value) 
+        private BetterListViewComboBoxEmbeddedControl _combobox;
+        public BreakpointThreads()
+            : base(BreakpointThreads.Name, BreakpointThreads.Value)
         {
-        
+
         }
         public override IBetterListViewEmbeddedControl Control
         {
             get
             {
-                BetterListViewComboBoxEmbeddedControl combobox = new BetterListViewComboBoxEmbeddedControl();
-                combobox.Items.AddRange(ThreadsManagement.getInstance().GetList().ToArray());
-                return combobox;
+                _combobox = new BetterListViewComboBoxEmbeddedControl();
+                _combobox.Items.AddRange(ThreadsManagement.getInstance().GetList().ToArray());
+                return _combobox;
             }
+        }
+        //public override IBetterListViewEmbeddedControl ListViewRequestEmbeddedControl(object sender, BetterListViewRequestEmbeddedControlEventArgs eventArgs)
+        //{
+        //    return Control;
+        //}
+        public override void AfterLabelEdit(object sender, BetterListViewLabelEditEventArgs eventArgs)
+        {
+            ThreadItem item = _combobox.SelectedItem as ThreadItem;
+            BreakpointHitLoactions bhl = List.Items[1] as BreakpointHitLoactions;
+            bhl.TargetThreadId = item.Thread.ID;
+            bhl.SetValue(BreakpointThreads.Value);
+            base.AfterLabelEdit(sender, eventArgs);
         }
     }
 }

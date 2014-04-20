@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Breakpoint
 {
-    public class DebugBreakpointFactory : DebugItemFactory
+    public class DebugBreakpointFactory : ItemFactory<DebugBreakpoint>
     {
         private IEnumDebugBoundBreakpoints2 _dbgbp;
         private IDebugCodeContext2 _codeContext;
@@ -22,7 +22,6 @@ namespace libWatherDebugger.Breakpoint
         private string _filename = "";
         public DebugBreakpointFactory(IDebugBreakpointEvent2 Event)
         {
-           
             _event = Event;
             int result = _initFactory();
             if (VSConstants.S_OK != result)
@@ -31,11 +30,11 @@ namespace libWatherDebugger.Breakpoint
         protected override int _initFactory()
         {
             int result = VSConstants.S_FALSE;
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugBreakpoint>();
             result = _getEnumDebugBoundBreakpoints(_event);
             return result;
         }
-        protected override IDebugItem _createProduct()
+        protected override DebugBreakpoint _createProduct()
         {
             return _createBreakPoint();
         }

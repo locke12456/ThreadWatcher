@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace libWatcherDialog.PropertyItem.PropertyViewItem
 {
@@ -20,6 +21,11 @@ namespace libWatcherDialog.PropertyItem.PropertyViewItem
         {
             Name = name;
             Value = Value;
+        }
+        public void SetValue(string value) 
+        {
+            SubItems.RemoveAt(1);
+            SubItems.Add(value);
         }
     }
 }

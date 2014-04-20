@@ -16,7 +16,7 @@ namespace libWatherDebugger.Script.Mode.Stack
             get;
             set;
         }
-        public List<IDebugItem> StackList
+        public List<DebugStackFrame> StackList
         {
             get;
             private set;

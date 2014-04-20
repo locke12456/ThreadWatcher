@@ -1,10 +1,12 @@
-﻿using libWatcherDialog.PropertyItem;
+﻿using libWatcherDialog.GeneralRules.Mode.Thread;
+using libWatcherDialog.PropertyItem;
 using libWatcherDialog.PropertyItem.Thread;
 using libWatherDebugger.Thread;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,17 +14,33 @@ namespace libWatcherDialog
 {
     public partial class Threads : ThreadsRef
     {
-        private System.ComponentModel.IContainer components;
+        private static AutoResetEvent sync; 
         private ThreadsManagement _threads = ThreadsManagement.getInstance() as ThreadsManagement;
+        private CreateThreadItem _create_thread;
         private ThreadPropertiesMenu _menus;
         public Threads()
             : base()
         {
             InitializeComponent();
-            Disposed += Threads_Disposed;
+            _register_events();
             _initContextMenu();
         }
 
+        private void _register_events()
+        {
+            Disposed += Threads_Disposed;
+            _threads.PropertyAdded += _threads_PropertyAdded;
+            _threads.PropertyRemoved += _threads_PropertyRemoved;
+        }
+
+        private void _threads_PropertyAdded(object sender, PropertyItem.EventArgs.PropertiesEventArgs<ThreadItem> e)
+        {
+            AddProprty(e.Item);
+        }
+        private void _threads_PropertyRemoved(object sender, PropertyItem.EventArgs.PropertiesEventArgs<ThreadItem> e)
+        {
+            RemoveProprty(e.Item);
+        }
         private void Threads_Disposed(object sender, EventArgs e)
         {
             foreach (ThreadItem item in Properties.Items)
@@ -34,13 +52,28 @@ namespace libWatcherDialog
             _menus = new ThreadPropertiesMenu();
             Properties.ContextMenuStrip = _menus.ListMenu;
         }
+        /*
+         *   Create thread item ,excute on other thread 
+         */
         public void AddThread(DebugThread thread)
         {
-            thread.Name = "Thread " + (Properties.Items.Count + 1);
-            ThreadItem item = new ThreadItem();
-            item.Thread = thread;
-            _threads.AddItem(item);
-            AddProprty(item);
+            _wait();
+            _create_thread = new CreateThreadItem();
+            _create_thread.Name = "Thread " + (Properties.Items.Count + 1);
+            _create_thread.Thread = thread;
+            _create_thread.RunRules();
+            _finish();
+        }
+
+        private static void _finish()
+        {
+            sync.Set();
+        }
+
+        private static void _wait()
+        {
+            if (sync == null) sync = new AutoResetEvent(false);
+            else sync.WaitOne();
         }
         public void RemoveThread(object thread)
         {
@@ -62,8 +95,15 @@ namespace libWatcherDialog
         {
 
         }
+        private void Threads_Load(object sender, EventArgs e)
+        {
 
+        }
 
+        private void Properties_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _menus.PropertiesChanged(Properties);
+        }
         private void InitializeComponent()
         {
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -115,17 +155,8 @@ namespace libWatcherDialog
 
         }
 
-        private void Threads_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Properties_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _menus.PropertiesChanged(Properties);
-        }
     }
-    public class ThreadsRef : PropertyForm<ThreadItem,ItemProperties>
+    public class ThreadsRef : PropertyForm<ThreadItem, ItemProperties>
     {
         public ThreadsRef() : base() { }
     }

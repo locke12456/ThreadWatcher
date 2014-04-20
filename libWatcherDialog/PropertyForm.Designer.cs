@@ -133,6 +133,7 @@
             this.PropertyView.Name = "PropertyView";
             this.PropertyView.Size = new System.Drawing.Size(228, 166);
             this.PropertyView.TabIndex = 0;
+            this.PropertyView.SelectedIndexChanged += new System.EventHandler(this.PropertyView_SelectedIndexChanged);
             // 
             // m_Name
             // 

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Memory
 {
-    public class MemoryInfoFactory : DebugItemFactory
+    public class MemoryInfoFactory : ItemFactory<MemoryInfo>
     {
         private DebugStackFrame _stack;
         private DEBUG_PROPERTY_INFO[] _info;
@@ -68,7 +68,7 @@ namespace libWatherDebugger.Memory
         }
         private void _buildAllProduct()
         {
-            _productList = new List<IDebugItem>();
+            _productList = new List<MemoryInfo>();
             uint fetched = 0;
             while (_propertyInfo.Next(1, _info, out fetched) == 0)
             {

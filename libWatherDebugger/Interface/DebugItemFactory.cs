@@ -7,20 +7,24 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger
 {
-    public abstract class DebugItemFactory : IDebugItemFactory
+    public abstract class ItemFactory<T> : IDebugItemFactory<T> 
+        where T : class
     {
+        protected static readonly int Success = VSConstants.S_OK;
+        protected static readonly int Fail = VSConstants.S_FALSE;
+
         protected Watcher.Debugger.Debugger _dbg = Watcher.Debugger.Debugger.getInstance();
         protected Object _materials;
-        protected IDebugItem _product;
-        protected List<IDebugItem> _productList;
-        public virtual IDebugItem Product
+        protected T _product;
+        protected List<T> _productList;
+        public virtual T Product
         {
             get
             {
                 return _product;
             }
         }
-        public virtual List<IDebugItem> ProductList
+        public virtual List<T> ProductList
         {
             get
             {
@@ -35,7 +39,8 @@ namespace libWatherDebugger
             }
             return VSConstants.S_OK;
         }
-        public virtual int CreateProduct(Object material) {
+        public virtual int CreateProduct(Object material)
+        {
             _initMaterials(material);
             return CreateProduct();
         }
@@ -43,11 +48,11 @@ namespace libWatherDebugger
         {
             return VSConstants.E_NOTIMPL;
         }
-        protected virtual void _initMaterials(Object obj) 
+        protected virtual void _initMaterials(Object obj)
         {
             _materials = obj;
         }
-        protected virtual IDebugItem _createProduct()
+        protected virtual T _createProduct()
         {
             return null;
         }

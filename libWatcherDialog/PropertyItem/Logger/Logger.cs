@@ -13,11 +13,14 @@ namespace libWatcherDialog.PropertyItem.Logger
 {
     public partial class Logger<T> : Form
     {
+        public delegate void LoggedEventHandler(object sender, T item);
+        public event LoggedEventHandler LogAddedEvent;
         private CrossThreadProtected gui;
         private bool _close = false;
-        public List<T> Logs 
+        public List<T> Logs
         {
-            get {
+            get
+            {
                 return Log.Items.Cast<T>().ToList();
             }
         }
@@ -41,14 +44,20 @@ namespace libWatcherDialog.PropertyItem.Logger
         public void AppendLog(T msg)
         {
             gui.UpdateGUI_ByCallMethod(Modify.Add, msg, Log.Items);
+            _log_added_trigger(msg);
         }
 
+        private void _log_added_trigger(T msg)
+        {
+            if (LogAddedEvent != null) LogAddedEvent(this, msg);
+        }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            if (!_close) {
+            if (!_close)
+            {
                 Hide();
-                e.Cancel = true; 
+                e.Cancel = true;
             }
         }
     }

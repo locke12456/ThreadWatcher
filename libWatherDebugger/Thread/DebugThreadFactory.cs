@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Thread
 {
-    public class DebugThreadFactory : DebugItemFactory
+    public class DebugThreadFactory : ItemFactory<DebugThread>
     {
         private IEnumDebugThreads2 _enumDebugThread;
         private IDebugProcess2 _debugProcess;
         public DebugThreadFactory(IDebugProcess2 process)
         {
             _debugProcess = process;
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugThread>();
         }
         public DebugThreadFactory(IDebugThread2 thread)
         {
@@ -28,18 +28,18 @@ namespace libWatherDebugger.Thread
         }
         public override int CreateProduct(object material)
         {
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugThread>();
             _initMaterials(material);
             return _initProduct();
         }
         private int _initProduct()
         {
-            IDebugItem item = _createProduct();
+            DebugThread item = _createProduct();
             _productList.Add(item);
             _product = item;
             return item == null ? VSConstants.S_FALSE : VSConstants.S_OK;
         }
-        protected override IDebugItem _createProduct()
+        protected DebugThread _createProduct()
         {
             DebugThread thread = new DebugThread();
             thread.Thread = _materials as IDebugThread2;
@@ -68,7 +68,7 @@ namespace libWatherDebugger.Thread
             int result = VSConstants.S_FALSE;
             uint celt = 1;
             uint upie = 0;
-            _productList = new List<IDebugItem>();
+            _productList = new List<DebugThread>();
             IDebugThread2[] thread = new IDebugThread2[1];
             while (VSConstants.S_OK == _enumDebugThread.Next(celt, thread, ref upie))
             {

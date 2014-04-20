@@ -26,7 +26,7 @@ namespace Watcher.Debugger
         private EnvDTE.Debugger _that;
         private IDebugThread2 _thread;
         private DebugThread _debugthread;
-        private List<IDebugItem> _stackFrame = null;
+        private List<DebugStackFrame> _stackFrame = null;
         private Dictionary<string, IDebuggerMemory> _queryList = new Dictionary<string, IDebuggerMemory>();
         private IDebugItem _currentStackFrame = null;
         private IDebugProperty2 _debugProperty = null;
@@ -41,7 +41,7 @@ namespace Watcher.Debugger
                 return _debugthread;
             }
         }
-        public List<IDebugItem> StackList
+        public List<DebugStackFrame> StackList
         {
             get { return _stackFrame; }
         }
@@ -118,19 +118,28 @@ namespace Watcher.Debugger
             });
             _continue.Start(list);
         }
+        public int InitStackFrame(DebugThread thread) 
+        {
+            return _update_stack_info(thread);
+        }
+
+        private int _update_stack_info(DebugThread thread)
+        {
+            DebugStackFrameFactory factory = new DebugStackFrameFactory(thread.Thread);
+            int result = factory.CreateProduct();
+            if (VSConstants.S_OK == result)
+            {
+                thread.Stack = factory.Product;
+                _stackFrame = factory.ProductList;
+            }
+            return result;
+        }
         public int InitStackFrame(IDebugThread2 thread)
         {
             _thread = thread;
             _debugthread = new DebugThread();
             _debugthread.Thread = _thread;
-            DebugStackFrameFactory factory = new DebugStackFrameFactory(_thread);
-            int result = factory.CreateProduct();
-            if (VSConstants.S_OK == result) 
-            {
-                _stackFrame = factory.ProductList;
-            }
-            // Get the current frame.
-            return result;
+            return _update_stack_info(_debugthread);
         }
         
         public IDebuggerMemory Query(string name, IDebugThread2 thread)

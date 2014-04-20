@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Property
 {
-    public class DebugPropertyFactory : DebugItemFactory
+    public class DebugPropertyFactory : ItemFactory<DebugProperty>
     {
         private IDebugStackFrame2 _stack;
         private IDebugExpressionContext2 _expressionContext;
@@ -59,7 +59,7 @@ namespace libWatherDebugger.Property
 
             return VSConstants.S_OK;
         }
-        protected override IDebugItem _createProduct()
+        protected DebugProperty _createProduct()
         {
             DebugProperty property = new DebugProperty();
             property.Expression = _expression;

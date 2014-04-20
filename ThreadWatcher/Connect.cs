@@ -181,11 +181,7 @@ namespace ThreadWatcher
                 if (VSConstants.S_OK == factory.CreateProduct())
                 {
                     string msg = (factory.Product as DebugMessage).Message;
-                    Debug.WriteLine(item.Thread.Document.Code.FunctionName);
-                    Debug.WriteLine(item.Thread.Document.Code.SourceCodeBlack);
-                    //BreakpointItem bp = BreakpointsManagement.getInstance().GetItem(msg) as BreakpointItem;
-                    //BreakpointsManagement.getInstance().SetCurrentItem(bp);
-                    _dbg.InitStackFrame(item.Thread.Thread);
+                    _dbg.InitStackFrame(item.Thread);
                     item.WriteLog(msg);
                 }
                 return 1;

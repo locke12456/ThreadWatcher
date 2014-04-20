@@ -35,13 +35,21 @@ namespace libWatherDebugger.DocumentContext
                 return "";
             }
         }
-        public uint Position {
+        public uint StartPosition {
             get {
                 _code();
                 return _start[0].dwLine;
             }
         }
-        public string SourceCodeBlack { get { return _code(); } }
+        public uint EndPosition
+        {
+            get
+            {
+                _code();
+                return _end[0].dwLine;
+            }
+        }
+        //public string SourceCodeBlack { get { return _code(); } }
         public CodeInformation()
         {
         }
@@ -55,16 +63,16 @@ namespace libWatherDebugger.DocumentContext
         private string _code()
         {
             if (_code_string != "") return _code_string;
-            string code = "";
+            string code = " ";
             _start = new TEXT_POSITION[1];
             _end = new TEXT_POSITION[1];
             DocumentContext.GetSourceRange(_start, _end);
             //code_info[0]
-            string[] file = File.ReadAllLines(FileName);
-            for (uint i = _start[0].dwLine - 1; i < _end[0].dwLine; i++)
-            {
-                code += file[i];
-            }
+            //string[] file = File.ReadAllLines(FileName);
+            //for (uint i = _start[0].dwLine - 1; i < _end[0].dwLine; i++)
+            //{
+            //    code += file[i];
+            //}
             _code_string = code;
             return code;
         }

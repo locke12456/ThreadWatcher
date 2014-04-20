@@ -15,14 +15,14 @@ namespace libWatcherDialog.PropertyItem.Logger
     {
         private static readonly uint MessageMaxLength = 46;
         public DebugStackFrame Stack { get; private set; }
-        public List<IDebugItem> Locals
+        public List<MemoryInfo> Locals
         {
             get
             {
                 return _locals;
             }
         }
-        private List<IDebugItem> _locals;
+        private List<MemoryInfo> _locals;
         public ThreadLog()
         {
             CreatedTimeTick = System.DateTime.Now.Ticks;
