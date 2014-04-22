@@ -168,6 +168,7 @@ namespace ThreadWatcher
                 {
                     DebugThreadFactory factory = new DebugThreadFactory(thread);
                     factory.CreateProduct(thread);
+                    //bug : need sync
                     threads.AddThread(factory.Product as DebugThread);
                 }
                 return 1;

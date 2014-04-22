@@ -33,6 +33,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint.Property
         //}
         public override void AfterLabelEdit(object sender, BetterListViewLabelEditEventArgs eventArgs)
         {
+            if (_combobox.SelectedItem == null) return;
             ThreadItem item = _combobox.SelectedItem as ThreadItem;
             BreakpointHitLoactions bhl = List.Items[1] as BreakpointHitLoactions;
             bhl.TargetThreadId = item.Thread.ID;
