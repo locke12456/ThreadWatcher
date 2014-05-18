@@ -1,6 +1,8 @@
 ﻿using Noesis.Javascript;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -8,6 +10,13 @@ namespace libUtilities
 {
     public class JavaScriptEngine
     {
+        private class Console {
+            public Console() { }
+            public void log(string msg) 
+            {
+                Debug.WriteLine(msg);
+            }
+        }
         private static JavaScriptEngine _this;
         private JavascriptContext _context;
 
@@ -24,7 +33,13 @@ namespace libUtilities
 
         public object RunScript(string filename)
         {
-            _init_engine();
+            try
+            {
+                _init_engine();
+            }
+            catch (Exception fail) {
+                throw (fail);
+            }
             return _try_run_script(filename);
         }
 
@@ -38,8 +53,14 @@ namespace libUtilities
             object result = null;
             try
             {
-                _context.Run(filename);
-                result = _context.GetParameter("result");
+                Console console = new Console();
+                _context.SetParameter("console", console);
+                string scr = File.ReadAllText(filename);
+                _context.Run(scr);
+//                @"  console.log('124');
+//                    result = 123;
+//                    ");
+               result = _context.GetParameter("result");
                 _reset_parameter();
             }
             catch (Exception fail)

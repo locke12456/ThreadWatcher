@@ -11,6 +11,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
     public class BreakpointsManagement : ItemsManagement<BreakpointItem>
     {
         protected static BreakpointsManagement _this;
+        private List<object> _concernedTarget;
         private MemoryData _memoryDatas;
 
         public MemoryData Datas {
