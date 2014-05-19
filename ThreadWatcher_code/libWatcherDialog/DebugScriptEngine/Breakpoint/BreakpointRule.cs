@@ -15,7 +15,6 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
         protected List<VirtualVariable> _vritualVariables;
         public BreakpointRule BreakPointInfo(string filename, int line) 
         {
-
             return this;
         }
         public void AddCondition(object condition) 
@@ -26,6 +25,11 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
         public void AddVirtualVariable(object variable_info)
         {
             _vritualVariables.Add(new VirtualVariable(variable_info));
+        }
+        protected void _init_lists ()
+        {
+            _conditions = new List<Condition>();
+            _vritualVariables = new List<VirtualVariable>();
         }
     }
 }

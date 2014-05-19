@@ -30,6 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.ListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataBreakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.breakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,13 +46,8 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.loadFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataBreakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.breakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListMenu.SuspendLayout();
             this.ItemMenu.SuspendLayout();
             this.SuspendLayout();
@@ -55,11 +57,58 @@
             this.ListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem,
-            this.toolStripSeparator1,
+            this.toolStripSeparator2,
             this.toolStripMenuItem3,
-            this.toolStripMenuItem4});
+            this.toolStripMenuItem4,
+            this.toolStripSeparator1,
+            this.scriptToolStripMenuItem});
             this.ListMenu.Name = "PropertyViewMenu";
-            this.ListMenu.Size = new System.Drawing.Size(153, 120);
+            this.ListMenu.Size = new System.Drawing.Size(153, 148);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataBreakpointToolStripMenuItem,
+            this.breakpointToolStripMenuItem});
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            // 
+            // dataBreakpointToolStripMenuItem
+            // 
+            this.dataBreakpointToolStripMenuItem.Name = "dataBreakpointToolStripMenuItem";
+            this.dataBreakpointToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.dataBreakpointToolStripMenuItem.Text = "Data Breakpoint";
+            this.dataBreakpointToolStripMenuItem.Click += new System.EventHandler(this.dataBreakpointToolStripMenuItem_Click);
+            // 
+            // breakpointToolStripMenuItem
+            // 
+            this.breakpointToolStripMenuItem.Name = "breakpointToolStripMenuItem";
+            this.breakpointToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.breakpointToolStripMenuItem.Text = "Breakpoint";
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "Enable";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem4.Text = "Disable";
             // 
             // ItemMenu
             // 
@@ -121,50 +170,16 @@
             this.saveToToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.saveToToolStripMenuItem.Text = "Save to ..";
             // 
-            // toolStripMenuItem3
+            // toolStripSeparator2
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem3.Text = "Enable";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
-            // toolStripMenuItem4
+            // scriptToolStripMenuItem
             // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem4.Text = "Disable";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dataBreakpointToolStripMenuItem,
-            this.breakpointToolStripMenuItem});
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addToolStripMenuItem.Text = "Add";
-            // 
-            // dataBreakpointToolStripMenuItem
-            // 
-            this.dataBreakpointToolStripMenuItem.Name = "dataBreakpointToolStripMenuItem";
-            this.dataBreakpointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.dataBreakpointToolStripMenuItem.Text = "Data Breakpoint";
-            this.dataBreakpointToolStripMenuItem.Click += new System.EventHandler(this.dataBreakpointToolStripMenuItem_Click);
-            // 
-            // breakpointToolStripMenuItem
-            // 
-            this.breakpointToolStripMenuItem.Name = "breakpointToolStripMenuItem";
-            this.breakpointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.breakpointToolStripMenuItem.Text = "Breakpoint";
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.scriptToolStripMenuItem.Text = "Script";
             // 
             // BreakpointMenu
             // 
@@ -196,5 +211,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem loadFormToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace libWatcherDialog.PropertyItem.SpecialKeyword
 {
-    public class SpecialKeywordItem : PropertyItem<SpecialKeywords,ItemProperties>
+    public class SpecialKeywordItem : PropertyItem<DebbugScripts,ItemProperties>
     {
         protected ItemsManagement<object> _items;
         public SpecialKeywordItem() { }

@@ -1,17 +1,19 @@
-﻿using libWatcherDialog.DebugScriptEngine;
+﻿using libUtilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace libWatcherDialogTest
+namespace libUtilitiesTests
 {
     
     
     /// <summary>
-    ///This is a test class for DebugScriptEngineTest and is intended
-    ///to contain all DebugScriptEngineTest Unit Tests
+    ///This is a test class for SearchTest and is intended
+    ///to contain all SearchTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class DebugScriptEngineTest
+    public class SearchTest
     {
 
 
@@ -65,34 +67,20 @@ namespace libWatcherDialogTest
 
 
         /// <summary>
-        ///A test for RunScript
+        ///A test for GetFile
         ///</summary>
         [TestMethod()]
-        public void RunScriptTest_virtual_variable()
+        public void GetFileTest()
         {
-            DebugScriptEngine target = DebugScriptEngine.getInstance(); // TODO: Initialize to an appropriate value
-            string filename = "..\\..\\Test file\\Scripts\\virtual_variable.js"; // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
-            object actual;
-            
-            actual = target.RunScript(filename);
-            Assert.AreEqual(expected, (bool)actual);
-            // Assert.Inconclusive("Verify the correctness of this test method.");
-        }
-        /// <summary>
-        ///A test for RunScript
-        ///</summary>
-        [TestMethod()]
-        public void RunScriptTest_condition()
-        {
-            DebugScriptEngine target = DebugScriptEngine.getInstance(); // TODO: Initialize to an appropriate value
-            string filename = "..\\..\\Test file\\Scripts\\condition.js"; // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
-            object actual;
-
-            actual = target.RunScript(filename);
-            Assert.AreEqual(expected, (bool)actual);
-            // Assert.Inconclusive("Verify the correctness of this test method.");
+            List<string> paths = new List<string>() { "..\\..\\"}; // TODO: Initialize to an appropriate value
+            Search target = new Search(paths); // TODO: Initialize to an appropriate value
+            string filename = "parmetetizes.js"; // TODO: Initialize to an appropriate value
+            int count = 0; // TODO: Initialize to an appropriate value
+            FileInfo expected = new FileInfo("..\\..\\Test file\\Scripts\\parmetetizes.js"); // TODO: Initialize to an appropriate value
+            FileInfo actual;
+            actual = target.GetFile(filename, count);
+            Assert.AreEqual(expected.FullName, actual.FullName);
+            //Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }
