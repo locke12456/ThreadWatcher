@@ -28,9 +28,9 @@ namespace libWatcherDialog.DebugScriptEngine.Property
                 _set_value_by_key(json_object.Key, json_object.Value);
             }
         }
-        private void _set_value_by_key(string key , object value)
+        protected virtual void _set_value_by_key(string key , object value)
         {
-            System.Reflection.PropertyInfo info = GetType().GetProperty(key);
+            System.Reflection.PropertyInfo info = this.GetType().GetProperty(key);
             Attribute[] attr = PropertyAttribute.GetCustomAttributes(info);
             PropertyAttribute key_info = attr[0] as PropertyAttribute;
             info.SetValue(this, value, null);

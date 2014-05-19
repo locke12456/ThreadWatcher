@@ -72,11 +72,9 @@ namespace libWatcherDialogTest
         {
             DebugScriptEngine target = DebugScriptEngine.getInstance(); // TODO: Initialize to an appropriate value
             string filename = "..\\..\\Test file\\Scripts\\virtual_variable.js"; // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
             object actual;
-            
             actual = target.RunScript(filename);
-            Assert.AreEqual(expected, (bool)actual);
+            Assert.IsNotNull(actual);
             // Assert.Inconclusive("Verify the correctness of this test method.");
         }
         /// <summary>
@@ -87,11 +85,10 @@ namespace libWatcherDialogTest
         {
             DebugScriptEngine target = DebugScriptEngine.getInstance(); // TODO: Initialize to an appropriate value
             string filename = "..\\..\\Test file\\Scripts\\condition.js"; // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
             object actual;
 
             actual = target.RunScript(filename);
-            Assert.AreEqual(expected, (bool)actual);
+            Assert.IsNotNull(actual);
             // Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }

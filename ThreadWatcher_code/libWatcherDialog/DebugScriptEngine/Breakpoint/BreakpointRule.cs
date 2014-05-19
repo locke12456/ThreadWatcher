@@ -10,11 +10,12 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
 {
     public abstract class BreakpointRule : IDebugScriptRule
     {
-
+        protected SourceFileInfo _breakpointInfo;
         protected List<Condition> _conditions;
         protected List<VirtualVariable> _vritualVariables;
-        public BreakpointRule BreakPointInfo(string filename, int line) 
+        public BreakpointRule BreakPointInfo(object info) 
         {
+            _breakpointInfo = new SourceFileInfo(info as Dictionary<string, object>);
             return this;
         }
         public void AddCondition(object condition) 
