@@ -71,7 +71,6 @@ namespace libUtilities
         }
         private JavaScriptEngine()
         {
-
             _reset_parameter();
             //_init_engine();
         }
