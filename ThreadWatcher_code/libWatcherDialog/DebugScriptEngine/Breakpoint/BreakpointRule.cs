@@ -1,4 +1,5 @@
 ﻿using libWatcherDialog.DebugScriptEngine.Property;
+using libWatcherDialog.PropertyItem.DebugScript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,6 +18,11 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
         {
             _breakpointInfo = new SourceFileInfo(info as Dictionary<string, object>);
             return this;
+        }
+        public DebugScriptItem GenerateScriptItem() 
+        {
+            DebugScriptItem item = null;
+            return item;
         }
         public void AddCondition(object condition) 
         {

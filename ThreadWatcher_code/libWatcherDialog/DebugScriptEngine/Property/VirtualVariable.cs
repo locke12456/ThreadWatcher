@@ -17,8 +17,8 @@ namespace libWatcherDialog.DebugScriptEngine.Property
 
     public class VariableInfo : PropertyInfo
     {
-        [Property(VariableInfoProperties.Name)]
-        public string name { get; set; }
+        //[Property(VariableInfoProperties.Name)]
+        //public string name { get; set; }
         [Property(VariableInfoProperties.Reference)]
         public string reference { get; set; }
         [Property(VariableInfoProperties.Type)]

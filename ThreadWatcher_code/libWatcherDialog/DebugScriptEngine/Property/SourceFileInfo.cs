@@ -8,7 +8,7 @@ namespace libWatcherDialog.DebugScriptEngine.Property
 {
     public class SourceFileInfoProperties
     {
-        public const string Name  = "fileName"  ;
+        public const string Name      = "fileName"  ;
         public const string Line      = "line"      ;
         public const string Code      = "code"      ;
         public const string Function  = "function"  ;
@@ -18,8 +18,8 @@ namespace libWatcherDialog.DebugScriptEngine.Property
    
     public class SourceFileInfo : PropertyInfo
     {
-        [Property(SourceFileInfoProperties.Name)]
-        public string name  { get; set; }
+        //[Property(SourceFileInfoProperties.Name)]
+        //public string name  { get; set; }
         [Property(SourceFileInfoProperties.Line)]
         public int    line      { get; set; }
         [Property(SourceFileInfoProperties.Code)]
@@ -34,12 +34,5 @@ namespace libWatcherDialog.DebugScriptEngine.Property
         {
 
         }
-        //protected override void _set_value_by_key(string key, object value)
-        //{
-        //    System.Reflection.PropertyInfo info = GetType().GetProperty(key);
-        //    Attribute[] attr = PropertyAttribute.GetCustomAttributes(info);
-        //    PropertyAttribute key_info = attr[0] as PropertyAttribute;
-        //    info.SetValue(this, value, null);
-        //}
     }
 }
