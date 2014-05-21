@@ -1,4 +1,5 @@
-﻿using libWatcherDialog.PropertyItem.Thread;
+﻿using libWatcherDialog.PropertyItem.BreakPoint.Property.BreakpointThread;
+using libWatcherDialog.PropertyItem.Thread;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace libWatcherDialog.PropertyItem.BreakPoint.Property
         public ThreadItem Thread;
         public string FileName { get; private set; }
         public uint LineNumber { get; private set; }
+        
+        //public BreakpointCondition Condition { get; private set; }
         public BreakpointThreadsProperty(string name, string value)
             : base(name, value)
         { 

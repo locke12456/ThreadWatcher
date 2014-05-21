@@ -34,9 +34,11 @@
             this.dataBreakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.breakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,8 +48,10 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.loadFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripAddProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.virtualVariableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ListMenu.SuspendLayout();
             this.ItemMenu.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +67,7 @@
             this.toolStripSeparator1,
             this.scriptToolStripMenuItem});
             this.ListMenu.Name = "PropertyViewMenu";
-            this.ListMenu.Size = new System.Drawing.Size(153, 148);
+            this.ListMenu.Size = new System.Drawing.Size(105, 126);
             // 
             // addToolStripMenuItem
             // 
@@ -71,7 +75,7 @@
             this.dataBreakpointToolStripMenuItem,
             this.breakpointToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
             this.addToolStripMenuItem.Text = "Add";
             // 
             // dataBreakpointToolStripMenuItem
@@ -90,29 +94,42 @@
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             // 
-            // toolStripSeparator1
+            // toolStripSeparator2
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(101, 6);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(104, 22);
             this.toolStripMenuItem3.Text = "Enable";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(104, 22);
             this.toolStripMenuItem4.Text = "Disable";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(101, 6);
+            // 
+            // scriptToolStripMenuItem
+            // 
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.scriptToolStripMenuItem.Text = "Script";
             // 
             // ItemMenu
             // 
             this.ItemMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripAddProperty,
+            this.toolStripSeparator5,
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
             this.toolStripSeparator3,
@@ -122,64 +139,79 @@
             this.loadFormToolStripMenuItem,
             this.saveToToolStripMenuItem});
             this.ItemMenu.Name = "PropertyViewMenu";
-            this.ItemMenu.Size = new System.Drawing.Size(130, 148);
+            this.ItemMenu.Size = new System.Drawing.Size(153, 198);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(129, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem1.Text = "Enable";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(129, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem2.Text = "Disable";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(126, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // delteteToolStripMenuItem
             // 
             this.delteteToolStripMenuItem.Name = "delteteToolStripMenuItem";
-            this.delteteToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.delteteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.delteteToolStripMenuItem.Text = "Deltete";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(126, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // loadFormToolStripMenuItem
             // 
             this.loadFormToolStripMenuItem.Name = "loadFormToolStripMenuItem";
-            this.loadFormToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.loadFormToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadFormToolStripMenuItem.Text = "Load form ..";
             // 
             // saveToToolStripMenuItem
             // 
             this.saveToToolStripMenuItem.Name = "saveToToolStripMenuItem";
-            this.saveToToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.saveToToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToToolStripMenuItem.Text = "Save to ..";
             // 
-            // toolStripSeparator2
+            // toolStripSeparator5
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
-            // scriptToolStripMenuItem
+            // toolStripAddProperty
             // 
-            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
-            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.scriptToolStripMenuItem.Text = "Script";
+            this.toolStripAddProperty.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.conditionToolStripMenuItem,
+            this.virtualVariableToolStripMenuItem});
+            this.toolStripAddProperty.Name = "toolStripAddProperty";
+            this.toolStripAddProperty.Size = new System.Drawing.Size(152, 22);
+            this.toolStripAddProperty.Text = "Add";
+            // 
+            // conditionToolStripMenuItem
+            // 
+            this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.conditionToolStripMenuItem.Text = "Condition";
+            // 
+            // virtualVariableToolStripMenuItem
+            // 
+            this.virtualVariableToolStripMenuItem.Name = "virtualVariableToolStripMenuItem";
+            this.virtualVariableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.virtualVariableToolStripMenuItem.Text = "Virtual variable";
             // 
             // BreakpointMenu
             // 
@@ -213,5 +245,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveToToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem scriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripAddProperty;
+        private System.Windows.Forms.ToolStripMenuItem conditionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem virtualVariableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }

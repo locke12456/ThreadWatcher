@@ -15,7 +15,7 @@ namespace libWatcherDialog.PropertyItem
         public event PropertiesEventHandler<T> PropertyAdded;
         public event PropertiesEventHandler<T> PropertyRemoved;
         protected List<T> _items;
-        public T CurrentItem { get; protected set; }
+        public T CurrentItem { get; set; }
         public void SetCurrentItem(T target)
         {
             T item = _findItemRule(target);

@@ -1,4 +1,5 @@
 ﻿using libWatcherDialog.PropertyItem.BreakPoint.Property;
+using libWatcherDialog.PropertyItem.BreakPoint.Property.BreakpointThread;
 using libWatcherDialog.PropertyItem.Thread;
 using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
@@ -18,8 +19,10 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         public BreakpointItem() {
             HitLocations = new BreakpointHitLoactions();
             Children = new List<BreakPointProperty>();
+            Children.Add(new BreakpointCondition());
             Children.Add(new BreakpointThreads());
             Children.Add(HitLocations);
+           
         }
         public override string ToString()
         {

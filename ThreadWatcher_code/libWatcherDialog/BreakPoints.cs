@@ -48,7 +48,9 @@ namespace libWatcherDialog
             ClearDetails();
             if (Properties.SelectedItem != null)
             {
-                AddProprtyViewItems((Properties.SelectedItem as BreakpointItem).Children);
+                BreakpointItem item = (Properties.SelectedItem as BreakpointItem);
+                BreakpointsManagement.getInstance().CurrentItem = (item);
+                AddProprtyViewItems(item.Children);
             }
         }
         private void InitializeComponent()
@@ -167,8 +169,10 @@ namespace libWatcherDialog
 
         private bool _data_breakpoint()
         {
-            Continue cnt = new Continue();
-            cnt.RunRules();
+            //Continue cnt = new Continue();
+            //cnt.RunRules();
+            BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Information.Name);
+            item.Breakpoint.FirstBreak(_breakpoint);
             return true;
         }
 

@@ -1,4 +1,5 @@
-﻿using libWatcherDialog.PropertyItem.Code;
+﻿using libWatcherDialog.PropertyItem.BreakPoint.Property.BreakpointThread;
+using libWatcherDialog.PropertyItem.Code;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         public string Code { get { return CodeMenagement.getInstance().GetItem(FileName)[(int)LineNumber - 1]; } }
         public uint LineNumber { get; set; }
         public uint HitCount { get; private set; }
+        public BreakpointCondition Condition { get; private set; }
         public BreakpointHitLocation()
         {
             HitCount = 0;
@@ -29,6 +31,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
                 members.Add(new BreakPointProperty("Code"       , Code));
                 members.Add(new BreakPointProperty("Line Number", LineNumber.ToString()));
                 members.Add(new BreakPointProperty("Hit Count"  , HitCount.ToString()));
+                members.Add(new BreakPointProperty("Condition", HitCount.ToString()));
                 return members;
             }
         }
