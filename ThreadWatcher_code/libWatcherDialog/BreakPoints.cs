@@ -71,8 +71,9 @@ namespace libWatcherDialog
             // 
             // Properties
             // 
+            this.Properties.ItemHeight = 12;
             this.Properties.Location = new System.Drawing.Point(0, 0);
-            this.Properties.Size = new System.Drawing.Size(142, 303);
+            this.Properties.Size = new System.Drawing.Size(142, 280);
             this.Properties.SelectedIndexChanged += new System.EventHandler(this.Properties_SelectedIndexChanged);
             // 
             // groupBox1
@@ -81,11 +82,12 @@ namespace libWatcherDialog
             // 
             // splitContainer2
             // 
+            this.splitContainer2.SplitterDistance = 153;
             // 
             // BreakPoints
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(374, 302);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.ClientSize = new System.Drawing.Size(374, 279);
             this.Name = "BreakPoints";
             this.Text = "BreakPoints";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BreakPoints_FormClosed);

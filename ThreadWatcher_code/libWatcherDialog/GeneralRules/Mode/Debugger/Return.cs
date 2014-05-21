@@ -1,5 +1,7 @@
-﻿using libWatherDebugger.Script;
+﻿using EnvDTE;
+using libWatherDebugger.Script;
 using libWatherDebugger.Script.Mode.DebugStep;
+using libWatherDebugger.Script.Mode.Document;
 using libWatherDebugger.Script.ScriptEvent;
 using libWatherDebugger.Stack;
 using System;
@@ -33,7 +35,14 @@ namespace libWatcherDialog.GeneralRules.Mode.Debugger
             DebugScript.WaitSync();
             while (_dbg.VSDebugger.CurrentMode != EnvDTE.dbgDebugMode.dbgBreakMode) ;
             System.Diagnostics.Debug.WriteLine(_dbg.FunctionName);
-            //_dbg.VSDebugger.DTE.ActiveDocument.
+            foreach (Project proj in _dbg.VSDebugger.DTE.Solution.Projects) {
+                foreach (ProjectItem proj_item in proj.ProjectItems) 
+                {
+                    if (proj_item.Document == _dbg.VSDebugger.DTE.ActiveDocument) {
+                        
+                    }
+                }  
+            }
             if (_isLeavedOnAPIs(_dbg.VSDebugger.CurrentStackFrame.FunctionName))
             {
                 DebugScript.ResetASyncScript();

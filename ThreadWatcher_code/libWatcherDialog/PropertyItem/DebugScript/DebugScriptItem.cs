@@ -7,10 +7,25 @@ using System.Threading.Tasks;
 
 namespace libWatcherDialog.PropertyItem.DebugScript
 {
-    public class DebugScriptItem : PropertyItem<DebugScripts, DebugScriptProperty> 
+    public class DebugScriptItem : PropertyItem<DebugScripts, DebugScriptProperty>
     {
-        protected SourceFileInfo _breakpointInfo;
-        protected List<Condition> _conditions;
-        protected List<VirtualVariable> _vritualVariables;
+        public SourceFileInfo BreakpointInfo
+        {
+            get;
+            set;
+        }
+        public List<Condition> Conditions
+        {
+            get;
+            set;
+        }
+        public List<VirtualVariable> VirtualVariables
+        {
+            get;
+            set;
+        }
+        public DebugScriptItem()
+        {
+        }
     }
 }

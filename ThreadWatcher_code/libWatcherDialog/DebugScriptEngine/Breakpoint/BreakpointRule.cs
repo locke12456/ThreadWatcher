@@ -11,32 +11,48 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
 {
     public abstract class BreakpointRule : IDebugScriptRule
     {
-        protected SourceFileInfo _breakpointInfo;
-        protected List<Condition> _conditions;
-        protected List<VirtualVariable> _vritualVariables;
+        public SourceFileInfo BreakpointInfo
+        {
+            get;
+            protected set;
+        }
+        public List<Condition> Conditions
+        {
+            get;
+            protected set;
+        }
+        public List<VirtualVariable> VirtualVariables
+        {
+            get;
+            protected set;
+        }
+
         public BreakpointRule BreakPointInfo(object info) 
         {
-            _breakpointInfo = new SourceFileInfo(info as Dictionary<string, object>);
+            BreakpointInfo = new SourceFileInfo(info as Dictionary<string, object>);
             return this;
         }
         public DebugScriptItem GenerateScriptItem() 
         {
-            DebugScriptItem item = null;
+            DebugScriptItemFactory factory = new DebugScriptItemFactory(this);
+            factory.CreateProduct();
+            DebugScriptItem item = factory.Product;
+            DebugScriptsManagement.getInstance().AddItem(item);
             return item;
         }
         public void AddCondition(object condition) 
         {
             Debug.Assert(condition is string);
-            _conditions.Add(new Condition(condition));
+            Conditions.Add(new Condition(condition));
         }
         public void AddVirtualVariable(object variable_info)
         {
-            _vritualVariables.Add(new VirtualVariable(variable_info));
+            VirtualVariables.Add(new VirtualVariable(variable_info));
         }
         protected void _init_lists ()
         {
-            _conditions = new List<Condition>();
-            _vritualVariables = new List<VirtualVariable>();
+            Conditions = new List<Condition>();
+            VirtualVariables = new List<VirtualVariable>();
         }
     }
 }
