@@ -63,6 +63,7 @@ namespace libWatherDebugger.Breakpoint
                 return BreakpointType == enum_BP_TYPE.BPT_DATA;
             }
         }
+        public string Name { get; set; }
         public string FileName
         {
             get {
@@ -115,7 +116,7 @@ namespace libWatherDebugger.Breakpoint
             BreakpointType = bpt.BreakpointType;
             Document = bpt.Document;
         }
-        private static void _set_information(DebugBreakpoint bpt, EnvDTE.Breakpoints bps, string data)
+        private void _set_information(DebugBreakpoint bpt, EnvDTE.Breakpoints bps, string data)
         {
             foreach (EnvDTE.Breakpoint bp_c in bps)
             {
