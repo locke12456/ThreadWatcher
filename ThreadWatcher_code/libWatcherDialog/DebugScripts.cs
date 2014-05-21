@@ -33,18 +33,22 @@ namespace libWatcherDialog
             // splitContainer1
             // 
             // 
-            // Properties
-            // 
-            this.Properties.ItemHeight = 12;
-            // 
             // splitContainer2
             // 
             this.splitContainer2.SplitterDistance = 153;
             // 
+            // PropertyView
+            // 
+            this.PropertyView.Size = new System.Drawing.Size(228, 153);
+            // 
+            // Details
+            // 
+            this.Details.Size = new System.Drawing.Size(228, 144);
+            // 
             // DebugScripts
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.ClientSize = new System.Drawing.Size(374, 279);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(374, 302);
             this.Name = "DebugScripts";
             this.Controls.SetChildIndex(this.splitContainer1, 0);
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -14,6 +14,7 @@ namespace libWatcherDialog.PropertyItem.Logger
     public class ThreadLog : Log
     {
         private static readonly uint MessageMaxLength = 46;
+        public DebugStackFrames StackList { get; private set; }
         public DebugStackFrame Stack { get; private set; }
         public List<MemoryInfo> Locals
         {
@@ -28,6 +29,7 @@ namespace libWatcherDialog.PropertyItem.Logger
             CreatedTimeTick = System.DateTime.Now.Ticks;
             Debugger dbg = Debugger.getInstance();
             Stack = dbg.CurrentStackFrame as DebugStackFrame;
+
             _init();
             _setMessage();
         }

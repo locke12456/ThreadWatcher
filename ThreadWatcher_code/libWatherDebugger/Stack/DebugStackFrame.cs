@@ -19,6 +19,11 @@ namespace libWatherDebugger.Stack
                 return _doucment;
             }
         }
+        public IDebugThread2 Thread
+        {
+            get;
+            set;
+        }
         public IDebugStackFrame2 Stack
         {
             get;

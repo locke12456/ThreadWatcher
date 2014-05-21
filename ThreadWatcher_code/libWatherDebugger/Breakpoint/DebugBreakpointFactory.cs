@@ -86,15 +86,20 @@ namespace libWatherDebugger.Breakpoint
                 if (VSConstants.S_OK == _getBreakpointResolution())
                     if (VSConstants.S_OK == _getResolutionInfo())
                     {
-                        if (BreakpointType == enum_BP_TYPE.BPT_CODE)
-                        {
-                            if (VSConstants.S_OK == _getDocumentContext(_breakpointInfo[0]))
-                                return VSConstants.S_OK;
-                        }
-                        return VSConstants.S_OK;
+                        return _init_breakpoint_info();
                     }
             }
             return VSConstants.S_FALSE;
+        }
+
+        private int _init_breakpoint_info()
+        {
+            if (BreakpointType == enum_BP_TYPE.BPT_CODE)
+            {
+                if (VSConstants.S_OK == _getDocumentContext(_breakpointInfo[0]))
+                    return VSConstants.S_OK;
+            }
+            return VSConstants.S_OK;
         }
         private DebugBreakpoint _createBreakPoint()
         {

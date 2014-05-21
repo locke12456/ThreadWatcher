@@ -42,6 +42,7 @@ namespace libWatherDebugger.Stack
         protected DebugStackFrame _createProduct()
         {
             DebugStackFrame stack = new DebugStackFrame();
+            stack.Thread = _thread;
             stack.Stack = _materials as IDebugStackFrame2;
             IDebugCodeContext2 codeContext;
             if (VSConstants.S_OK == stack.Stack.GetCodeContext(out codeContext))
