@@ -27,13 +27,18 @@ namespace libWatcherDialog.PropertyItem.Logger
         public ThreadLog()
         {
             CreatedTimeTick = System.DateTime.Now.Ticks;
-            Debugger dbg = Debugger.getInstance();
-            Stack = dbg.CurrentStackFrame as DebugStackFrame;
-
-            _init();
+            _init_stack_info();
+            _init_memory_info();
             _setMessage();
         }
-        private void _init()
+
+        private void _init_stack_info()
+        {
+            Debugger dbg = Debugger.getInstance();
+            Stack = dbg.CurrentStackFrame as DebugStackFrame;
+            StackList = new DebugStackFrames(Stack);
+        }
+        private void _init_memory_info()
         {
             MemoryInfoFactory factory = new MemoryInfoFactory(Stack);
             factory.CreateProduct();
