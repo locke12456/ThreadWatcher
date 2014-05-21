@@ -80,12 +80,13 @@ namespace libWatherDebugger.Stack
 
             int result = VSConstants.S_FALSE;
             // Get frame info enum interface.
-            if (VSConstants.S_OK != _thread.EnumFrameInfo((uint)enum_FRAMEINFO_FLAGS.FIF_FRAME, 0, out enumDebugFrameInfo2))
-            {
-                Debug.WriteLine("Could not enumerate stack frames.");
-                return result;
-            }
+            result = _get_frame_info(result, out enumDebugFrameInfo2);
             // Skip frames above the current one.
+            return _skip_current_one(currentFrameDepth, enumDebugFrameInfo2, ref result);
+        }
+
+        private static int _skip_current_one(uint currentFrameDepth, IEnumDebugFrameInfo2 enumDebugFrameInfo2, ref int result)
+        {
             result = enumDebugFrameInfo2.Reset();
 
             if (VSConstants.S_OK != enumDebugFrameInfo2.Skip(currentFrameDepth))
@@ -96,11 +97,32 @@ namespace libWatherDebugger.Stack
 
             return result;
         }
+
+        private int _get_frame_info(int result, out IEnumDebugFrameInfo2 enumDebugFrameInfo2)
+        {
+            if (VSConstants.S_OK != _thread.EnumFrameInfo((uint)enum_FRAMEINFO_FLAGS.FIF_FRAME, 0, out enumDebugFrameInfo2))
+            {
+                Debug.WriteLine("Could not enumerate stack frames.");
+                return result;
+            }
+            return result;
+        }
         private int _getAllStackFrame(IEnumDebugFrameInfo2 enumDebugFrameInfo2)
         {
-            int result = VSConstants.S_FALSE;
-
             // Get all stack frame.
+            _create_products(enumDebugFrameInfo2);
+            return _has_product();
+        }
+
+        private int _has_product()
+        {
+            int result = VSConstants.S_FALSE;
+            result = (ProductList.Count != 0) ? VSConstants.S_OK : result;
+            return result;
+        }
+
+        private void _create_products(IEnumDebugFrameInfo2 enumDebugFrameInfo2)
+        {
             FRAMEINFO[] frameInfo = new FRAMEINFO[1];
             _productList = new List<DebugStackFrame>();
             uint fetched = 0;
@@ -109,8 +131,6 @@ namespace libWatherDebugger.Stack
                 _initMaterials(frameInfo[0].m_pFrame);
                 _productList.Add(_createProduct());
             }
-            result = (ProductList.Count != 0) ? VSConstants.S_OK : result;
-            return result;
         }
     }
 }

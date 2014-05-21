@@ -15,6 +15,7 @@ namespace libWatherDebugger.Stack
         public DebugStackFrames(DebugStackFrame current_stack) : base()
         {
             DebugStackFrameFactory factory = new DebugStackFrameFactory( current_stack.Thread );
+            factory.CreateProduct();
             AddRange(factory.ProductList);
         }
         public override string ToString()
