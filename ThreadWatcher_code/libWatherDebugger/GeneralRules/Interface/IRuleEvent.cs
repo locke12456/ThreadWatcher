@@ -1,16 +1,15 @@
-﻿using libWatcherDialog.GeneralRules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
 
-namespace libWatcherDialog.CombineRules
+namespace Watcher.Debugger
 {
-    interface ICombineRule
+    public delegate void RuleEventHandler(object sender, RuleEventArgs e);
+    interface IRuleEvent
     {
-        bool Run();
         event RuleEventHandler RuleProgressing;
         event RuleEventHandler RuleCompleted;
     }

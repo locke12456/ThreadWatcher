@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
 
 namespace libWatcherDialog.CombineRules
 {
@@ -42,9 +43,9 @@ namespace libWatcherDialog.CombineRules
         }
         protected virtual void _finish()
         {
-            if (RuleCompleted != null) RuleCompleted(this, new GeneralRules.EventArgs.RuleEventArgs());
+            if (RuleCompleted != null) RuleCompleted(this, new RuleEventArgs());
         }
-        protected void rule_RuleCompleted(object sender, GeneralRules.EventArgs.RuleEventArgs e)
+        protected void rule_RuleCompleted(object sender, RuleEventArgs e)
         {
             WatcherRule rule = sender as WatcherRule;
             rule.RuleCompleted -= rule_RuleCompleted;

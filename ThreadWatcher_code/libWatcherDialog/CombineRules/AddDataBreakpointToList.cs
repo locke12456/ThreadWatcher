@@ -1,6 +1,4 @@
 ﻿using libUtilities;
-using libWatcherDialog.GeneralRules.Mode.BreakPoint;
-using libWatcherDialog.GeneralRules.Mode.Debugger;
 using libWatcherDialog.GeneralRules.Mode.MemoryData;
 using libWatcherDialog.List;
 using libWatcherDialog.PropertyItem.BreakPoint;
@@ -12,6 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
+using Watcher.Debugger.GeneralRules.Mode.Debugger;
 
 namespace libWatcherDialog.CombineRules
 {
@@ -26,12 +27,12 @@ namespace libWatcherDialog.CombineRules
             Data = null;
             _return = new Return();
             _return.RuleCompleted += _return_RuleCompleted;
-            _rules = new List<GeneralRules.WatcherRule>() {
+            _rules = new List<WatcherRule>() {
                 _addToList, _return , LastRule
             };
         }
 
-        private void _return_RuleCompleted(object sender, GeneralRules.EventArgs.RuleEventArgs e)
+        private void _return_RuleCompleted(object sender, RuleEventArgs e)
         {
             BreakpointsManagement bps = BreakpointsManagement.getInstance();
             DataBreakpointListItem item = bps.Datas.GetData(Data.Variable);

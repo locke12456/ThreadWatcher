@@ -1,10 +1,13 @@
 ﻿using EnvDTE90a;
 using libWatcher.Constants;
 using libWatherDebugger.DocumentContext;
+using libWatherDebugger.Script.Mode.BreakPoint;
+using libWatherDebugger.Script.Mode.VSDebugger;
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Watcher.Debugger;
@@ -17,6 +20,7 @@ namespace libWatherDebugger.Breakpoint
         public DebugDocument Document { get; set; }
         private IDebugBoundBreakpoint2 _breakpoint;
         private IDebugBreakpointRequest2 _breakpointRequest;
+        private IDebugBreakpointRequest3 _breakpointRequest3;
         private Dictionary<enum_BP_TYPE, string> _kinds;
         public EnvDTE.Breakpoint Information { get; set; }
         public IDebugBoundBreakpoint2 Breakpoint
@@ -28,18 +32,38 @@ namespace libWatherDebugger.Breakpoint
                 IDebugPendingBreakpoint2 pendingBreakpoint;
                 _breakpoint.GetPendingBreakpoint(out pendingBreakpoint);
                 PendingBreakpoint = pendingBreakpoint;
+                _check_bp_req();
             }
         }
-        public IDebugBreakpointRequest2 BreakpointRequest
+        public IDebugBreakpointRequest3 BreakpointRequest
         {
             get
             {
-                PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
-                return _breakpointRequest;
+                _check_bp_req();
+                return _breakpointRequest3;
             }
+        }
+
+        private void _get_bp_req3()
+        {
+            PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
+            _breakpointRequest3 = _breakpointRequest as IDebugBreakpointRequest3;
         }
         public IDebugPendingBreakpoint2 PendingBreakpoint { get; private set; }
         public BP_RESOLUTION_INFO BreakpointInfo { get; set; }
+        public BP_REQUEST_INFO2 RequestInfo {
+            get {
+                _check_bp_req();
+                BP_REQUEST_INFO2[] req = new BP_REQUEST_INFO2[1];
+                _breakpointRequest3.GetRequestInfo2((uint)enum_BPREQI_FIELDS.BPREQI_ALLFIELDS, req);
+                return req[0];
+            }
+        }
+
+        private void _check_bp_req()
+        {
+            if (_breakpointRequest3 == null) _get_bp_req3();
+        }
         public enum_BP_TYPE BreakpointType
         {
             get;
@@ -63,7 +87,7 @@ namespace libWatherDebugger.Breakpoint
                 return BreakpointType == enum_BP_TYPE.BPT_DATA;
             }
         }
-        public string Name { get; set; }
+        public string Name { get { return Marshal.PtrToStringBSTR(RequestInfo.bpLocation.unionmember3); } }
         public string FileName
         {
             get {
@@ -87,10 +111,20 @@ namespace libWatherDebugger.Breakpoint
                 return bp3.Condition;
             }
             set {
-                BP_REQUEST_INFO[] bp_info = new BP_REQUEST_INFO[1];
-                BreakpointRequest.GetRequestInfo((uint)enum_BPREQI_FIELDS.BPREQI_CONDITION,bp_info);
-                bp_info[0].bpCondition.bstrCondition = value;
-                Breakpoint.SetCondition(bp_info[0].bpCondition);
+                //BP_REQUEST_INFO[] bp_info = new BP_REQUEST_INFO[1];
+                //BreakpointRequest.GetRequestInfo((uint)enum_BPREQI_FIELDS.BPREQI_CONDITION,bp_info);
+                //bp_info[0].bpCondition.styleCondition = (uint)enum_BP_COND_STYLE.BP_COND_WHEN_TRUE;
+                //bp_info[0].bpCondition.bstrCondition = value;
+                //bp_info[0].bpCondition.nRadix = 10;
+                ////Breakpoint.SetCondition(bp_info[0].bpCondition);
+                //Breakpoint.SetCondition(bp_info[0].bpCondition);
+                Information.Delete();
+                AddWatchPoint add = new AddWatchPoint();
+                add.Condition = value;
+                add.Data = Name;
+                //add.Run();
+                Debugger.getInstance().DebugScript(new List<Func<bool>>() { new DebuggerBreak().Run ,  add.Run ,new DebuggerContinue().Run, null});
+                _breakpoint = null;
             }
 
         }
@@ -101,12 +135,20 @@ namespace libWatherDebugger.Breakpoint
                 { enum_BP_TYPE.BPT_DATA,Types.DataBreakpoint },
             };
         }
-        public void FirstBreak(DebugBreakpoint bpt) 
+        public bool FirstBreak(DebugBreakpoint bpt) 
+        {
+            if (_breakpoint != null) return false;
+            return _first_break(bpt);
+        }
+
+        private bool _first_break(DebugBreakpoint bpt)
         {
             EnvDTE.Breakpoints bps = dbg.VSDebugger.Breakpoints;
-            string data = bpt.Information.Name.Replace("0x", "").ToUpper();
+            string data = bpt.Name.Replace("0x", "").ToUpper();
             _set_as_tracepoint(bpt, bps, data);
             _get_debug_breakpoint_infos(bpt);
+            //_set_information();
+            return true;
         }
 
         private void _get_debug_breakpoint_infos(DebugBreakpoint bpt)
@@ -126,7 +168,7 @@ namespace libWatherDebugger.Breakpoint
                 }
             }
         }
-        private static void _set_as_tracepoint(DebugBreakpoint bpt, EnvDTE.Breakpoints bps, string data)
+        private void _set_as_tracepoint(DebugBreakpoint bpt, EnvDTE.Breakpoints bps, string data)
         {
             foreach (var bp_c in bps)
             {
@@ -134,7 +176,8 @@ namespace libWatherDebugger.Breakpoint
                 if (bp.Name.IndexOf(data) != -1)
                 {
                     bp.BreakWhenHit = false;
-                    bp.Message = bpt.Information.Name;
+                    bp.Message = bpt.Name;
+                    Information = bp as EnvDTE.Breakpoint;
                 }
             }
         }

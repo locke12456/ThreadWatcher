@@ -1,14 +1,15 @@
 ﻿using libUtilities;
 using libWatcher.Constants;
 using libWatcherDialog.CombineRules;
-using libWatcherDialog.GeneralRules.Mode.BreakPoint;
-using libWatcherDialog.GeneralRules.Mode.Debugger;
 using libWatcherDialog.List;
 using libWatcherDialog.PropertyItem;
 using libWatcherDialog.PropertyItem.BreakPoint;
+using libWatcherDialog.PropertyItem.Log;
+using libWatcherDialog.PropertyItem.Logger;
 using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
 using libWatherDebugger.Stack;
+using libWatherDebugger.Thread;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
+using Watcher.Debugger.GeneralRules.Mode.BreakPoint;
 
 namespace libWatcherDialog
 {
@@ -171,8 +174,15 @@ namespace libWatcherDialog
         {
             //Continue cnt = new Continue();
             //cnt.RunRules();
-            BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Information.Name);
-            item.Breakpoint.FirstBreak(_breakpoint);
+            BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Name);
+            if (!item.Breakpoint.FirstBreak(_breakpoint)) {
+                ThreadLog log = new ThreadLog();
+                log.Name = item.Breakpoint.Name;
+                log.Key =  (Debugger.getInstance().CurrentThread as DebugThread).ID;
+                LogManagement.getInstance().AddItem(log);
+                BreakpointItem target = BreakpointsManagement.getInstance().GetItem(log.Name);
+                target.HitLocations.BreakpointHit((Debugger.getInstance().CurrentThread as DebugThread));
+            }
             return true;
         }
 
@@ -202,7 +212,7 @@ namespace libWatcherDialog
         {
             AddProprty(e.Item);
         }
-        private void removemode_RuleCompleted(object sender, GeneralRules.EventArgs.RuleEventArgs e)
+        private void removemode_RuleCompleted(object sender, RuleEventArgs e)
         {
             RemoveDataBreakPointFromAPI rule = sender as RemoveDataBreakPointFromAPI;
             RemoveProprtyByName(rule.Data.Variable);

@@ -140,9 +140,9 @@ namespace libWatherDebugger.Breakpoint
         private int _getResolutionInfo()
         {
             _breakpointInfo = new BP_RESOLUTION_INFO[1];
+            
             if (VSConstants.S_OK == _breakpointResolution.GetResolutionInfo((uint)enum_BPRESI_FIELDS.BPRESI_ALLFIELDS, _breakpointInfo))
             {
-
                 return VSConstants.S_OK;
             }
             return VSConstants.S_FALSE;

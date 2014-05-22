@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
 
 namespace libWatcherDialog.CombineRules
 {
@@ -42,7 +44,7 @@ namespace libWatcherDialog.CombineRules
             Scripts.Enqueue(script);
         }
 
-        private void RuleCompleted(object sender, GeneralRules.EventArgs.RuleEventArgs e)
+        private void RuleCompleted(object sender, RuleEventArgs e)
         {
             T script = Scripts.Dequeue();
             _switch_order_mode();

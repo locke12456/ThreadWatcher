@@ -1,5 +1,4 @@
 ﻿using libUtilities;
-using libWatcherDialog.GeneralRules.Mode.BreakPoint;
 using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
 using libWatherDebugger.Stack;
@@ -8,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Watcher.Debugger;
+using Watcher.Debugger.GeneralRules.Mode.BreakPoint;
 
 namespace libWatcherDialog.CombineRules
 {
@@ -23,7 +24,7 @@ namespace libWatcherDialog.CombineRules
         public BreakpointTriggerFromAPI()
         {
             Data = null;
-            _rules = new List<GeneralRules.WatcherRule>() {
+            _rules = new List<WatcherRule>() {
                  LastRule
             };
         }

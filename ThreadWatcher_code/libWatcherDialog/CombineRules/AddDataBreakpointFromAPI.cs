@@ -1,6 +1,4 @@
 ﻿using libUtilities;
-using libWatcherDialog.GeneralRules.Mode.BreakPoint;
-using libWatcherDialog.GeneralRules.Mode.Debugger;
 using libWatcherDialog.PropertyItem.BreakPoint;
 using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
@@ -10,6 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Watcher.Debugger;
+using Watcher.Debugger.EventArgs;
+using Watcher.Debugger.GeneralRules.Mode.BreakPoint;
+using Watcher.Debugger.GeneralRules.Mode.Debugger;
 
 namespace libWatcherDialog.CombineRules
 {
@@ -35,12 +37,12 @@ namespace libWatcherDialog.CombineRules
             _return = new Return();
             _addDataBreakpoint = new AddDataBreakPoint();
             _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
-            _rules = new List<GeneralRules.WatcherRule>() {
+            _rules = new List<WatcherRule>() {
                 _addDataBreakpoint , _return , LastRule
             };
         }
 
-        private void _addDataBreakpoint_RuleCompleted(object sender, GeneralRules.EventArgs.RuleEventArgs e)
+        private void _addDataBreakpoint_RuleCompleted(object sender, RuleEventArgs e)
         {
             AddDataBreakpointFromAPI rule = sender as AddDataBreakpointFromAPI;
             _addDataToManagement(rule);

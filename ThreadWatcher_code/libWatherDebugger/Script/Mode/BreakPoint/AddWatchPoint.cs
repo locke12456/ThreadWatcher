@@ -18,10 +18,16 @@ namespace libWatherDebugger.Script.Mode.BreakPoint
             get;
             set;
         }
+        public string Condition
+        {
+            get;
+            set;
+        }
         public AddWatchPoint()
             : base()
         {
             Mode = dbgDebugMode.dbgBreakMode;
+            Condition = "";
         }
         public AddWatchPoint(EnvDTE.Debugger dbg)
             : base(dbg)
@@ -32,7 +38,7 @@ namespace libWatherDebugger.Script.Mode.BreakPoint
         {
             Breakpoint3 bp;
             EnvDTE90a.Debugger4 dbg = _dbg as Debugger4;
-            Breakpoints bps = dbg.Breakpoints.Add("", "", 0, 0, "", EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenTrue, "C++", Data, 4);
+            Breakpoints bps = dbg.Breakpoints.Add("", "", 0, 0, Condition , EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenTrue, "C++", Data, 4);
             //string data = Data.Replace("0x", "").ToUpper();
             //foreach (var bp_c in bps)
             //{
