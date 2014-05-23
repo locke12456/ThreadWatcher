@@ -1,6 +1,8 @@
 ﻿using EnvDTE90a;
 using libWatcher.Constants;
 using libWatherDebugger.DocumentContext;
+using libWatherDebugger.GeneralRules.Mode.BreakPoint;
+using libWatherDebugger.Script;
 using libWatherDebugger.Script.Mode.BreakPoint;
 using libWatherDebugger.Script.Mode.VSDebugger;
 using Microsoft.VisualStudio.Debugger.Interop;
@@ -16,12 +18,16 @@ namespace libWatherDebugger.Breakpoint
 {
     public class DebugBreakpoint : IDebugItem
     {
+        //private delegate void _set_condition(string val);
+        private delegate void BreakTriggered(object sender, string value);
+        private BreakTriggered _reset_condition_event;
         private Debugger dbg = Debugger.getInstance();
         public DebugDocument Document { get; set; }
         private IDebugBoundBreakpoint2 _breakpoint;
         private IDebugBreakpointRequest2 _breakpointRequest;
         private IDebugBreakpointRequest3 _breakpointRequest3;
         private Dictionary<enum_BP_TYPE, string> _kinds;
+        private string _condition { get; set; }
         public EnvDTE.Breakpoint Information { get; set; }
         public IDebugBoundBreakpoint2 Breakpoint
         {
@@ -118,15 +124,22 @@ namespace libWatherDebugger.Breakpoint
                 //bp_info[0].bpCondition.nRadix = 10;
                 ////Breakpoint.SetCondition(bp_info[0].bpCondition);
                 //Breakpoint.SetCondition(bp_info[0].bpCondition);
-                Information.Delete();
-                AddWatchPoint add = new AddWatchPoint();
-                add.Condition = value;
-                add.Data = Name;
-                //add.Run();
-                Debugger.getInstance().DebugScript(new List<Func<bool>>() { new DebuggerBreak().Run ,  add.Run ,new DebuggerContinue().Run, null});
-                _breakpoint = null;
+                _condition = value;
+                if (_reset_condition_event == null)
+                    _reset_condition_event += _reset_condition;
             }
 
+        }
+
+        private void _reset_condition(object sender , string value)
+        {
+            DebugBreakpoint bp = sender as DebugBreakpoint;
+            bp._reset_condition_event -= _reset_condition;
+            if (DebugScript.HasASyncScript())
+                DebugScript.WaitSync();
+            ResetBreakpointCondition reset = new ResetBreakpointCondition(this, value);
+            reset.RunRules();
+            bp._breakpoint = null;
         }
         public DebugBreakpoint()
         {
@@ -137,7 +150,11 @@ namespace libWatherDebugger.Breakpoint
         }
         public bool FirstBreak(DebugBreakpoint bpt) 
         {
-            if (_breakpoint != null) return false;
+            if (_breakpoint != null)
+            {
+                if (_reset_condition_event != null) _reset_condition_event(this, _condition);
+                return false;
+            }
             return _first_break(bpt);
         }
 

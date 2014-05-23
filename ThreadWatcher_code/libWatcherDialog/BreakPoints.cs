@@ -172,18 +172,24 @@ namespace libWatcherDialog
 
         private bool _data_breakpoint()
         {
-            //Continue cnt = new Continue();
-            //cnt.RunRules();
             BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Name);
             if (!item.Breakpoint.FirstBreak(_breakpoint)) {
-                ThreadLog log = new ThreadLog();
-                log.Name = item.Breakpoint.Name;
-                log.Key =  (Debugger.getInstance().CurrentThread as DebugThread).ID;
-                LogManagement.getInstance().AddItem(log);
-                BreakpointItem target = BreakpointsManagement.getInstance().GetItem(log.Name);
-                target.HitLocations.BreakpointHit((Debugger.getInstance().CurrentThread as DebugThread));
+                DebugThread thread = (Debugger.getInstance().CurrentThread as DebugThread);
+                string name = item.Breakpoint.Name;
+                string id = thread.ID;
+                _write_log(thread, name, id);
             }
             return true;
+        }
+
+        private void _write_log(DebugThread thread, string name, string id)
+        {
+            ThreadLog log = new ThreadLog();
+            log.Name = name;
+            log.Key = id;
+            LogManagement.getInstance().AddItem(log);
+            BreakpointItem target = BreakpointsManagement.getInstance().GetItem(log.Name);
+            target.HitLocations.BreakpointHit(thread);
         }
 
         private bool _code_breakpoint()

@@ -1,4 +1,5 @@
-﻿using libWatcherDialog.List;
+﻿using libUtilities;
+using libWatcherDialog.List;
 using libWatcherDialog.PropertyItem.BreakPoint;
 using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Logger;
@@ -15,6 +16,7 @@ namespace libWatcherDialog.GeneralRules.Mode.MemoryData
 {
     public class FreeHeapMemoryData : ItemManagementRule
     {
+        public IDebuggerMemory Data { get; set; }
         public static readonly string Name = "MemoryFreed";
         public static readonly string Created = "a data address has freed .";
         public FreeHeapMemoryData()

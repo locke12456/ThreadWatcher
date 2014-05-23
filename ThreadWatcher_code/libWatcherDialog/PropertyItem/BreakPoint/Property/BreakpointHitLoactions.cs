@@ -82,6 +82,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint.Property
         }
         public override void AfterLabelEdit(object sender, BetterListViewLabelEditEventArgs eventArgs)
         {
+            if (_combobox.SelectedItem == null) return;
             if (_combobox.SelectedItem.ToString() == Value) return;
             BreakpointHitLocation bhl = _combobox.SelectedItem as BreakpointHitLocation;
             BreakPoints bps = Parent as BreakPoints;

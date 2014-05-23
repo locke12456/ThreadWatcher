@@ -150,6 +150,11 @@ namespace ThreadWatcher
                 {
                     if (thread != null)
                     {
+                        if (DebugScript.HasASyncScript()) 
+                            DebugScript.WaitSync();
+                        //lock
+                        DebugScript.RegisterASyncEvent(DebugScript.ASyncEvent);
+                        //
                         _dbg.InitStackFrame(thread);
                         DebugStackFrame stack = _dbg.CurrentStackFrame as DebugStackFrame;
                         _dbg.Locals(stack);
@@ -157,8 +162,11 @@ namespace ThreadWatcher
                         bpFactory.CreateProduct();
                         DebugBreakpoint breakpoint = bpFactory.Product as DebugBreakpoint;
                         breakpoints.BreakPointTriggered(breakpoint);
-                        return 1;
+                        //unlock
+                        DebugScript.FinishSync();
+                        //
                     }
+                    return 1;
                 }
                 catch (Exception fail)
                 {
