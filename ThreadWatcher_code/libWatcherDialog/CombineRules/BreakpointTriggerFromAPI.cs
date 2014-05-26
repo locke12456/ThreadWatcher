@@ -14,8 +14,8 @@ namespace libWatcherDialog.CombineRules
 {
     public class BreakpointTriggerFromAPI : CombineRules, IBreakPoint
     {
-        public DebugBreakpoint Breakpoint { get; set; }
-        public IDebuggerMemory Data { get; set; }
+        public virtual DebugBreakpoint Breakpoint { get; set; }
+        public virtual IDebuggerMemory Data { get; set; }
         protected enum APITypes
         {
             Malloc, Free

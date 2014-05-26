@@ -1,6 +1,7 @@
 ﻿using libUtilities;
 using libWatcherDialog.PropertyItem.BreakPoint;
 using libWatcherDialog.PropertyItem.Code;
+using libWatcherDialog.PropertyItem.DebugScript;
 using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Thread;
 using System;
@@ -18,5 +19,6 @@ namespace libWatcherDialog.GeneralRules.Mode
         protected LogManagement _logs = LogManagement.getInstance();
         protected ThreadsManagement _threads = ThreadsManagement.getInstance();
         protected CodeMenagement _codes = CodeMenagement.getInstance();
+        protected DebugScriptsManagement _scripts = DebugScriptsManagement.getInstance();
     }
 }

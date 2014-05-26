@@ -16,10 +16,12 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         public MemoryInfo Data { get; set; }
         public DebugBreakpoint Breakpoint { get; set; }
         public BreakpointHitLoactions HitLocations { get; private set; }
+        public BreakpointCondition Condition { get; set; }
         public BreakpointItem() {
             HitLocations = new BreakpointHitLoactions();
+            Condition = new BreakpointCondition();
             Children = new List<BreakPointProperty>();
-            Children.Add(new BreakpointCondition());
+            Children.Add(Condition);
             Children.Add(new BreakpointThreads());
             Children.Add(HitLocations);
            

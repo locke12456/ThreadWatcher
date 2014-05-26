@@ -16,6 +16,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
     }
     public abstract class BreakpointRule : WatcherRule, IBreakPoint
     {
+        public string Condition { get; set; }
         public DebugBreakpoint Breakpoint { get; set; }
         public IDebuggerMemory Data { get; set; }
         protected libWatherDebugger.Script.Mode.BreakPoint.BreakPoint _breakpoint;

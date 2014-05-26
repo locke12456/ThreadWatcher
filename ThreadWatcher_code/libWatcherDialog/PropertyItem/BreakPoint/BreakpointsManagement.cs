@@ -1,4 +1,5 @@
 ﻿using libWatcherDialog.List;
+using libWatcherDialog.PropertyItem.DebugScript;
 using libWatherDebugger.Memory;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,11 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
     public class BreakpointsManagement : ItemsManagement<BreakpointItem>
     {
         protected static BreakpointsManagement _this;
-        private List<object> _concernedTarget;
+        public DebugScriptItem ConcernedTarget
+        {
+            get;
+            set;
+        }
         private MemoryData _memoryDatas;
 
         public MemoryData Datas {

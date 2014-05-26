@@ -13,9 +13,10 @@ using System.Windows.Forms;
 
 namespace libWatcherDialog
 {
-    public partial class PropertyForm<T, T2> : Form where T2 : ItemProperties
+    public partial class PropertyForm<T, T2> : Form where T2 : ItemProperties  where T : class
     {
         protected CrossThreadProtected _gui;
+        protected ItemsManagement<T> _management;
         protected MenuStatus _propertiesMenu;
         protected MenuStatus _propertiesViewMenu;
         protected MenuStatus _detialMenu;
@@ -23,6 +24,7 @@ namespace libWatcherDialog
         {
             _gui = new CrossThreadProtected(this);
             InitializeComponent();
+
         }
 
         protected virtual void _initContextMenu()
@@ -134,7 +136,7 @@ namespace libWatcherDialog
         }
         protected virtual void Properties_SelectedValueChanged(object sender, EventArgs e)
         {
-
+            _management.CurrentItem = Properties.SelectedItem as T;
         }
 
         private void PropertyView_SelectedIndexChanged(object sender, EventArgs e)

@@ -26,6 +26,7 @@ namespace libWatcherDialog.PropertyItem.PropertyViewItem
         {
             SubItems.RemoveAt(1);
             SubItems.Add(value);
+            //AfterLabelEdit(this, null);
         }
     }
 }

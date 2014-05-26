@@ -1,6 +1,6 @@
-﻿namespace libWatcherDialog.PropertyItem.BreakPoint
+﻿namespace libWatcherDialog.PropertyItem.DebugScript
 {
-    partial class BreakpointMenu
+    partial class DebugScriptsMenu
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,15 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.ListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataBreakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.breakpointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.debugScriptEnabe = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugScriptDisable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripAddProperty = new System.Windows.Forms.ToolStripMenuItem();
             this.conditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +50,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.loadFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugScriptOpen = new System.Windows.Forms.OpenFileDialog();
             this.ListMenu.SuspendLayout();
             this.ItemMenu.SuspendLayout();
             this.SuspendLayout();
@@ -59,72 +58,59 @@
             // ListMenu
             // 
             this.ListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.deleteToolStripMenuItem,
+            this.scriptToolStripMenuItem,
             this.toolStripSeparator2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4,
-            this.toolStripSeparator1,
-            this.scriptToolStripMenuItem});
+            this.debugScriptEnabe,
+            this.debugScriptDisable,
+            this.toolStripSeparator1});
             this.ListMenu.Name = "PropertyViewMenu";
-            this.ListMenu.Size = new System.Drawing.Size(153, 148);
+            this.ListMenu.Size = new System.Drawing.Size(105, 82);
             // 
-            // addToolStripMenuItem
+            // scriptToolStripMenuItem
             // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dataBreakpointToolStripMenuItem,
-            this.breakpointToolStripMenuItem});
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addToolStripMenuItem.Text = "Add";
+            this.scriptToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
+            this.saveToolStripMenuItem});
+            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
+            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(104, 22);
+            this.scriptToolStripMenuItem.Text = "Script";
             // 
-            // dataBreakpointToolStripMenuItem
+            // loadToolStripMenuItem
             // 
-            this.dataBreakpointToolStripMenuItem.Name = "dataBreakpointToolStripMenuItem";
-            this.dataBreakpointToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.dataBreakpointToolStripMenuItem.Text = "Data Breakpoint";
-            this.dataBreakpointToolStripMenuItem.Click += new System.EventHandler(this.dataBreakpointToolStripMenuItem_Click);
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
-            // breakpointToolStripMenuItem
+            // saveToolStripMenuItem
             // 
-            this.breakpointToolStripMenuItem.Name = "breakpointToolStripMenuItem";
-            this.breakpointToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.breakpointToolStripMenuItem.Text = "Breakpoint";
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(101, 6);
             // 
-            // toolStripMenuItem3
+            // debugScriptEnabe
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem3.Text = "Enable";
+            this.debugScriptEnabe.Name = "debugScriptEnabe";
+            this.debugScriptEnabe.Size = new System.Drawing.Size(104, 22);
+            this.debugScriptEnabe.Text = "Enable";
+            this.debugScriptEnabe.Click += new System.EventHandler(this.debugScriptEnabe_Click);
             // 
-            // toolStripMenuItem4
+            // debugScriptDisable
             // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem4.Text = "Disable";
+            this.debugScriptDisable.Name = "debugScriptDisable";
+            this.debugScriptDisable.Size = new System.Drawing.Size(104, 22);
+            this.debugScriptDisable.Text = "Disable";
+            this.debugScriptDisable.Click += new System.EventHandler(this.debugScriptDisable_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // scriptToolStripMenuItem
-            // 
-            this.scriptToolStripMenuItem.Name = "scriptToolStripMenuItem";
-            this.scriptToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.scriptToolStripMenuItem.Text = "Script";
-            this.scriptToolStripMenuItem.Click += new System.EventHandler(this.scriptToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(101, 6);
             // 
             // ItemMenu
             // 
@@ -214,11 +200,16 @@
             this.saveToToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.saveToToolStripMenuItem.Text = "Save to ..";
             // 
-            // BreakpointMenu
+            // debugScriptOpen
+            // 
+            this.debugScriptOpen.Filter = "Script Files(.js)|*.js";
+            this.debugScriptOpen.Title = "Select DebugScript";
+            // 
+            // DebugScriptsMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "BreakpointMenu";
+            this.Name = "DebugScriptsMenu";
             this.ListMenu.ResumeLayout(false);
             this.ItemMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -228,13 +219,7 @@
         #endregion
 
         public System.Windows.Forms.ContextMenuStrip ListMenu;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataBreakpointToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem breakpointToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         protected System.Windows.Forms.ContextMenuStrip ItemMenu;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
@@ -250,5 +235,10 @@
         private System.Windows.Forms.ToolStripMenuItem conditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem virtualVariableToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugScriptEnabe;
+        private System.Windows.Forms.ToolStripMenuItem debugScriptDisable;
+        private System.Windows.Forms.OpenFileDialog debugScriptOpen;
     }
 }

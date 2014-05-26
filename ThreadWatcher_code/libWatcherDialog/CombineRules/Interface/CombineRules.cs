@@ -1,4 +1,5 @@
 ﻿using libWatcherDialog.GeneralRules;
+using libWatherDebugger.Script;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,14 @@ namespace libWatcherDialog.CombineRules
         {
 
         }
+        protected virtual void _start()
+        {
+
+        }
+        protected virtual void _wait()
+        {
+
+        }
         protected void _next()
         {
             if (_rules == null) return;
@@ -39,7 +48,9 @@ namespace libWatcherDialog.CombineRules
             }
             _init();
             rule.RuleCompleted += rule_RuleCompleted;
+            _start();
             rule.RunRules();
+            _wait();
         }
         protected virtual void _finish()
         {

@@ -8,6 +8,6 @@ namespace libWatcherDialog.PropertyItem
 {
     interface IItemsManagement<T>
     {
-        T CurrentItem { get; }
+        T CurrentItem { get; set; }
     }
 }

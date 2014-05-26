@@ -15,9 +15,17 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
 {
     public partial class BreakpointMenu : PropertyDialogMenu
     {
+        private DebugScripts _scriptDialog = new DebugScripts();
         public BreakpointMenu() : base()
         {
             InitializeComponent();
+            Disposed += BreakpointMenu_Disposed;
+        }
+
+        private void BreakpointMenu_Disposed(object sender, System.EventArgs e)
+        {
+            _scriptDialog.CanDistory = true;
+            _scriptDialog.Close();
         }
 
         private void dataBreakpointToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -35,5 +43,11 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
             addDatabp.Run();
             (sender as DataBreakpointList).Close();
         }
+
+        private void scriptToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            _scriptDialog.Show();
+        }
+        
     }
 }

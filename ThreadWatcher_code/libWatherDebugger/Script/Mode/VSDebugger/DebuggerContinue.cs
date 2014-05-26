@@ -25,6 +25,7 @@ namespace libWatherDebugger.Script.Mode.VSDebugger
         {
             try
             {
+                while (_dbg.CurrentMode != Mode) ;
                 _dbg.Go(false);
                 return true;
             }

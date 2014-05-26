@@ -24,6 +24,7 @@ namespace libWatcherDialog
         public Threads()
             : base()
         {
+            _management = _threads;
             InitializeComponent();
             _register_events();
             _initContextMenu();

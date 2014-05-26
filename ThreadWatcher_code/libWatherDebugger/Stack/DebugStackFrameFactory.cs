@@ -1,4 +1,5 @@
 ﻿using EnvDTE90a;
+using libWatherDebugger.Thread;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
@@ -24,6 +25,10 @@ namespace libWatherDebugger.Stack
         public DebugStackFrameFactory(IDebugThread2 thread)
         {
             _thread = thread;
+        }
+        public DebugStackFrameFactory(DebugThread thread)
+        {
+            _thread = thread.Thread;
         }
         public override int CreateProduct()
         {

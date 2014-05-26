@@ -1,9 +1,11 @@
 ﻿using libUtilities;
 using libWatcher.Constants;
 using libWatcherDialog.CombineRules;
+using libWatcherDialog.CombineRules.Script;
 using libWatcherDialog.List;
 using libWatcherDialog.PropertyItem;
 using libWatcherDialog.PropertyItem.BreakPoint;
+using libWatcherDialog.PropertyItem.DebugScript;
 using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Logger;
 using libWatherDebugger.Breakpoint;
@@ -20,26 +22,20 @@ using System.Threading.Tasks;
 using Watcher.Debugger;
 using Watcher.Debugger.EventArgs;
 using Watcher.Debugger.GeneralRules.Mode.BreakPoint;
+using Watcher.Debugger.GeneralRules.Mode.Debugger;
 
 namespace libWatcherDialog
 {
     public partial class BreakPoints : BreakPointsRef
     {
+
         public delegate void BreakPointEventHandler(object sender);
         public BreakPoints()
             : base()
         {
+
             InitializeComponent();
             _initContextMenu();
-        }
-        public void BreakPointTriggered(DebugBreakpoint breakpoint)
-        {
-            _breakpoint = breakpoint;
-            Func<bool> mode;
-            if (_modify_mode.TryGetValue(breakpoint.BreakpointKind, out mode))
-            {
-                mode();
-            }
         }
         private void BreakPoints_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
@@ -121,24 +117,110 @@ namespace libWatcherDialog
         }
 
     }
+    public enum BreakPointsModes
+    {
+        Manual, Script
+    }
     public class BreakPointsRef : PropertyForm<BreakpointItem, BreakPointProperty>
     {
         protected BreakpointsManagement _breakpoints = BreakpointsManagement.getInstance();
+        protected DebugScriptsManagement _scripts = DebugScriptsManagement.getInstance();
+        protected Debugger _watcher = Debugger.getInstance();
+        protected Dictionary<BreakPointsModes, Func<bool>> _modes;
         protected Dictionary<string, CombineRules.CombineRules> _breakpoint_mode;
         protected Dictionary<string, Func<bool>> _modify_mode;
+        protected Dictionary<DebugScriptItem, Func<bool>> _script_modify_mode;
         protected DebugBreakpoint _breakpoint;
         protected BreakpointMenu _menus;
+
+        protected AddDataBreakpointFormScript _addDataFormScript;
         protected AddDataBreakpointToList _addDataToList;
         protected RemoveDataBreakPointFromAPI _removeData;
+        public BreakPointsModes Mode
+        {
+            get
+            {
+                return BreakPointsModes.Script;
+            }
+        }
         public BreakPointsRef()
             : base()
         {
+            _management = _breakpoints;
             _create_modes();
             _init_events();
             _init_modes();
         }
+
+        public bool BreakPointTriggered(DebugBreakpoint breakpoint)
+        {
+            _breakpoint = breakpoint; Func<bool> mode;
+            if (_modify_mode.TryGetValue(_breakpoint.BreakpointKind, out mode))
+            {
+                mode();
+            }
+            return true;
+        }
+
+        private bool _script_mode()
+        {
+            DebugScriptItem script = _scripts.GetItem(_breakpoint);
+            if (script != null)
+            {
+                _breakpoints.ConcernedTarget = script;
+            }
+            else {
+                if (_breakpoints.ConcernedTarget != null)
+                {
+                    _do_script_modify();
+                }
+                else
+                    _continue_debugging();
+            }
+            
+            return true;
+
+        }
+
+        private void _do_script_modify()
+        {
+            _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataFormScript;
+            _manaul_mode();
+            _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataToList;
+        }
+        private void _continue_debugging()
+        {
+            _breakpoint_mode[APICppFiles.MemoryAlloc] = new NotConcernedPoint();
+            _manaul_mode();
+            _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataToList;
+        }
+        private bool _manaul_mode()
+        {
+            CombineRules.CombineRules mode;
+            string name = (Debugger.getInstance().CurrentStackFrame as DebugStackFrame).FunctionName;
+            if (_breakpoint_mode.TryGetValue(name, out mode))
+            {
+                _try_set_add_target(mode);
+                mode.Run();
+            }
+            else 
+                return false;
+            return true;
+        }
+
+        private void _try_set_add_target(CombineRules.CombineRules mode)
+        {
+            if (!(mode is BreakpointTriggerFromAPI))
+                return;
+            IBreakPoint bp = mode as IBreakPoint;
+            bp.Breakpoint = _breakpoint;
+        }
         private void _init_modes()
         {
+            _modes = new Dictionary<BreakPointsModes, Func<bool>>() {
+                {BreakPointsModes.Manual , _manaul_mode},
+                {BreakPointsModes.Script , _script_mode}
+            };
             _breakpoint_mode = new Dictionary<string, CombineRules.CombineRules>() { 
                  { APICppFiles.MemoryAlloc, _addDataToList },
                  { APICppFiles.MemoryFree, _removeData }
@@ -155,14 +237,23 @@ namespace libWatcherDialog
             _breakpoints.PropertyAdded += _breakpoints_PropertyAdded;
             _breakpoints.PropertyRemoved += _breakpoints_PropertyRemoved;
             _breakpoints.PropertyChanged += _breakpoints_PropertyChanged;
+            _addDataFormScript.RuleCompleted += _addDataFormScript_RuleCompleted;
             Disposed += BreakPoints_Disposed;
         }
+
         private void _create_modes()
         {
             _addDataToList = new AddDataBreakpointToList();
+            try
+            {
+                _addDataFormScript = new AddDataBreakpointFormScript();
+            }
+            catch (Exception fail) 
+            {
+                System.Diagnostics.Debug.WriteLine(fail.Message);
+            }
             _removeData = new RemoveDataBreakPointFromAPI();
         }
-
 
         protected override void _initContextMenu()
         {
@@ -173,7 +264,8 @@ namespace libWatcherDialog
         private bool _data_breakpoint()
         {
             BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Name);
-            if (!item.Breakpoint.FirstBreak(_breakpoint)) {
+            if (!item.Breakpoint.FirstBreak(_breakpoint))
+            {
                 DebugThread thread = (Debugger.getInstance().CurrentThread as DebugThread);
                 string name = item.Breakpoint.Name;
                 string id = thread.ID;
@@ -195,15 +287,17 @@ namespace libWatcherDialog
         private bool _code_breakpoint()
         {
             //FileInfo file = new FileInfo(_breakpoint.FileName);
-            CombineRules.CombineRules mode;
-            string name = (Debugger.getInstance().CurrentStackFrame as DebugStackFrame).FunctionName;
-            if (_breakpoint_mode.TryGetValue(name, out mode))
-            {
-                IBreakPoint bp = mode as IBreakPoint;
-                bp.Breakpoint = _breakpoint;
-                mode.Run();
+            Func<bool> mode;
+            if (_modes.TryGetValue(Mode,out mode)) {
+                mode();                
             }
+
             return true;
+        }
+
+        private void _addDataFormScript_RuleCompleted(object sender, RuleEventArgs e)
+        {
+            _breakpoints.ConcernedTarget = null;
         }
 
         private void _breakpoints_PropertyChanged(object sender, PropertyItem.EventArgs.PropertiesEventArgs<BreakpointItem> e)

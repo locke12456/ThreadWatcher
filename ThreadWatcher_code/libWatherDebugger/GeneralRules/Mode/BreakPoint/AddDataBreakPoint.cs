@@ -19,7 +19,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
         
         public AddDataBreakPoint()
         {
-
+            Condition = "";
         }
         protected override void _init()
         {
@@ -35,6 +35,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
             {
                 _breakpoint = new AddWatchPoint();
                 AddWatchPoint bp = _breakpoint as AddWatchPoint;
+                bp.Condition = Condition;
                 long address = addr + i * 4;
                 bp.Data = "0x" + address.ToString("X8");
                 _script_list.Add(bp.Run);

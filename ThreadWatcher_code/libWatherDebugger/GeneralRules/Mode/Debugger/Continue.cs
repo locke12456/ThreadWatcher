@@ -17,12 +17,10 @@ namespace Watcher.Debugger.GeneralRules.Mode.Debugger
         }
         protected override void _init()
         {
-            if (_dbg.VSDebugger.CurrentMode == EnvDTE.dbgDebugMode.dbgBreakMode)
-            {
                 _script_list = new List<Func<bool>>() { 
                     new DebuggerContinue().Run , null
                 };
-            }
+            
         }
     }
 }

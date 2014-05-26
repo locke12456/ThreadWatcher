@@ -52,6 +52,14 @@ namespace libWatherDebugger.DocumentContext
         //public string SourceCodeBlack { get { return _code(); } }
         public CodeInformation()
         {
+            try
+            {
+                _init();
+            }
+            catch (Exception fail) 
+            {
+                
+            }
         }
         private void _init()
         {

@@ -35,14 +35,13 @@ namespace libWatcherDialog.GeneralRules.Mode.MemoryData
             bps.AddMemoryData(item);
             LogItem log = Log.Create(Name, Created + "(" + Data.Variable + ")");
             log.Key = _get_threadId();
-            //log.
-            //log.Name = msg;
             LogManagement.getInstance().AddItem(log);
-            //ThreadItem thread = ThreadsManagement.getInstance().GetItem();
-            //thread.WriteLog();
             return true;
         }
-
+        protected override bool _finish()
+        {
+            return base._finish();
+        }
         private string _get_threadId()
         {
             return (_dbg.CurrentThread as DebugThread).ID;

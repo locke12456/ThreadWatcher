@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace libWatcherDialog
 {
@@ -50,6 +51,7 @@ namespace libWatcherDialog
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(374, 302);
             this.Name = "DebugScripts";
+            this.Text = "DebugScripts";
             this.Controls.SetChildIndex(this.splitContainer1, 0);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -70,12 +72,56 @@ namespace libWatcherDialog
     }
     public class DebugScriptsRef : PropertyForm<DebugScriptItem, DebugScriptProperty>
     {
+        protected DebugScriptsMenu _property_menu;
+        protected DebugScriptsManagement _scripts = DebugScriptsManagement.getInstance();
+        public bool CanDistory { get; set; }
         public DebugScriptsRef()
             : base()
         {
-
+            _management = _scripts;
+            _init_status();
+            _init_menus();
         }
 
+        private void _init_status()
+        {
+            CanDistory = false;
+            _scripts.PropertyAdded += _scripts_PropertyAdded;
+            _scripts.PropertyChanged += _scripts_PropertyChanged;
+            _scripts.PropertyRemoved += _scripts_PropertyRemoved;
+            Disposed += DebugScriptsRef_Disposed;
+        }
 
+        protected void _scripts_PropertyRemoved(object sender, PropertyItem.EventArgs.PropertiesEventArgs<DebugScriptItem> e)
+        {
+            RemoveProprty(e.Item);
+        }
+        protected void _scripts_PropertyChanged(object sender, PropertyItem.EventArgs.PropertiesEventArgs<DebugScriptItem> e)
+        {
+            SetCurrentProperty(e.Item);
+        }
+
+        protected void _scripts_PropertyAdded(object sender, PropertyItem.EventArgs.PropertiesEventArgs<DebugScriptItem> e)
+        {
+            AddProprty(e.Item);
+        }
+
+        protected void DebugScriptsRef_Disposed(object sender, EventArgs e)
+        {
+            DebugScriptsManagement.Destroy();
+        }
+
+        private void _init_menus()
+        {
+            _property_menu = new DebugScriptsMenu();
+            Properties.ContextMenuStrip = _property_menu.ListMenu;
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (CanDistory)
+                base.OnFormClosing(e);
+            else Hide();
+        }
     }
 }

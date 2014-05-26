@@ -21,6 +21,7 @@ using libWatherDebugger.Script;
 using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Logger;
 using libWatcherDialog.PropertyItem.BreakPoint;
+using libWatcherDialog.PropertyItem.DebugScript;
 namespace ThreadWatcher
 {
     /// <summary>用於實作增益集的物件。</summary>
@@ -123,6 +124,12 @@ namespace ThreadWatcher
                 threads = new libWatcherDialog.Threads();
                 _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 7, 1);
                 _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 12, 1);
+                //DebugScriptItem item;
+                //item = new DebugScriptItem();
+                //item.BreakpointInfo = new libWatcherDialog.DebugScriptEngine.Property.SourceFileInfo();
+                //item.BreakpointInfo.line = 41;
+                //item.BreakpointInfo.filename = "ConsoleApplication1.cpp";
+                //_dte.Debugger.Breakpoints.Add("", item.BreakpointInfo.filename , item.BreakpointInfo.line, 1);
                 //_dte.Debugger.Breakpoints.Add("", "dbgdel.cpp", 42, 1);
                 // Debug.WriteLine(pEvent);
             }
@@ -150,10 +157,10 @@ namespace ThreadWatcher
                 {
                     if (thread != null)
                     {
-                        if (DebugScript.HasASyncScript()) 
-                            DebugScript.WaitSync();
+                        //if (DebugScript.HasASyncScript()) 
+                        //    DebugScript.WaitSync();
                         //lock
-                        DebugScript.RegisterASyncEvent(DebugScript.ASyncEvent);
+                        //DebugScript.RegisterASyncEvent(DebugScript.ASyncEvent);
                         //
                         _dbg.InitStackFrame(thread);
                         DebugStackFrame stack = _dbg.CurrentStackFrame as DebugStackFrame;
@@ -163,7 +170,7 @@ namespace ThreadWatcher
                         DebugBreakpoint breakpoint = bpFactory.Product as DebugBreakpoint;
                         breakpoints.BreakPointTriggered(breakpoint);
                         //unlock
-                        DebugScript.FinishSync();
+                        //DebugScript.FinishSync();
                         //
                     }
                     return 1;
@@ -214,10 +221,11 @@ namespace ThreadWatcher
                     DebugScript.FinishSync();
                 return 1;
             }
+
             if (addressExpressionString == "")
             {
-
-                //Debug.WriteLine(riidEvent);
+                
+               Debug.WriteLine(riidEvent);
 
                 //if(pEvent is IDebugStepCompleteEvent2)              
                 //    Debug.WriteLine("1");

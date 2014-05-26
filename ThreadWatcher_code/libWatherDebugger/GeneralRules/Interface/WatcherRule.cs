@@ -40,10 +40,15 @@ namespace Watcher.Debugger
         {
             return true;
         }
+        protected virtual bool _start() 
+        {
+            return true;
+        }
         protected virtual bool _wait()
         {
             if (sync == null) sync = new AutoResetEvent(false);
             else sync.WaitOne();
+            _start();
             return true;
         }
         protected virtual bool _finish() {
@@ -57,6 +62,14 @@ namespace Watcher.Debugger
             sync.Reset();
             return true;
         }
+        protected virtual void _step_start() 
+        {
+        
+        }
+        protected virtual void _step_finish() 
+        {
+        
+        }
         protected virtual void _rules()
         {
             bool Break = false;
@@ -65,10 +78,12 @@ namespace Watcher.Debugger
             {
                 if (RuleProgressing != null) RuleProgressing(this, new RuleEventArgs());
                 Func<bool> step = _script_list[index];
+                _step_start();
                 if (step())
                 {
                     Break = _script_list[++index] == null;
                 }
+                _step_finish();
             }
         }
         protected virtual void _thread(object args) {
@@ -83,5 +98,6 @@ namespace Watcher.Debugger
             }
             _finish();
         }
+        
     }
 }
