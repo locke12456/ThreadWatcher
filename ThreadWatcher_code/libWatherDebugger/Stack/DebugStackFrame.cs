@@ -54,6 +54,7 @@ namespace libWatherDebugger.Stack
         }
         private DebugDocument _init_document() 
         {
+            if (CodeContext == null) return null;
             DebugDocumentFactory factory = new DebugDocumentFactory(CodeContext);
             factory.CreateProduct();
             return factory.Product as DebugDocument;

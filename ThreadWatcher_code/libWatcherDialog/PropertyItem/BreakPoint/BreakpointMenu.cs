@@ -15,7 +15,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
 {
     public partial class BreakpointMenu : PropertyDialogMenu
     {
-        private DebugScripts _scriptDialog = new DebugScripts();
+        private DebugScripts _scriptDialog;
         public BreakpointMenu() : base()
         {
             InitializeComponent();
@@ -46,7 +46,12 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
 
         private void scriptToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
-            _scriptDialog.Show();
+            if (_scriptDialog == null)
+            {
+                _scriptDialog = new DebugScripts();
+                _scriptDialog.Show();
+            }
+            else _scriptDialog.Visible = true;
         }
         
     }

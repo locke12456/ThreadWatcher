@@ -1,6 +1,7 @@
 ﻿using libWatcherDialog.CombineRules;
 using libWatcherDialog.GeneralRules.Mode.Thread;
 using libWatcherDialog.PropertyItem;
+using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Thread;
 using libWatherDebugger.Thread;
 using System;
@@ -56,6 +57,7 @@ namespace libWatcherDialog
             foreach (ThreadItem item in Properties.Items)
                 item.CloseLogger();
             ThreadsManagement.Destroy();
+            LogManagement.Destroy();
         }
         protected override void _initContextMenu()
         {

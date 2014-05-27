@@ -50,10 +50,17 @@ namespace libWatcherDialog.PropertyItem.Thread
 
         private void _init_log_data(List<LogItem> log)
         {
-            log.AddRange(Logs);
-            log.AddRange(_logs);
+            _try_add_logs(log);
             log.Sort(_compare);
             _log.AddLogs(log);
+        }
+
+        private void _try_add_logs(List<LogItem> log)
+        {
+            if (Logs != null)
+                log.AddRange(Logs);
+            if(_logs!= null)
+            log.AddRange(_logs);
         }
 
         private void _add_break_log_event()

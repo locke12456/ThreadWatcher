@@ -119,9 +119,13 @@ namespace libWatcherDialog
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (CanDistory)
-                base.OnFormClosing(e);
-            else Hide();
+            if (!CanDistory)
+            {
+                Hide();
+                e.Cancel = true;
+                return;
+            }
+            base.OnFormClosing(e);
         }
     }
 }

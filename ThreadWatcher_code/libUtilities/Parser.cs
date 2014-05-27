@@ -1,6 +1,7 @@
 ﻿using LitJson;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -95,7 +96,20 @@ namespace libUtilities
         public string ToJSONString()
         {
             JsonMapper mapper = new JsonMapper();
+            object temp_val;
             string json = "";
+            try
+            {
+                foreach ( var val in this)
+                {
+                    temp_val = val.Value;
+                    string str = JsonMapper.ToJson(val.Value);
+                }
+            }
+            catch (Exception fail)
+            {
+                Debug.WriteLine(fail.Message);
+            }
             json = JsonMapper.ToJson(this);
             return json;
         }

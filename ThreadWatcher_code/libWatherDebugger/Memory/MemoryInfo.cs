@@ -13,21 +13,20 @@ namespace libWatherDebugger.Memory
     {
         private IDebugThread2 _thread;
         private Watcher.Debugger.Debugger _dte;
-        public IDebugThread2 Thread { get { return (Parent as MemoryInfo)._thread; } }
-        public IDebuggerMemory Parent { get; private set; }
+        private IDebugThread2 Thread { get { return (Parent as MemoryInfo)._thread; } }
+        private IDebuggerMemory Parent { get; set; }
         public string Address { get; set; }
         public string Type { get; set; }
         public string ThreadInfo { get; set; }
         public string Variable { get; set; }
         public string Value { get; set; }
         public string Size { get; set; }
-        public bool IsRoot {
+        private bool IsRoot {
             get {
-                //Debug.WriteLine(Parent == this ? Variable : "");
                 return Parent == this;
             }
         }
-        public bool IsRootIsPointer
+        private bool IsRootIsPointer
         {
             get
             {
@@ -48,7 +47,7 @@ namespace libWatherDebugger.Memory
                 return IsPointer && (Address == "0xcccccc" || Address == "0x00000000");
             }
         }
-        public string AddressQuery
+        private string AddressQuery
         {
             get
             {

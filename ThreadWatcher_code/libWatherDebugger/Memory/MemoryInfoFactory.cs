@@ -12,27 +12,28 @@ namespace libWatherDebugger.Memory
 {
     public class MemoryInfoFactory : ItemFactory<MemoryInfo>
     {
+        private bool _recursive = false;
         private DebugStackFrame _stack;
         private DEBUG_PROPERTY_INFO[] _info;
         private IEnumDebugPropertyInfo2 _propertyInfo;
         public MemoryInfoFactory(DebugStackFrame stack)
             : base()
         {
+            _recursive = true;
             _stack = stack;
             _initParentInfo();
         }
-        //protected MemoryInfoFactory(DEBUG_PROPERTY_INFO[] infos)
-        //    : base()
-        //{
-        //    _info = infos;
-        //    _initChildrenInfo();
-        //    //_info[0].pProperty
-        //}
+        private MemoryInfoFactory(DEBUG_PROPERTY_INFO[] infos)
+            : base()
+        {
+            _recursive = false;
+            _info = infos;
+            _initChildrenInfo();
+        }
         public override int CreateProduct()
         {
             int result = base.CreateProduct();
             _buildAllProduct();
-            _product = ProductList[0];
             return result;
         }
         protected override int _initFactory()
@@ -51,7 +52,6 @@ namespace libWatherDebugger.Memory
         }
         private void _initChildrenInfo()
         {
-            //DEBUG_PROPERTY_INFO info = _info[0];
             Guid FilterLocalsGuid = ThreadWatcher.GUIDs.FilterAllLocalsGuid;
             if (VSConstants.S_OK == _info[0].pProperty.EnumChildren((uint)enum_DEBUGPROP_INFO_FLAGS.DEBUGPROP_INFO_ALL, 10, ref FilterLocalsGuid, 0x00000000ffffffff, _info[0].bstrName, 0, out _propertyInfo))
             {
@@ -64,17 +64,31 @@ namespace libWatherDebugger.Memory
             meminfo.Variable = _info[0].bstrName;
             meminfo.Value = _info[0].bstrValue;
             meminfo.Type = _info[0].bstrType;
+            _create_childern(meminfo);
             return meminfo;
+        }
+
+        private void _create_childern(MemoryInfo meminfo)
+        {
+            if (_recursive)
+            {
+                MemoryInfoFactory childs = new MemoryInfoFactory(_info);
+                childs.CreateProduct();
+                if (childs.ProductList.Count > 0)
+                    meminfo.Members.AddRange(childs.ProductList);
+            }
         }
         private void _buildAllProduct()
         {
             _productList = new List<MemoryInfo>();
+            if (_propertyInfo == null) return;
             uint fetched = 0;
             while (_propertyInfo.Next(1, _info, out fetched) == 0)
             {
                 _productList.Add(_createProduct());
-                //Debug.WriteLine(_info[0].bstrName + " : " + _info[0].bstrValue + "(" + _info[0].bstrType + ")");
             }
+            if (_productList.Count > 0)
+                _product = ProductList[0];
         }
     }
 }

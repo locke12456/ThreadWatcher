@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,8 +18,10 @@ namespace libWatherDebugger.DocumentContext
         private TEXT_POSITION[] _start;
         private TEXT_POSITION[] _end;
         private string _code_string = "";
-        public string FunctionName {
-            get {
+        public string FunctionName
+        {
+            get
+            {
                 if (_code_info == null) _init();
                 return _code_info == null ? "" : _code_info[0].bstrFunction;
             }
@@ -27,26 +30,44 @@ namespace libWatherDebugger.DocumentContext
         {
             get
             {
-                string filename;
-                if (VSConstants.S_OK == DocumentContext.GetName((uint)enum_GETNAME_TYPE.GN_FILENAME, out filename))
+                try
                 {
-                    return filename;
+                    string filename;
+                    if (DocumentContext != null)
+                        if (VSConstants.S_OK == DocumentContext.GetName((uint)enum_GETNAME_TYPE.GN_FILENAME, out filename))
+                        {
+                            return filename;
+                        }
+                }
+                catch (Exception fail)
+                {
+                    Debug.WriteLine(fail.Message);
                 }
                 return "";
             }
         }
-        public uint StartPosition {
-            get {
-                _code();
-                return _start[0].dwLine;
+        public uint StartPosition
+        {
+            get
+            {
+                if (DocumentContext != null)
+                {
+                    _code();
+                    return _start[0].dwLine;
+                }
+                return 1;
             }
         }
         public uint EndPosition
         {
             get
             {
-                _code();
-                return _end[0].dwLine;
+                if (DocumentContext != null)
+                {
+                    _code();
+                    return _end[0].dwLine;
+                }
+                return 1;
             }
         }
         //public string SourceCodeBlack { get { return _code(); } }
@@ -56,9 +77,9 @@ namespace libWatherDebugger.DocumentContext
             {
                 _init();
             }
-            catch (Exception fail) 
+            catch (Exception fail)
             {
-                
+
             }
         }
         private void _init()
@@ -75,21 +96,25 @@ namespace libWatherDebugger.DocumentContext
             _start = new TEXT_POSITION[1];
             _end = new TEXT_POSITION[1];
             DocumentContext.GetSourceRange(_start, _end);
-            //code_info[0]
-            //string[] file = File.ReadAllLines(FileName);
-            //for (uint i = _start[0].dwLine - 1; i < _end[0].dwLine; i++)
-            //{
-            //    code += file[i];
-            //}
             _code_string = code;
             return code;
         }
     }
 
-
     public class DebugDocument : IDebugItem
     {
-        public CodeInformation Code { get; private set; }
+        private CodeInformation _code;
+        public CodeInformation Code
+        {
+            get
+            {
+                return _code;
+            }
+            private set
+            {
+                _code = value;
+            }
+        }
         public IDebugCodeContext2 CodeContext
         {
             get
@@ -118,7 +143,14 @@ namespace libWatherDebugger.DocumentContext
         {
             get
             {
-                return Code.FileName;
+                try
+                {
+                    return Code.FileName;
+                }
+                catch (Exception fail)
+                {
+                    return "";
+                }
             }
         }
         public DebugDocument()

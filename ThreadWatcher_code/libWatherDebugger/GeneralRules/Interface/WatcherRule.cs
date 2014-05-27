@@ -94,7 +94,7 @@ namespace Watcher.Debugger
             }
             catch (Exception fail) {
                 _reset();
-                throw (fail);
+                //throw (fail);
             }
             _finish();
         }

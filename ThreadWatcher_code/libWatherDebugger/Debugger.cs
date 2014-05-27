@@ -152,14 +152,14 @@ namespace Watcher.Debugger
             }
             return null;
         }
-        public IDebuggerMemory Query(string name)
-        {
+        //public IDebuggerMemory Query(string name)
+        //{
 
-            EnvDTE.Expression variable = _that.GetExpression(name, true, 100);
-            MemoryInfo info = new MemoryInfo();
-            info = _buildMemoryInfo(variable, info) as MemoryInfo;
-            return info;
-        }
+        //    EnvDTE.Expression variable = _that.GetExpression(name, true, 100);
+        //    MemoryInfo info = new MemoryInfo();
+        //    info = _buildMemoryInfo(variable, info) as MemoryInfo;
+        //    return info;
+        //}
         public Dictionary<string, IDebuggerMemory> Locals(DebugStackFrame stack)
         {
             MemoryInfoFactory factory = new MemoryInfoFactory(stack);
@@ -179,21 +179,21 @@ namespace Watcher.Debugger
             //info = _buildMemoryInfo(variable, info) as MemoryInfo;
             return info;
         }
-        private IDebuggerMemory _buildMemoryInfo(EnvDTE.Expression variable, MemoryInfo info)
-        {
-            info.Variable = variable.Name;
-            info.Value = variable.Value;
-            info.Type = variable.Type;
-            info.Address = _tryGetAddress(info.AddressQuery);
-            if (info.IsNullPointer) return info;
-            foreach (Expression sub in variable.DataMembers)
-            {
-                MemoryInfo child = new MemoryInfo();
-                info.Add(child);
-                child = _buildMemoryInfo(sub, child) as MemoryInfo;
-            }
-            return info;
-        }
+        //private IDebuggerMemory _buildMemoryInfo(EnvDTE.Expression variable, MemoryInfo info)
+        //{
+        //    info.Variable = variable.Name;
+        //    info.Value = variable.Value;
+        //    info.Type = variable.Type;
+        //    info.Address = _tryGetAddress(info.AddressQuery);
+        //    if (info.IsNullPointer) return info;
+        //    foreach (Expression sub in variable.DataMembers)
+        //    {
+        //        MemoryInfo child = new MemoryInfo();
+        //        info.Add(child);
+        //        child = _buildMemoryInfo(sub, child) as MemoryInfo;
+        //    }
+        //    return info;
+        //}
         private Debugger()
         {
             IsInited = false;

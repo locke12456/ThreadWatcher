@@ -14,6 +14,7 @@ namespace libWatherDebugger.Thread
     {
         public IDebugThread2 Thread { get; set; }
         public DebugStackFrame Stack { get; set; }
+
         public DebugDocument Document
         {
             get

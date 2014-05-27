@@ -61,6 +61,7 @@ namespace libWatherDebugger.Stack
 
         private static string _code_position_info(DebugStackFrame stack)
         {
+            if (stack.Document == null) return "";
             return stack.Document.FileName + "(" + Convert.ToString(stack.Document.Code.StartPosition) + ")";
         }
     }

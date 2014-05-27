@@ -14,7 +14,10 @@ namespace libWatcherDialog.PropertyItem.Logger
     public class ThreadLog : Log
     {
         private static readonly uint MessageMaxLength = 46;
-        public DebugStackFrames StackList { get; private set; }
+        public DebugStackFrames StackList { 
+            get; 
+            set; 
+        }
         public DebugStackFrame Stack { get; private set; }
         public List<MemoryInfo> Locals
         {
