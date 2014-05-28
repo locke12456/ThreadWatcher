@@ -47,7 +47,7 @@ namespace libWatcherDialog.DebugScriptEngine.Property
         public SourceFileInfo(Dictionary<string, object> json)
             : base(json)
         {
-
+           // type = "";
         }
         private void _try_get_code_information()
         {

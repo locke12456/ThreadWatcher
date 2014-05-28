@@ -34,6 +34,7 @@ namespace libWatcherDialog.PropertyItem.DebugScript
             item.BreakpointInfo = info.BreakpointInfo;
             item.Conditions = info.Conditions;
             item.VirtualVariables = info.VirtualVariables;
+            item.Target = info.Target;
             return item;
         }
     }

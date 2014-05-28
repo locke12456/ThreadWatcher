@@ -75,7 +75,7 @@ namespace libWatcherDialogTest
         {
             DebugScriptEngine target = DebugScriptEngine.getInstance(); // TODO: Initialize to an appropriate value
             // string filename = "..\\..\\Test file\\Scripts\\breakpoint_info.js"; 
-            string filename = search.GetFile("breakpoint_info.js").FullName;// TODO: Initialize to an appropriate value
+            string filename = search.GetFile("list.js").FullName;// TODO: Initialize to an appropriate value
             object actual;
             actual = target.RunScript(filename);
             DebugScriptItem info = (actual as BreakpointRule).GenerateScriptItem();

@@ -16,7 +16,8 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
             get;
             protected set;
         }
-        public List<Condition> Conditions
+        
+        public Condition Conditions
         {
             get;
             protected set;
@@ -25,6 +26,11 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
         {
             get;
             protected set;
+        }
+        public WatchTarget Target
+        {
+            get;
+            set;
         }
 
         public BreakpointRule BreakPointInfo(object info) 
@@ -40,10 +46,14 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
             DebugScriptsManagement.getInstance().AddItem(item);
             return item;
         }
+        public void SetWatchTarget(object target) 
+        {
+            Target = new WatchTarget(target as Dictionary<string, object>);
+        }
         public void AddCondition(object condition) 
         {
             Debug.Assert(condition is string);
-            Conditions.Add(new Condition(condition));
+            Conditions = (new Condition(condition));
         }
         public void AddVirtualVariable(object variable_info)
         {
@@ -51,7 +61,7 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
         }
         protected void _init_lists ()
         {
-            Conditions = new List<Condition>();
+            Conditions = new Condition();
             VirtualVariables = new List<VirtualVariable>();
         }
     }

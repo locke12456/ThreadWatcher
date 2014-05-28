@@ -22,6 +22,11 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         public MemoryData Datas {
             get { return _memoryDatas; }
         }
+        public int WatchpointCount
+        {
+            get;
+            private set;
+        }
         public static BreakpointsManagement getInstance()
         {
             if (_this == null) _this = new BreakpointsManagement();
@@ -38,6 +43,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         public void AddMemoryData(DataBreakpointListItem data) 
         {
             _memoryDatas.Add(data);
+            //WatchpointCount++;
         }
         public void RemoveMemoryData(DataBreakpointListItem data)
         {

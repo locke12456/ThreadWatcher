@@ -15,6 +15,7 @@ namespace libWatcherDialog.CombineRules
     public class BreakpointTriggerFromAPI : CombineRules, IBreakPoint
     {
         public virtual DebugBreakpoint Breakpoint { get; set; }
+        public virtual string Watchtarget { get; set; }
         public virtual IDebuggerMemory Data { get; set; }
         protected enum APITypes
         {
@@ -24,6 +25,7 @@ namespace libWatcherDialog.CombineRules
         public BreakpointTriggerFromAPI()
         {
             Data = null;
+            Watchtarget = "";
             _rules = new List<WatcherRule>() {
                  LastRule
             };
@@ -89,11 +91,16 @@ namespace libWatcherDialog.CombineRules
             return size;
         }
 
-        private static HeapMemory _create_memory_data(IDebuggerMemory data, IDebuggerMemory size)
+        protected HeapMemory _create_memory_data(IDebuggerMemory data, IDebuggerMemory size)
         {
-            HeapMemory memoory_addr = new HeapMemory();
-            memoory_addr.Variable = data.Value;
+            HeapMemory memoory_addr = _create_memdata(data);
             _set_size(size, memoory_addr);
+            return memoory_addr;
+        }
+
+        protected HeapMemory _create_memdata( IDebuggerMemory data )
+        {
+            HeapMemory memoory_addr = new HeapMemory(data);
             return memoory_addr;
         }
 

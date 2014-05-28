@@ -13,8 +13,8 @@ namespace libWatherDebugger.Memory
     {
         private IDebugThread2 _thread;
         private Watcher.Debugger.Debugger _dte;
-        private IDebugThread2 Thread { get { return (Parent as MemoryInfo)._thread; } }
-        private IDebuggerMemory Parent { get; set; }
+        private IDebugThread2 Thread { get { return Parent._thread; } }
+        private MemoryInfo Parent { get; set; }
         public string Address { get; set; }
         public string Type { get; set; }
         public string ThreadInfo { get; set; }
@@ -33,7 +33,7 @@ namespace libWatherDebugger.Memory
                 return IsRoot ? IsPointer : Parent.IsPointer;
             }
         }
-        public bool IsPointer
+        protected bool IsPointer
         {
             get
             {
@@ -44,16 +44,32 @@ namespace libWatherDebugger.Memory
         {
             get
             {
-                return IsPointer && (Address == "0xcccccc" || Address == "0x00000000");
+                try
+                {
+                    return IsPointer && (Address == "0xcccccc" || Address == "0x00000000");
+                }
+                catch (Exception fail) 
+                {
+                    Debug.WriteLine(fail.Message);
+                    return true;
+                }
             }
         }
-        private string AddressQuery
+        public string AddressQuery
         {
             get
             {
-                MemoryInfo parent = Parent as MemoryInfo;
-                string addrq = _addressQuery;
-                return ( IsPointer ? ( IsRootIsPointer ? "" : "&" ) : "&") + addrq;
+                try
+                {
+                    MemoryInfo parent = Parent as MemoryInfo;
+                    string addrq = _addressQuery;
+                    return (IsPointer ? (IsRootIsPointer ? "" : "&") : "&") + addrq;
+                }
+                catch (Exception fail) {
+
+                    Debug.WriteLine(fail.Message);
+                    return "";
+                }
             }
         }
         private string _addressQuery
@@ -65,7 +81,7 @@ namespace libWatherDebugger.Memory
                 return addrq + Variable;
             }
         }
-        public List<IDebuggerMemory> Members { get; private set; }
+        public List<IDebuggerMemory> Members { get; set; }
 
         public MemoryInfo()
         {

@@ -19,6 +19,10 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         {
             return _datas.Where(item => !item.MemoryAddressInfo.InWatchList).ToList();
         }
+        public List<DataBreakpointListItem> GetWatchingList()
+        {
+            return _datas.Where(item => item.MemoryAddressInfo.InWatchList).ToList();
+        }
         public bool Find( string address) 
         {
             return _dataInList(address) != null;

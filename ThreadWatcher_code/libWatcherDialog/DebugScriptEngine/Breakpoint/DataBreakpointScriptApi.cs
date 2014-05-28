@@ -8,6 +8,7 @@ namespace libWatcherDialog.DebugScriptEngine.Breakpoint
 {
     public class DataBreakpointScriptApi : BreakpointRule
     {
+        
         public DataBreakpointScriptApi() 
         {
             _init_lists();

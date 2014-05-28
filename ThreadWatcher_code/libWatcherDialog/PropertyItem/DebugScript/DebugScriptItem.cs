@@ -53,12 +53,17 @@ namespace libWatcherDialog.PropertyItem.DebugScript
             get;
             set;
         }
-        public List<Condition> Conditions
+        public Condition Conditions
         {
             get;
             set;
         }
         public List<VirtualVariable> VirtualVariables
+        {
+            get;
+            set;
+        }
+        public WatchTarget Target
         {
             get;
             set;

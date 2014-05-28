@@ -169,7 +169,8 @@ namespace libWatcherDialog
             {
                 _breakpoints.ConcernedTarget = script;
             }
-            else {
+            else
+            {
                 if (_breakpoints.ConcernedTarget != null)
                 {
                     _do_script_modify();
@@ -177,7 +178,7 @@ namespace libWatcherDialog
                 else
                     _continue_debugging();
             }
-            
+
             return true;
 
         }
@@ -203,7 +204,7 @@ namespace libWatcherDialog
                 _try_set_add_target(mode);
                 mode.Run();
             }
-            else 
+            else
                 return false;
             return true;
         }
@@ -243,16 +244,16 @@ namespace libWatcherDialog
 
         private void _create_modes()
         {
-            _addDataToList = new AddDataBreakpointToList();
             try
             {
+                _addDataToList = new AddDataBreakpointToList();
                 _addDataFormScript = new AddDataBreakpointFormScript();
+                _removeData = new RemoveDataBreakPointFromAPI();
             }
-            catch (Exception fail) 
+            catch (Exception fail)
             {
                 System.Diagnostics.Debug.WriteLine(fail.Message);
             }
-            _removeData = new RemoveDataBreakPointFromAPI();
         }
 
         protected override void _initContextMenu()
@@ -288,8 +289,9 @@ namespace libWatcherDialog
         {
             //FileInfo file = new FileInfo(_breakpoint.FileName);
             Func<bool> mode;
-            if (_modes.TryGetValue(Mode,out mode)) {
-                mode();                
+            if (_modes.TryGetValue(Mode, out mode))
+            {
+                mode();
             }
 
             return true;

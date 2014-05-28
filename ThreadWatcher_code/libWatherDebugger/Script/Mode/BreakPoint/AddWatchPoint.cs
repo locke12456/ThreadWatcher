@@ -39,17 +39,15 @@ namespace libWatherDebugger.Script.Mode.BreakPoint
             Breakpoint3 bp;
             EnvDTE90a.Debugger4 dbg = _dbg as Debugger4;
             Breakpoints bps = dbg.Breakpoints.Add("", "", 0, 0, Condition , EnvDTE.dbgBreakpointConditionType.dbgBreakpointConditionTypeWhenTrue, "C++", Data, 4);
-            //string data = Data.Replace("0x", "").ToUpper();
-            //foreach (var bp_c in bps)
-            //{
-            //    bp = bp_c as Breakpoint3;
-            //    if (bp.Name.IndexOf(data) != -1)
-            //    {
-            //        Breakpoint = bp;
-            //        bp.BreakWhenHit = false;
-            //        bp.Message = Data;
-            //    }
-            //}
+            string data = Data.Replace("0x", "").ToUpper();
+            foreach (var bp_c in bps)
+            {
+                bp = bp_c as Breakpoint3;
+                if (bp.Name.IndexOf(data) != -1)
+                {
+                    Breakpoint = bp;
+                }
+            }
             return true;
         }
     }

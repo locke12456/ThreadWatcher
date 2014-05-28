@@ -56,7 +56,9 @@ namespace libWatcherDialog.CombineRules
         protected virtual void _init_rulelist()
         {
             _addToList = new AddHeapMemoryData();
+            _addDataBreakpoint = new AddDataBreakPoint();
             _addToList.RuleCompleted += _addToList_RuleCompleted;
+            _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
             _rules = new List<WatcherRule>() {
                 _addToList , _addDataBreakpoint, new Continue() , LastRule
             };
@@ -74,25 +76,47 @@ namespace libWatcherDialog.CombineRules
         }
         protected virtual void _addToList_RuleCompleted(object sender, RuleEventArgs e)
         {
-            
             BreakpointsManagement bps = BreakpointsManagement.getInstance();
-            _addDataBreakpoint = new AddDataBreakPoint();
-            _addDataBreakpoint.Type = "";
-            _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
+            _addDataBreakpoint.Watchtarget = bps.ConcernedTarget.Target.name;
+            _addDataBreakpoint.WatchtargetIsPoniter = bps.ConcernedTarget.Target.IsPointer;
+            _addDataBreakpoint.Type = bps.ConcernedTarget.BreakpointInfo.type;
             _addDataBreakpoint.Data = _addToList.Data;
             //DebugScript.FinishSync();
         }
         protected virtual void _addDataBreakpoint_RuleCompleted(object sender, RuleEventArgs e)
         {
-            HeapMemory memory = _addDataBreakpoint.Data as HeapMemory;
-            memory.InWatchList = true;
+            AddDataBreakPoint data = sender as AddDataBreakPoint;
+            BreakpointsManagement bps = BreakpointsManagement.getInstance();
+            foreach (var mem in data.Breakpoints)
+            {
+                HeapMemory memory = mem.Key as HeapMemory;
+                _add_to_list(bps, memory);
+               _add_breakpoint_item(bps, mem, memory);
+            }
+            //DebugScript.FinishSync();
+        }
+
+        private void _add_breakpoint_item(BreakpointsManagement bps, KeyValuePair<IDebuggerMemory, DebugBreakpoint> mem, HeapMemory memory)
+        {
+            if (!memory.InWatchList)
+            {
+                mem.Value.Information.Delete();
+                return;
+            }
             BreakpointItem bpItem = new BreakpointItem();
             bpItem.Data = memory;
-            bpItem.Breakpoint = _addDataBreakpoint.Breakpoint;
-            bpItem.Condition.Condition = BreakpointsManagement.getInstance().ConcernedTarget.Conditions[0].DebugCondition;
+            bpItem.Breakpoint = mem.Value;
+            bpItem.Condition.Condition = bps.ConcernedTarget.Conditions.DebugCondition;
             bpItem.Breakpoint.Condition = bpItem.Condition.Condition;
-            BreakpointsManagement.getInstance().AddItem(bpItem);
-            //DebugScript.FinishSync();
+            bps.AddItem(bpItem);
+        }
+
+        private static void _add_to_list(BreakpointsManagement bps, HeapMemory memory)
+        {
+            DataBreakpointListItem list_item = new DataBreakpointListItem();
+            list_item.MemoryAddressInfo = memory;
+            memory.InWatchList = bps.Datas.GetWatchingList().Count < 4;
+            bps.AddMemoryData(list_item);
         }
 
     }
