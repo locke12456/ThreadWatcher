@@ -16,7 +16,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
 {
     public class AddDataBreakPoint : BreakpointRule
     {
-        
+        public string Type { get; set; }
         public AddDataBreakPoint()
         {
             Condition = "";

@@ -29,6 +29,7 @@ namespace libWatcherDialog.GeneralRules.Mode.MemoryData
         }
         private bool _addToList()
         {
+            while (_dbg.VSDebugger.CurrentMode != EnvDTE.dbgDebugMode.dbgBreakMode) ;
             BreakpointsManagement bps = BreakpointsManagement.getInstance();
             DataBreakpointListItem item = new DataBreakpointListItem();
             item.MemoryAddressInfo = Data as HeapMemory;

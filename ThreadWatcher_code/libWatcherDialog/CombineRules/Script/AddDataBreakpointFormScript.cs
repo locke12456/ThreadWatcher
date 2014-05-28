@@ -56,9 +56,7 @@ namespace libWatcherDialog.CombineRules
         protected virtual void _init_rulelist()
         {
             _addToList = new AddHeapMemoryData();
-            _addDataBreakpoint = new AddDataBreakPoint();
             _addToList.RuleCompleted += _addToList_RuleCompleted;
-            _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
             _rules = new List<WatcherRule>() {
                 _addToList , _addDataBreakpoint, new Continue() , LastRule
             };
@@ -76,7 +74,11 @@ namespace libWatcherDialog.CombineRules
         }
         protected virtual void _addToList_RuleCompleted(object sender, RuleEventArgs e)
         {
+            
             BreakpointsManagement bps = BreakpointsManagement.getInstance();
+            _addDataBreakpoint = new AddDataBreakPoint();
+            _addDataBreakpoint.Type = "";
+            _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
             _addDataBreakpoint.Data = _addToList.Data;
             //DebugScript.FinishSync();
         }
