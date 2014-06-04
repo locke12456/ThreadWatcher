@@ -185,7 +185,7 @@ namespace Watcher.Debugger
             info.Value = variable.Value;
             info.Type = variable.Type;
             info.Address = _tryGetAddress(info.AddressQuery);
-            if (info.IsNullPointer) return info;
+            if (info.IsNullPointer()) return info;
             foreach (Expression sub in variable.DataMembers)
             {
                 MemoryInfo child = new MemoryInfo();

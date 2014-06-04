@@ -14,7 +14,7 @@ namespace libUtilities
         string Value { get; set; }
         string Size { get; set; }
         //bool IsPointer { get; }
-        bool IsNullPointer { get; }
+        bool IsNullPointer();
         List<IDebuggerMemory> Members { get;  }
     }
 }

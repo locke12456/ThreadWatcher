@@ -21,8 +21,10 @@ namespace libWatherDebugger.Memory
         public string Variable { get; set; }
         public string Value { get; set; }
         public string Size { get; set; }
-        private bool IsRoot {
-            get {
+        private bool IsRoot
+        {
+            get
+            {
                 return Parent == this;
             }
         }
@@ -40,20 +42,26 @@ namespace libWatherDebugger.Memory
                 return Type.IndexOf('*') != -1;
             }
         }
-        public bool IsNullPointer
+
+        private bool _isNullPointer
         {
             get
             {
                 try
                 {
-                    return IsPointer && (Address == "0xcccccc" || Address == "0x00000000");
+                    return IsPointer && (_is_null_pointer(Value) && _is_null_pointer(Address));
                 }
-                catch (Exception fail) 
+                catch (Exception fail)
                 {
                     Debug.WriteLine(fail.Message);
                     return true;
                 }
             }
+        }
+
+        private bool _is_null_pointer(string Address)
+        {
+            return Address != null && (Address.IndexOf("0xcccccc") > 0 || Address.IndexOf("0x00000000") > 0);
         }
         public string AddressQuery
         {
@@ -65,7 +73,8 @@ namespace libWatherDebugger.Memory
                     string addrq = _addressQuery;
                     return (IsPointer ? (IsRootIsPointer ? "" : "&") : "&") + addrq;
                 }
-                catch (Exception fail) {
+                catch (Exception fail)
+                {
 
                     Debug.WriteLine(fail.Message);
                     return "";
@@ -74,10 +83,11 @@ namespace libWatherDebugger.Memory
         }
         private string _addressQuery
         {
-            get {
+            get
+            {
                 MemoryInfo parent = Parent as MemoryInfo;
                 string addrq = "";
-                addrq = parent != this ? parent._addressQuery + (parent.IsPointer?"->":".") : "";
+                addrq = parent != this ? parent._addressQuery + (parent.IsPointer ? "->" : ".") : "";
                 return addrq + Variable;
             }
         }
@@ -88,6 +98,9 @@ namespace libWatherDebugger.Memory
             _dte = Watcher.Debugger.Debugger.getInstance();
             Members = new List<IDebuggerMemory>();
             Parent = this;
+        }
+        public bool IsNullPointer() {
+            return _isNullPointer;
         }
         public void Init(IDebugThread2 thread)
         {
@@ -102,7 +115,7 @@ namespace libWatherDebugger.Memory
         }
         public override string ToString()
         {
-            return Variable + " { "+Value+" }";
+            return Variable + " { " + Value + " }";
         }
     }
 }
