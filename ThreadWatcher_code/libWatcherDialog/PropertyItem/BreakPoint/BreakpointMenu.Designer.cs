@@ -38,6 +38,9 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.modeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripAddProperty = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,9 +68,10 @@
             this.toolStripMenuItem3,
             this.toolStripMenuItem4,
             this.toolStripSeparator1,
+            this.modeToolStripMenuItem,
             this.scriptToolStripMenuItem});
             this.ListMenu.Name = "PropertyViewMenu";
-            this.ListMenu.Size = new System.Drawing.Size(153, 148);
+            this.ListMenu.Size = new System.Drawing.Size(153, 170);
             // 
             // addToolStripMenuItem
             // 
@@ -118,6 +122,33 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // modeToolStripMenuItem
+            // 
+            this.modeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualModeToolStripMenuItem,
+            this.scriptModeToolStripMenuItem});
+            this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modeToolStripMenuItem.Text = "Mode";
+            this.modeToolStripMenuItem.DropDownOpening += new System.EventHandler(this.modeToolStripMenuItem_Click);
+            this.modeToolStripMenuItem.Click += new System.EventHandler(this.modeToolStripMenuItem_Click);
+            // 
+            // manualModeToolStripMenuItem
+            // 
+            this.manualModeToolStripMenuItem.Name = "manualModeToolStripMenuItem";
+            this.manualModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.manualModeToolStripMenuItem.Text = "Manual Mode";
+            this.manualModeToolStripMenuItem.Click += new System.EventHandler(this.manualModeToolStripMenuItem_Click);
+            // 
+            // scriptModeToolStripMenuItem
+            // 
+            this.scriptModeToolStripMenuItem.Checked = true;
+            this.scriptModeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scriptModeToolStripMenuItem.Name = "scriptModeToolStripMenuItem";
+            this.scriptModeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.scriptModeToolStripMenuItem.Text = "Script Mode";
+            this.scriptModeToolStripMenuItem.Click += new System.EventHandler(this.scriptModeToolStripMenuItem_Click);
             // 
             // scriptToolStripMenuItem
             // 
@@ -216,9 +247,10 @@
             // 
             // BreakpointMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "BreakpointMenu";
+            this.Size = new System.Drawing.Size(150, 138);
             this.ListMenu.ResumeLayout(false);
             this.ItemMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -250,5 +282,8 @@
         private System.Windows.Forms.ToolStripMenuItem conditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem virtualVariableToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem modeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manualModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptModeToolStripMenuItem;
     }
 }

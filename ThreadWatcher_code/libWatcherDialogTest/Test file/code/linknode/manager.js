@@ -1,4 +1,5 @@
-﻿var file = { name: "linknode.cpp", line: 30, type: "ListPointer" };
+﻿var file = { filename: "linknode.cpp", line: 35, type: "List" };
 var variable = addWatchponitFormAPi.BreakPointInfo(file);
-variable.AddCondition("manager != nullptr");
+variable.AddCondition("_list != nullptr");
+variable.SetWatchTarget({ name: "head", type: "variable" });
 var result = variable;

@@ -136,17 +136,12 @@ namespace libWatcherDialog
         protected AddDataBreakpointFormScript _addDataFormScript;
         protected AddDataBreakpointToList _addDataToList;
         protected RemoveDataBreakPointFromAPI _removeData;
-        public BreakPointsModes Mode
-        {
-            get
-            {
-                return BreakPointsModes.Script;
-            }
-        }
+        
         public BreakPointsRef()
             : base()
         {
             _management = _breakpoints;
+            _breakpoints.Mode = BreakPointsModes.Script;
             _create_modes();
             _init_events();
             _init_modes();
@@ -168,6 +163,7 @@ namespace libWatcherDialog
             if (script != null)
             {
                 _breakpoints.ConcernedTarget = script;
+                _continue_debugging();
             }
             else
             {
@@ -289,7 +285,7 @@ namespace libWatcherDialog
         {
             //FileInfo file = new FileInfo(_breakpoint.FileName);
             Func<bool> mode;
-            if (_modes.TryGetValue(Mode, out mode))
+            if (_modes.TryGetValue( _breakpoints.Mode, out mode))
             {
                 mode();
             }

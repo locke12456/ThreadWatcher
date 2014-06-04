@@ -15,8 +15,10 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
 {
     public partial class BreakpointMenu : PropertyDialogMenu
     {
+        protected BreakpointsManagement _breakpoints = BreakpointsManagement.getInstance();
         private DebugScripts _scriptDialog;
-        public BreakpointMenu() : base()
+        public BreakpointMenu()
+            : base()
         {
             InitializeComponent();
             Disposed += BreakpointMenu_Disposed;
@@ -53,6 +55,38 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
             }
             else _scriptDialog.Visible = true;
         }
-        
+
+        private void modeToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            Dictionary<BreakPointsModes, bool[]> modes = new Dictionary<BreakPointsModes, bool[]>() 
+            {   
+                { BreakPointsModes.Manual , new bool[]{true , false}},
+                { BreakPointsModes.Script , new bool[]{false , true}}
+            };
+            List<ToolStripMenuItem> menus = new List<ToolStripMenuItem>() { manualModeToolStripMenuItem, scriptModeToolStripMenuItem };
+            bool[] mode_value;
+            if (modes.TryGetValue(_breakpoints.Mode, out mode_value))
+            {
+                foreach (var value in mode_value.Select((val2, idx2) => new { Index = idx2, Value = val2 }))
+                {
+                    if (menus[value.Index] != null)
+                    {
+                        menus[value.Index].Checked = value.Value;
+                        menus[value.Index].Enabled = !value.Value;
+                    }
+                }
+            }
+        }
+
+        private void manualModeToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            _breakpoints.Mode = BreakPointsModes.Manual;
+        }
+
+        private void scriptModeToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            _breakpoints.Mode = BreakPointsModes.Script;
+        }
+
     }
 }

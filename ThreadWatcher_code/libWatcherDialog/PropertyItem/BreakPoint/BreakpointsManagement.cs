@@ -12,6 +12,11 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
     public class BreakpointsManagement : ItemsManagement<BreakpointItem>
     {
         protected static BreakpointsManagement _this;
+        public BreakPointsModes Mode
+        {
+            get;
+            set;
+        }
         public DebugScriptItem ConcernedTarget
         {
             get;
