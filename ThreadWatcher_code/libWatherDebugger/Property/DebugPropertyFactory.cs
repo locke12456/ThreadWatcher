@@ -34,6 +34,7 @@ namespace libWatherDebugger.Property
         protected override int _initFactory()
         {
             int result = VSConstants.S_FALSE;
+            _productList = new List<DebugProperty>();
             // Get a context for evaluating expressions.
             
             if (VSConstants.S_OK != _stack.GetExpressionContext(out _expressionContext))
@@ -66,6 +67,7 @@ namespace libWatherDebugger.Property
         protected DebugProperty _createProduct()
         {
             DebugProperty property = new DebugProperty();
+            property.Property = _debugProperty;
             property.Expression = _expression;
             property.ExpressionContext = _expressionContext;
            // property.DataSize = Convert.ToUInt32( _materials );

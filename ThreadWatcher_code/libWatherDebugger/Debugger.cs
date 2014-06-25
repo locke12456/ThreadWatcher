@@ -142,7 +142,10 @@ namespace Watcher.Debugger
             _debugthread = factory.Product;
             return _update_stack_info(_debugthread);
         }
-        
+        public void TryQuery(string expression) 
+        {
+            _query(expression);
+        }
         public IDebuggerMemory Query(string name, IDebugThread2 thread)
         {
             if (VSConstants.S_OK == InitStackFrame(thread))
@@ -163,10 +166,15 @@ namespace Watcher.Debugger
         public IDebuggerMemory QueryAddress(string name )
         {
 
-            EnvDTE.Expression variable = _that.GetExpression(name, true, 100);
+            EnvDTE.Expression variable = _query(name);
             MemoryInfo info = new MemoryInfo();
             info = _buildMemoryInfo(variable, info , false) as MemoryInfo;
             return info;
+        }
+
+        private Expression _query(string name)
+        {
+            return _that.GetExpression(name, true, 100);
         }
         public Dictionary<string, IDebuggerMemory> Locals(DebugStackFrame stack)
         {

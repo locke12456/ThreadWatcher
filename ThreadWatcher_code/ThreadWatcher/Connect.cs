@@ -22,6 +22,7 @@ using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Logger;
 using libWatcherDialog.PropertyItem.BreakPoint;
 using libWatcherDialog.PropertyItem.DebugScript;
+using libWatherDebugger.WatchAPI.Control;
 namespace ThreadWatcher
 {
     /// <summary>用於實作增益集的物件。</summary>
@@ -164,6 +165,8 @@ namespace ThreadWatcher
                         //
                         _dbg.InitStackFrame(thread);
                         DebugStackFrame stack = _dbg.CurrentStackFrame as DebugStackFrame;
+                        SetWatchMalloc set = new SetWatchMalloc(stack);
+                        set.Enable();
                         _dbg.Locals(stack);
                         DebugBreakpointFactory bpFactory = new DebugBreakpointFactory(pEvent as IDebugBreakpointEvent2);
                         bpFactory.CreateProduct();

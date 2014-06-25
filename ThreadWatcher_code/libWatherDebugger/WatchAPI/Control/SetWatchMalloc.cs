@@ -1,5 +1,6 @@
 ﻿using libWatherDebugger.Memory;
 using libWatherDebugger.Property;
+using libWatherDebugger.Script;
 using libWatherDebugger.Stack;
 using Microsoft.VisualStudio;
 using System;
@@ -12,23 +13,21 @@ namespace libWatherDebugger.WatchAPI.Control
 {
     public class SetWatchMalloc
     {
-        public SetWatchMalloc(DebugStackFrame stack) 
+        private DebugStackFrame _stack;
+        public SetWatchMalloc(DebugStackFrame stack)
         {
-            DebugPropertyFactory factory = new DebugPropertyFactory(stack);
-
-            if (VSConstants.S_OK != factory.CreateProduct("____watch_malloc_active")) return;
-
-            DebugProperty property = factory.ProductList[0] as DebugProperty;
-
-            property.DataSize = 4;
+            _stack = stack;
         }
         public void Enable()
         {
-        
+            SetMallocActiveEnable enable = new SetMallocActiveEnable(_stack);
+            enable.RunRules();
+            DebugScript.WaitSync();
+            return;
         }
-        public void Disable() 
+        public void Disable()
         {
-        
+
         }
     }
 }

@@ -34,6 +34,17 @@ namespace libWatherDebugger.Property
             return _readMemoeyValue( _memoryContext , _memoryBytes , DataSize );
 
         }
+        public bool SetData(Byte[] data) 
+        {
+            // Get memory context for the property.
+            if (VSConstants.S_OK != _init())
+            {
+                // In practice, this is where it seems to fail if you enter an invalid expression.
+                return false;
+            }
+            // Get memory bytes .
+            return VSConstants.S_OK != _writeMemoeyValue(_memoryContext , _memoryBytes, data);
+        }
         private int _init() 
         {
             int result = VSConstants.S_FALSE;
@@ -62,6 +73,11 @@ namespace libWatherDebugger.Property
             uint unreadable = 0;
             int hr = memoryBytes.ReadAt(memoryContext, dataSize, data, out writtenBytes, ref unreadable);
             return VSConstants.S_OK != hr ? null : data;
+        }
+        private int _writeMemoeyValue(IDebugMemoryContext2 memoryContext, IDebugMemoryBytes2 memoryBytes,  byte[] data)
+        {
+            int hr = memoryBytes.WriteAt(memoryContext, DataSize , data);
+            return hr;
         }
     }
 }
