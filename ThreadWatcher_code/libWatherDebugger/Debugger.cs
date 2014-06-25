@@ -160,6 +160,14 @@ namespace Watcher.Debugger
             info = _buildMemoryInfo(variable, info) as MemoryInfo;
             return info;
         }
+        public IDebuggerMemory QueryAddress(string name )
+        {
+
+            EnvDTE.Expression variable = _that.GetExpression(name, true, 100);
+            MemoryInfo info = new MemoryInfo();
+            info = _buildMemoryInfo(variable, info , false) as MemoryInfo;
+            return info;
+        }
         public Dictionary<string, IDebuggerMemory> Locals(DebugStackFrame stack)
         {
             MemoryInfoFactory factory = new MemoryInfoFactory(stack);
@@ -179,13 +187,13 @@ namespace Watcher.Debugger
             //info = _buildMemoryInfo(variable, info) as MemoryInfo;
             return info;
         }
-        private IDebuggerMemory _buildMemoryInfo(EnvDTE.Expression variable, MemoryInfo info)
+        private IDebuggerMemory _buildMemoryInfo(EnvDTE.Expression variable, MemoryInfo info , bool recursive = true)
         {
             info.Variable = variable.Name;
             info.Value = variable.Value;
             info.Type = variable.Type;
             info.Address = _tryGetAddress(info.AddressQuery);
-            if (info.IsNullPointer()) return info;
+            if ( !recursive || info.IsNullPointer()) return info;
             foreach (Expression sub in variable.DataMembers)
             {
                 MemoryInfo child = new MemoryInfo();

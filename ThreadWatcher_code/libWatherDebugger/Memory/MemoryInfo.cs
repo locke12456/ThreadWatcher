@@ -61,7 +61,7 @@ namespace libWatherDebugger.Memory
 
         private bool _is_null_pointer(string Address)
         {
-            return Address != null && (Address.IndexOf("0xcccccc") > 0 || Address.IndexOf("0x00000000") > 0);
+            return Address != null && (Address.IndexOf("0xcccccccc") > 0 || Address.IndexOf("0xcdcdcdcd") > 0 || Address.IndexOf("0x00000000") > 0);
         }
         public string AddressQuery
         {

@@ -37,7 +37,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
             double dataSize = Math.Ceiling(data_size / type_size);
             string address = Data.Variable.Replace("0x", "");
             long addr = _set_watchtarget(address);// Convert.ToInt64(address);
-            _initRuleList(addr, (int)dataSize, (int)type_size);
+            _initRuleList(addr, 1, 0);
         }
 
         private long _set_watchtarget(string address)
@@ -48,7 +48,7 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
                 //&(*((ListPointer *)0x005348b0)).Current
                 string type = WatchtargetIsPoniter ? "" : "&";
                 string query_string = type + "(*((" + Type + " *)0x" + address + "))." + Watchtarget + "";
-                info = _dbg.Query(query_string);
+                info = _dbg.QueryAddress(query_string);
                 address = info.Address.Replace("0x", "");
             }
             long addr = Int64.Parse(address, System.Globalization.NumberStyles.HexNumber);
@@ -80,8 +80,9 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
             DebugBreakpoint Breakpoint = new DebugBreakpoint();
             if (Type != "")
             {
-                info = new HeapMemory(_dbg.Query("(" + Type + " *)" + bp.Data));
-                info.Variable = info.Variable.Replace("(" + Type + " *)", "");
+                info = new HeapMemory();
+                info.Variable = info.Address = bp.Data;
+                // info.Variable.Replace("(" + Type + " *)", "");
             }
             if (info != null)
                 Breakpoints.Add(info, Breakpoint);
