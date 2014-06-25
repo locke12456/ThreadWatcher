@@ -122,8 +122,8 @@ namespace ThreadWatcher
             {
                 breakpoints = new BreakPoints();
                 threads = new libWatcherDialog.Threads();
-                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 7, 1);
-                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 12, 1);
+                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 7, 1, "____watch_malloc_active");
+                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 12, 1, "____watch_free_active");
                 //DebugScriptItem item;
                 //item = new DebugScriptItem();
                 //item.BreakpointInfo = new libWatcherDialog.DebugScriptEngine.Property.SourceFileInfo();

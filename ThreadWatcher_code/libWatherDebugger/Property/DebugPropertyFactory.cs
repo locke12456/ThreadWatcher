@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio;
+﻿using libWatherDebugger.Stack;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,9 @@ namespace libWatherDebugger.Property
         private IDebugExpression2 _expression;
         private IDebugProperty2 _debugProperty;
         private string _queryString;
+        public DebugPropertyFactory(DebugStackFrame stack) {
+            _stack = stack.Stack;
+        }
         public DebugPropertyFactory(IDebugStackFrame2 stack) {
             _stack = stack;
         }
