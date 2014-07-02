@@ -12,6 +12,7 @@ using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
 using libWatherDebugger.Stack;
 using libWatherDebugger.Thread;
+using libWatherDebugger.WatchAPI.Control;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,6 +163,7 @@ namespace libWatcherDialog
             DebugScriptItem script = _scripts.GetItem(_breakpoint);
             if (script != null)
             {
+                _malloc_enable();
                 _breakpoints.ConcernedTarget = script;
                 _continue_debugging();
             }
@@ -177,6 +179,18 @@ namespace libWatcherDialog
 
             return true;
 
+        }
+
+        private static void _malloc_disable()
+        {
+            SetWatchMalloc malloc = new SetWatchMalloc();
+            malloc.Disable();
+        }
+
+        private static void _malloc_enable()
+        {
+            SetWatchMalloc malloc = new SetWatchMalloc();
+            malloc.Enable();
         }
 
         private void _do_script_modify()

@@ -1,58 +1,31 @@
-﻿using libWatherDebugger.Property;
-using libWatherDebugger.Script;
-using libWatherDebugger.Stack;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Debugger.Interop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
+using EnvDTE;
+using EnvDTE90a;
+using libWatcher.Constants;
+using System.IO;
 namespace libWatherDebugger.WatchAPI.Control
 {
-    public class SetWatchMallocDisable : DebugScript
+    public class SetWatchMallocDisable : WatchAPISetting
     {
-        public override event DebugScript.EventHandler ASyncCompleteEvent;
-        private DebugStackFrame _stack;
-        private DebugProperty _property;
-        public SetWatchMallocDisable(DebugStackFrame stack) 
+        public SetWatchMallocDisable() 
         {
-            _stack = stack;
             Mode = EnvDTE.dbgDebugMode.dbgBreakMode;
         }
-        public override Type ASyncEventType
+        protected override void _setting(Watcher.Debugger.Debugger dbg)
         {
-            get
+            //dbg.TryQuery("____watch_malloc_active = false");
+            Breakpoints bps = dbg.VSDebugger.Breakpoints;
+
+            foreach (Breakpoint3 bp in bps)
             {
-                return typeof(IDebugBreakpointEvent2);
+                FileInfo file = new FileInfo(bp.File);
+                if (file.Name == APICppFiles.APIFileName)
+                    if (bp.FileLine == APICppFiles.MemoryAllocLine)
+                    {
+                        bp.Delete();
+                        break;
+                    }
             }
-        }
-        protected override bool _tyrToControl()
-        {
-            while (_dbg.CurrentMode != EnvDTE.dbgDebugMode.dbgBreakMode);
-
-            if (!_init_property()) return true;
-
-            Byte[] data = {0,0,0,1};
-            _property.SetData(data);
-            
-            if (DebugScript.HasASyncScript())
-                DebugScript.FinishSync();
-
-            return true;
-        }
-        private bool _init_property()
-        {
-            DebugPropertyFactory factory = new DebugPropertyFactory(_stack);
-
-            if (VSConstants.S_OK != factory.CreateProduct("____watch_malloc_active")) return false;
-
-            _property = factory.ProductList[0] as DebugProperty;
-
-            _property.DataSize = 4;
-
-            return true;
         }
     }
 }

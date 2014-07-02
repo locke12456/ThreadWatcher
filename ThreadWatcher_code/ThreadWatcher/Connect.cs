@@ -15,14 +15,12 @@ using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Stack;
 using libWatcherDialog;
 using libWatherDebugger.Thread;
-using libWatcherDialog.PropertyItem.Thread;
 using libWatherDebugger.Message;
 using libWatherDebugger.Script;
 using libWatcherDialog.PropertyItem.Log;
 using libWatcherDialog.PropertyItem.Logger;
 using libWatcherDialog.PropertyItem.BreakPoint;
-using libWatcherDialog.PropertyItem.DebugScript;
-using libWatherDebugger.WatchAPI.Control;
+using libWatcher.Constants;
 namespace ThreadWatcher
 {
     /// <summary>用於實作增益集的物件。</summary>
@@ -123,8 +121,8 @@ namespace ThreadWatcher
             {
                 breakpoints = new BreakPoints();
                 threads = new libWatcherDialog.Threads();
-                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 7, 1, "____watch_malloc_active");
-                _dte.Debugger.Breakpoints.Add("", "____watch_alloc.cpp", 12, 1, "____watch_free_active");
+                //_dte.Debugger.Breakpoints.Add("", APICppFiles.APIFileName, APICppFiles.MemoryAllocLine, 1,"____watch_malloc_active");
+                //_dte.Debugger.Breakpoints.Add("", APICppFiles.APIFileName, APICppFiles.MemoryFreeLine, 1, "____watch_free_active");
                 //DebugScriptItem item;
                 //item = new DebugScriptItem();
                 //item.BreakpointInfo = new libWatcherDialog.DebugScriptEngine.Property.SourceFileInfo();
@@ -165,8 +163,6 @@ namespace ThreadWatcher
                         //
                         _dbg.InitStackFrame(thread);
                         DebugStackFrame stack = _dbg.CurrentStackFrame as DebugStackFrame;
-                        SetWatchMalloc set = new SetWatchMalloc(stack);
-                        set.Enable();
                         _dbg.Locals(stack);
                         DebugBreakpointFactory bpFactory = new DebugBreakpointFactory(pEvent as IDebugBreakpointEvent2);
                         bpFactory.CreateProduct();

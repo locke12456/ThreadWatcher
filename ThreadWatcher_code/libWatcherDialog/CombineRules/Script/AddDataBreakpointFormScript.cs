@@ -7,6 +7,7 @@ using libWatherDebugger.Breakpoint;
 using libWatherDebugger.Memory;
 using libWatherDebugger.Script;
 using libWatherDebugger.Stack;
+using libWatherDebugger.WatchAPI.Control;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,8 +60,10 @@ namespace libWatcherDialog.CombineRules
             _addDataBreakpoint = new AddDataBreakPoint();
             _addToList.RuleCompleted += _addToList_RuleCompleted;
             _addDataBreakpoint.RuleCompleted += _addDataBreakpoint_RuleCompleted;
+            SetMallocActiveEnable disable = new SetMallocActiveEnable(false);
+
             _rules = new List<WatcherRule>() {
-                _addToList , _addDataBreakpoint, new Continue() , LastRule
+                _addToList , _addDataBreakpoint, disable ,new Continue() , LastRule
             };
             Data = null;
         }
