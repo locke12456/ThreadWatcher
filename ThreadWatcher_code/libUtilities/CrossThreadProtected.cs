@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Dialog
@@ -15,6 +12,16 @@ namespace Dialog
         public static string Enabled { get { return "Enabled"; } }
         public static string Disable { get { return "Disable"; } }
     }
+    #region
+    /* *
+     *   用於非同步更新 GUI 元件
+     *   usage : 
+     *      gui = new CrossThreadProtected( From ); //假設From的GUI上有一個btn的button
+     *      gui.UpdateGUI_BySetValue ( "Text" , "Click Me" , btn );
+     *   效果 ：
+     *      From.btn.Text = "Click Me";
+     * */
+    #endregion
     public class CrossThreadProtected
     {
         private ContainerControl _that;
@@ -64,21 +71,5 @@ namespace Dialog
                 methodInfo.Invoke(control, new object[] {  });
             }
         }
-        //public void UpdateGUI_ByCallMethod(string method, Object[] parmeters, Object control)
-        //{
-        //    if (_that.InvokeRequired)
-        //    {
-        //        UpdateGUI_ByCallMethodCallback ui = new UpdateGUI_ByCallMethodCallback(UpdateGUI_ByCallMethod);
-        //        _that.Invoke(ui, method, parmeters, control);
-        //    }
-        //    else
-        //    {
-        //        Type[] types = {};
-        //        foreach (Object parmeter in parmeters)
-        //            types[types.Length] = parmeter.GetType();
-        //        MethodInfo methodInfo = control.GetType().GetMethod(method, types );
-        //        methodInfo.Invoke(control, parmeters);
-        //    }
-        //}
     }
 }

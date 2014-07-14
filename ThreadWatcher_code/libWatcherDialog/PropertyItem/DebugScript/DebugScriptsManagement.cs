@@ -39,11 +39,31 @@ namespace libWatcherDialog.PropertyItem.DebugScript
         }
         private bool _object_equal(DebugScriptItem child, object item)
         {
-            DebugBreakpoint dbp = item as DebugBreakpoint;
-            FileInfo filename = new FileInfo(dbp.FileName);
-            bool filename_eql = filename.Name == child.BreakpointInfo.filename.ToLower();
-            bool line_eql = dbp.Document.Code.StartPosition + 1 == child.BreakpointInfo.line;
+            bool filename_eql = false;
+            bool line_eql = false;
+            if (item is DebugBreakpoint)
+            {
+                DebugBreakpoint dbp = item as DebugBreakpoint;
+                _is_debug_breakpoint(child, dbp, out filename_eql, out line_eql);
+            }
+            if (item is EnvDTE.Breakpoint) {
+                EnvDTE.Breakpoint bp = item as EnvDTE.Breakpoint;
+                _is_breakpoint(child, bp, out filename_eql, out line_eql);
+            }
             return filename_eql && line_eql;
+        }
+
+        private static void _is_debug_breakpoint(DebugScriptItem child, DebugBreakpoint dbp, out bool filename_eql, out bool line_eql)
+        {
+            FileInfo filename = new FileInfo(dbp.FileName);
+            filename_eql = filename.Name == child.BreakpointInfo.filename.ToLower();
+            line_eql = dbp.Document.Code.StartPosition + 1 == child.BreakpointInfo.line;
+        }
+        private static void _is_breakpoint(DebugScriptItem child, EnvDTE.Breakpoint dbp, out bool filename_eql, out bool line_eql)
+        {
+            FileInfo filename = new FileInfo(dbp.File);
+            filename_eql = filename.Name == child.BreakpointInfo.filename.ToLower();
+            line_eql = dbp.FileLine == child.BreakpointInfo.line;
         }
         protected DebugScriptItem _findItemRule(object item)
         {

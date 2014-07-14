@@ -9,18 +9,10 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio;
 using EnvDTE80;
 using System.Threading;
-using libWatherDebugger.Memory;
 using System.Collections.Generic;
-using libWatherDebugger.Breakpoint;
-using libWatherDebugger.Stack;
 using libWatcherDialog;
-using libWatherDebugger.Thread;
-using libWatherDebugger.Message;
-using libWatherDebugger.Script;
-using libWatcherDialog.PropertyItem.Log;
-using libWatcherDialog.PropertyItem.Logger;
-using libWatcherDialog.PropertyItem.BreakPoint;
-using libWatcher.Constants;
+using ThreadWatcher.Modes;
+using ThreadWatcher.GUI;
 namespace ThreadWatcher
 {
     /// <summary>用於實作增益集的物件。</summary>
@@ -81,16 +73,8 @@ namespace ThreadWatcher
                     {
                         _dbg = Watcher.Debugger.Debugger.getInstance();
                         _dbg.Init(applicationObject.Debugger);
+                        _init_modes();
                     }
-                    //CommandBar menuBar = ((CommandBars)applicationObject.CommandBars)["MenuBar"];
-                    //CommandBarPopup toolsPopup = (CommandBarPopup)menuBar.Controls["Tools"];
-                    //cmdBarButton = (CommandBarButton)toolsPopup.Controls.Add(MsoControlType.msoControlButton, Missing.Value, Missing.Value, 1, true);
-                    //cmdBarButton.Caption = "Get StackFrame Info";
-                    //cmdBarButton.Style = MsoButtonStyle.msoButtonCaption;
-                    //cmdBarButton.Click += new _CommandBarButtonEvents_ClickEventHandler(OnCmdBarButtonClick);
-
-                    //IVsTextManager textManager = (IVsTextManager)serviceProvider.GetService(typeof(SVsTextManager));
-                    //hResult = textManager.GetRegisteredMarkerTypeID(ref currentStmtMarkerGuid, out currentStmtMarkerID);
                 }
                 catch (System.ArgumentException)
                 {
@@ -112,137 +96,27 @@ namespace ThreadWatcher
             object obj1 = this, obj2 = sender;
             Exec((sender as VariablesWatcher).QueryType, vsCommandExecOption.vsCommandExecOptionDoDefault, ref obj1, ref obj2, ref handled);
         }
+        private void _init_modes()
+        {
+            _mode = new Dictionary<Guid, IThreadWatcherMode>() 
+            {
+                { typeof(IDebugProcessCreateEvent2).GUID , new ProcessCreate() } , 
+                { typeof(IDebugBreakpointEvent2).GUID    , new ThreadWatcher.Modes.Breakpoint() } , 
+                { typeof(IDebugMessageEvent2).GUID       , new ThreadWatcher.Modes.DebugMessage() } , 
+                { typeof(IDebugProgramDestroyEvent2).GUID, new ProcessTerminated() } , 
+                { typeof(IDebugReturnValueEvent2).GUID   , new ReturnValue() } , 
+                { typeof(IDebugThreadCreateEvent2).GUID  , new ThreadCreate() } , 
+            
+            };
+        }
         public int Event(IDebugEngine2 pEngine, IDebugProcess2 pProcess, IDebugProgram2 pProgram, IDebugThread2 thread, IDebugEvent2 pEvent, ref Guid riidEvent, uint dwAttrib)
         {
-            DTE2 _dte = _applicationObject;
-            //note .trigger on program created . need to implements 
-            //pProcess.EnumThreads(IEnumDebugThreads2)
-            if (pEvent is IDebugProcessCreateEvent2)
+            IThreadWatcherMode mode;
+            Guid guid = riidEvent;
+            if (_mode.TryGetValue(guid, out mode)) 
             {
-                breakpoints = new BreakPoints();
-                threads = new libWatcherDialog.Threads();
-                //_dte.Debugger.Breakpoints.Add("", APICppFiles.APIFileName, APICppFiles.MemoryAllocLine, 1,"____watch_malloc_active");
-                //_dte.Debugger.Breakpoints.Add("", APICppFiles.APIFileName, APICppFiles.MemoryFreeLine, 1, "____watch_free_active");
-                //DebugScriptItem item;
-                //item = new DebugScriptItem();
-                //item.BreakpointInfo = new libWatcherDialog.DebugScriptEngine.Property.SourceFileInfo();
-                //item.BreakpointInfo.line = 41;
-                //item.BreakpointInfo.filename = "ConsoleApplication1.cpp";
-                //_dte.Debugger.Breakpoints.Add("", item.BreakpointInfo.filename , item.BreakpointInfo.line, 1);
-                //_dte.Debugger.Breakpoints.Add("", "dbgdel.cpp", 42, 1);
-                // Debug.WriteLine(pEvent);
-            }
-            //note .trigger on program destory . need to implements 
-            if (pEvent is IDebugProgramDestroyEvent2)
-            {
-                List<Breakpoint> bps = new List<Breakpoint>();
-                foreach (Breakpoint bp in _dte.Debugger.Breakpoints)
-                {
-                    //if (bp.File != "")
-                    //{
-                    //    FileInfo file = new FileInfo(bp.File);
-                    //    if (file.Name == "____watch_alloc.cpp") bps.Add(bp);
-                    //}
-                    bps.Add(bp);
-                }
-                foreach (Breakpoint bp in bps)
-                    bp.Delete();
-                breakpoints.Close();
-                threads.Close();
-            }
-            if (pEvent is IDebugBreakpointEvent2)
-            {
-                try
-                {
-                    if (thread != null)
-                    {
-                        //if (DebugScript.HasASyncScript()) 
-                        //    DebugScript.WaitSync();
-                        //lock
-                        //DebugScript.RegisterASyncEvent(DebugScript.ASyncEvent);
-                        //
-                        _dbg.InitStackFrame(thread);
-                        DebugStackFrame stack = _dbg.CurrentStackFrame as DebugStackFrame;
-                        _dbg.Locals(stack);
-                        DebugBreakpointFactory bpFactory = new DebugBreakpointFactory(pEvent as IDebugBreakpointEvent2);
-                        bpFactory.CreateProduct();
-                        DebugBreakpoint breakpoint = bpFactory.Product as DebugBreakpoint;
-                        breakpoints.BreakPointTriggered(breakpoint);
-                        //unlock
-                        //DebugScript.FinishSync();
-                        //
-                    }
-                    return 1;
-                }
-                catch (Exception fail)
-                {
-                    Debug.WriteLine(fail.Message);
-                }
-            }
-            if (pEvent is IDebugThreadCreateEvent2)
-            {
-                if (thread != null)
-                {
-                    DebugThreadFactory factory = new DebugThreadFactory(thread);
-                    factory.CreateProduct(thread);
-                    //bug : need sync
-                    threads.AddThread(factory.Product as DebugThread);
-                }
-                return 1;
-            }
-            if (pEvent is IDebugMessageEvent2)
-            {
-                IDebugMessageEvent2 events = pEvent as IDebugMessageEvent2;
-                DebugMessageFactory factory = new DebugMessageFactory(events);
-                DebugThreadFactory threadfactory = new DebugThreadFactory(thread);
-                //factory.CreateProduct(thread);
-                //ThreadItem item = ThreadsManagement.getInstance().GetItem(thread) as ThreadItem;
-                //ThreadsManagement.getInstance().SetCurrentItem(item);
-                if (VSConstants.S_OK == factory.CreateProduct())
-                {
-                    string msg = (factory.Product as DebugMessage).Message;
-                    threadfactory.CreateProduct(thread);
-                    _dbg.InitStackFrame(threadfactory.Product);
-                    ThreadLog log = new ThreadLog();
-                    log.Name = msg;
-                    log.Key = threadfactory.Product.ID;
-                    LogManagement.getInstance().AddItem(log);
-                    BreakpointItem target = BreakpointsManagement.getInstance().GetItem(log.Name);
-                    target.HitLocations.BreakpointHit(threadfactory.Product);
-                    //item.WriteLog(msg);
-                }
-                return 1;
-            }
-            if (pEvent is IDebugReturnValueEvent2)
-            {
-                IDebugReturnValueEvent2 e = pEvent as IDebugReturnValueEvent2;
-                if (DebugScript.HasASyncScript())
-                    DebugScript.FinishSync();
-                return 1;
-            }
-
-            if (addressExpressionString == "")
-            {
-                
-               Debug.WriteLine(riidEvent);
-
-                //if(pEvent is IDebugStepCompleteEvent2)              
-                //    Debug.WriteLine("1");
-                return 1;
-            }
-            if (riidEvent == typeof(IDebugCurrentThreadChangedEvent100).GUID)
-            {
-                if (thread != null)
-                {
-
-                    Debug.WriteLine("enter event");
-                    _dbg.InitStackFrame(thread);
-                    MemoryInfo memory = _dbg.Query(addressExpressionString, thread) as MemoryInfo;
-                    //watch.LoadAddress(memory);
-                    memory.Init(thread);
-                    addressExpressionString = "";
-                }
-                //}
+                mode.Init(pEngine, pProcess, pProgram, thread, pEvent);
+                mode.Rule();
             }
             return 1;
         }
@@ -309,60 +183,21 @@ namespace ThreadWatcher
             if (executeOption == vsCommandExecOption.vsCommandExecOptionDoDefault)
             {
                 DTE2 _dte = _applicationObject;
+                GUIManagement gui = GUIManagement.getInstance();
                 if (commandName == "ThreadWatcher.Connect.ThreadWatcher")
                 {
 
-                    breakpoints.Show();
-                    threads.Show();
-                    //if (watch != null)
-                    //{
-                    //    watch.Close();
-                    //    watch.Dispose();
-                    //}
-
-                    //watch = new VariablesWatcher();
-                    //watch.AddEvent += watch_AddEvent;
-                    //watch.Show();
-
+                    gui.Breakpoints.Show();
+                    gui.Threads.Show();
                 }
-                if (commandName == "query")
-                {
-                    try
-                    {
-                        _dte.Debugger.Break();
-                        //watch.LoadVariable(_dbg.Query);
-                        _dte.Debugger.Go();
-                    }
-                    catch (Exception fail)
-                    {
-
-                    }
-
-
-                    return;
-                }
-                if (commandName == "address")
-                {
-
-
-                    try
-                    {
-                        addressExpressionString = watch.QueryString;
-                        _dte.Debugger.Break();
-                        _dte.Debugger.Go();
-                    }
-                    catch (Exception fail)
-                    {
-
-                    }
-                }
-
+                
             }
         }
 
         private IDebugProperty2 DebugProperty;
         private DTE2 _applicationObject;
         private AddIn _addInInstance;
+        private Dictionary<Guid, IThreadWatcherMode> _mode;
         private static AutoResetEvent sync;
         private static libWatcherDialog.Threads threads;
         private static BreakPoints breakpoints;

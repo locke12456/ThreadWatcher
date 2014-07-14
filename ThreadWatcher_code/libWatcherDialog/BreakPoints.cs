@@ -141,6 +141,7 @@ namespace libWatcherDialog
         public BreakPointsRef()
             : base()
         {
+            _breakpoints = BreakpointsManagement.getInstance();
             _management = _breakpoints;
             _breakpoints.Mode = BreakPointsModes.Script;
             _create_modes();
@@ -161,6 +162,7 @@ namespace libWatcherDialog
         private bool _script_mode()
         {
             DebugScriptItem script = _scripts.GetItem(_breakpoint);
+            _breakpoints = BreakpointsManagement.getInstance();
             if (script != null)
             {
                 _malloc_enable();
@@ -244,7 +246,7 @@ namespace libWatcherDialog
 
         private void _init_events()
         {
-            //removemode.RuleCompleted += removemode_RuleCompleted;
+            _breakpoints = BreakpointsManagement.getInstance();
             _breakpoints.PropertyAdded += _breakpoints_PropertyAdded;
             _breakpoints.PropertyRemoved += _breakpoints_PropertyRemoved;
             _breakpoints.PropertyChanged += _breakpoints_PropertyChanged;
@@ -297,7 +299,7 @@ namespace libWatcherDialog
 
         private bool _code_breakpoint()
         {
-            //FileInfo file = new FileInfo(_breakpoint.FileName);
+            _breakpoints = BreakpointsManagement.getInstance();
             Func<bool> mode;
             if (_modes.TryGetValue( _breakpoints.Mode, out mode))
             {
@@ -309,6 +311,7 @@ namespace libWatcherDialog
 
         private void _addDataFormScript_RuleCompleted(object sender, RuleEventArgs e)
         {
+            _breakpoints = BreakpointsManagement.getInstance();
             _breakpoints.ConcernedTarget = null;
         }
 
@@ -333,6 +336,7 @@ namespace libWatcherDialog
         private void BreakPoints_Disposed(object sender, EventArgs e)
         {
             BreakpointsManagement.Destroy();
+            DebugScriptsManagement.Destroy();
         }
 
     }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using libWatcherDialog.List;
 using libWatcherDialog.CombineRules;
 using libWatherDebugger.Memory;
+using ThreadWatcher.GUI;
 
 namespace libWatcherDialog.PropertyItem.BreakPoint
 {
@@ -50,7 +51,7 @@ namespace libWatcherDialog.PropertyItem.BreakPoint
         {
             if (_scriptDialog == null)
             {
-                _scriptDialog = new DebugScripts();
+                _scriptDialog = GUIManagement.getInstance().DebugScripts;
                 _scriptDialog.Show();
             }
             else _scriptDialog.Visible = true;

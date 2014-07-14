@@ -143,15 +143,17 @@ namespace libWatcherDialog
             // 
             // Properties
             // 
+            this.Properties.ItemHeight = 12;
             this.Properties.SelectedIndexChanged += new System.EventHandler(this.Properties_SelectedIndexChanged);
             // 
             // splitContainer2
             // 
+            this.splitContainer2.SplitterDistance = 153;
             // 
             // Threads
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(374, 302);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.ClientSize = new System.Drawing.Size(374, 279);
             this.Name = "Threads";
             this.Text = "Threads";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Threads_FormClosed);
