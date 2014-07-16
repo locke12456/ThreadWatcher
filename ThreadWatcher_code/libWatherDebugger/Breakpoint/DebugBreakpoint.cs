@@ -16,19 +16,96 @@ using Watcher.Debugger;
 
 namespace libWatherDebugger.Breakpoint
 {
+    /// <summary>
+    /// Breakpoint information item
+    /// </summary>
     public class DebugBreakpoint : IDebugItem
     {
         //private delegate void _set_condition(string val);
         private delegate void BreakTriggered(object sender, string value);
         private BreakTriggered _reset_condition_event;
         private Debugger dbg = Debugger.getInstance();
-        public DebugDocument Document { get; set; }
         private IDebugBoundBreakpoint2 _breakpoint;
         private IDebugBreakpointRequest2 _breakpointRequest;
         private IDebugBreakpointRequest3 _breakpointRequest3;
         private Dictionary<enum_BP_TYPE, string> _kinds;
         private string _condition { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DebugBreakpoint()
+        {
+            _kinds = new Dictionary<enum_BP_TYPE, string>() {
+                { enum_BP_TYPE.BPT_CODE,Types.Breakpoint },
+                { enum_BP_TYPE.BPT_DATA,Types.DataBreakpoint },
+            };
+        }
+        /// <summary>
+        /// 使用於當 type 為 DataBreakpoint 時
+        /// 
+        /// 若有設定或重設Condition，此時會註冊 _reset_condition_event  
+        /// Condition 等到 watchpoint 中斷時， Condition 才會被重設
+        /// 
+        /// 如果是第一次中斷，會將 watchpoint 設成 trace point
+        /// </summary>
+        /// <param name="bpt"></param>
+        /// <returns>true or false</returns>
+        public bool FirstBreak(DebugBreakpoint bpt)
+        {
+            if (_breakpoint != null)
+            {
+                if (_reset_condition_event != null) _reset_condition_event(this, _condition);
+                return false;
+            }
+            return _first_break(bpt);
+        }
+        /// <summary>
+        /// no used
+        /// </summary>
+        /// <returns></returns>
+        public bool Enable()
+        {
+            PendingBreakpoint.Enable(1);
+            return true;
+        }
+        /// <summary>
+        /// no used
+        /// </summary>
+        /// <returns></returns>
+        public bool Delete()
+        {
+            PendingBreakpoint.Delete();
+            return true;
+        }
+        /// <summary>
+        /// no used
+        /// </summary>
+        /// <returns></returns>
+        public bool GetRequest()
+        {
+            IDebugBreakpointRequest2 req;
+            PendingBreakpoint.GetBreakpointRequest(out req);
+            //req.GetRequestInfo(enum_BPREQI_FIELDS.BPREQI_ALLFIELDS,
+            return true;
+        }
+        /// <summary>
+        /// no used
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public bool Equals(string name)
+        {
+            name = name.Replace("0x", "").ToUpper();
+            return Information.Name.IndexOf(name) != -1;
+        }
+        /// <summary>
+        /// 中斷位置的資訊
+        /// </summary>
+        public DebugDocument Document { get; set; }
         public EnvDTE.Breakpoint Information { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public IDebugBoundBreakpoint2 Breakpoint
         {
             get { return _breakpoint; }
@@ -50,25 +127,17 @@ namespace libWatherDebugger.Breakpoint
             }
         }
 
-        private void _get_bp_req3()
-        {
-            PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
-            _breakpointRequest3 = _breakpointRequest as IDebugBreakpointRequest3;
-        }
         public IDebugPendingBreakpoint2 PendingBreakpoint { get; private set; }
         public BP_RESOLUTION_INFO BreakpointInfo { get; set; }
-        public BP_REQUEST_INFO2 RequestInfo {
-            get {
+        public BP_REQUEST_INFO2 RequestInfo
+        {
+            get
+            {
                 _check_bp_req();
                 BP_REQUEST_INFO2[] req = new BP_REQUEST_INFO2[1];
                 _breakpointRequest3.GetRequestInfo2((uint)enum_BPREQI_FIELDS.BPREQI_ALLFIELDS, req);
                 return req[0];
             }
-        }
-
-        private void _check_bp_req()
-        {
-            if (_breakpointRequest3 == null) _get_bp_req3();
         }
         public enum_BP_TYPE BreakpointType
         {
@@ -96,7 +165,8 @@ namespace libWatherDebugger.Breakpoint
         public string Name { get { return Marshal.PtrToStringBSTR(RequestInfo.bpLocation.unionmember3); } }
         public string FileName
         {
-            get {
+            get
+            {
                 return Document.FileName;
             }
         }
@@ -112,26 +182,29 @@ namespace libWatherDebugger.Breakpoint
         }
         public string Condition
         {
-            get {
+            get
+            {
                 EnvDTE90a.Breakpoint3 bp3 = Information as EnvDTE90a.Breakpoint3;
                 return bp3.Condition;
             }
-            set {
-                //BP_REQUEST_INFO[] bp_info = new BP_REQUEST_INFO[1];
-                //BreakpointRequest.GetRequestInfo((uint)enum_BPREQI_FIELDS.BPREQI_CONDITION,bp_info);
-                //bp_info[0].bpCondition.styleCondition = (uint)enum_BP_COND_STYLE.BP_COND_WHEN_TRUE;
-                //bp_info[0].bpCondition.bstrCondition = value;
-                //bp_info[0].bpCondition.nRadix = 10;
-                ////Breakpoint.SetCondition(bp_info[0].bpCondition);
-                //Breakpoint.SetCondition(bp_info[0].bpCondition);
+            set
+            {
                 _condition = value;
                 if (_reset_condition_event == null)
                     _reset_condition_event += _reset_condition;
             }
 
         }
-
-        private void _reset_condition(object sender , string value)
+        private void _check_bp_req()
+        {
+            if (_breakpointRequest3 == null) _get_bp_req3();
+        }
+        private void _get_bp_req3()
+        {
+            PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
+            _breakpointRequest3 = _breakpointRequest as IDebugBreakpointRequest3;
+        }
+        private void _reset_condition(object sender, string value)
         {
             DebugBreakpoint bp = sender as DebugBreakpoint;
             bp._reset_condition_event -= _reset_condition;
@@ -141,23 +214,6 @@ namespace libWatherDebugger.Breakpoint
             reset.RunRules();
             bp._breakpoint = null;
         }
-        public DebugBreakpoint()
-        {
-            _kinds = new Dictionary<enum_BP_TYPE, string>() {
-                { enum_BP_TYPE.BPT_CODE,Types.Breakpoint },
-                { enum_BP_TYPE.BPT_DATA,Types.DataBreakpoint },
-            };
-        }
-        public bool FirstBreak(DebugBreakpoint bpt) 
-        {
-            if (_breakpoint != null)
-            {
-                if (_reset_condition_event != null) _reset_condition_event(this, _condition);
-                return false;
-            }
-            return _first_break(bpt);
-        }
-
         private bool _first_break(DebugBreakpoint bpt)
         {
             EnvDTE.Breakpoints bps = dbg.VSDebugger.Breakpoints;
@@ -198,27 +254,6 @@ namespace libWatherDebugger.Breakpoint
                 }
             }
         }
-        public bool Enable()
-        {
-            PendingBreakpoint.Enable(1);
-            return true;
-        }
-        public bool Delete()
-        {
-            PendingBreakpoint.Delete();
-            return true;
-        }
-        public bool GetRequest()
-        {
-            IDebugBreakpointRequest2 req;
-            PendingBreakpoint.GetBreakpointRequest(out req);
-            //req.GetRequestInfo(enum_BPREQI_FIELDS.BPREQI_ALLFIELDS,
-            return true;
-        }
-        public bool Equals(string name)
-        {
-            name = name.Replace("0x", "").ToUpper();
-            return Information.Name.IndexOf(name) != -1;
-        }
+
     }
 }

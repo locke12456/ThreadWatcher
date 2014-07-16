@@ -74,7 +74,7 @@ namespace libWatcherDialog
     {
         protected DebugScriptsMenu _property_menu;
         protected DebugScriptsManagement _scripts = DebugScriptsManagement.getInstance();
-        public bool CanDistory { get; set; }
+        
         public DebugScriptsRef()
             : base()
         {
@@ -115,17 +115,6 @@ namespace libWatcherDialog
         {
             _property_menu = new DebugScriptsMenu();
             Properties.ContextMenuStrip = _property_menu.ListMenu;
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            if (!CanDistory)
-            {
-                Hide();
-                e.Cancel = true;
-                return;
-            }
-            base.OnFormClosing(e);
         }
     }
 }

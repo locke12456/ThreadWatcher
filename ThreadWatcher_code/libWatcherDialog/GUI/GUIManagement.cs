@@ -16,10 +16,21 @@ namespace ThreadWatcher.GUI
         }
         public static void Destroy()
         {
+            _set_gui_distory_option();
+            _distory_gui();
+            _this = null;
+        }
+        private static void _set_gui_distory_option()
+        {
+            _this.Threads.CanDistory = true;
+            _this.Breakpoints.CanDistory = true;
+            _this.DebugScripts.CanDistory = true;
+        }
+        private static void _distory_gui()
+        {
             _this.Threads.Close();
             _this.Breakpoints.Close();
             _this.DebugScripts.Close();
-            _this = null;
         }
         private GUIManagement()
         {

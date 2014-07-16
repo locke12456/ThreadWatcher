@@ -336,7 +336,7 @@ namespace libWatcherDialog
         private void BreakPoints_Disposed(object sender, EventArgs e)
         {
             BreakpointsManagement.Destroy();
-            DebugScriptsManagement.Destroy();
+            //DebugScriptsManagement.Destroy();
         }
 
     }

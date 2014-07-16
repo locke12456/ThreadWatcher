@@ -112,7 +112,7 @@ namespace libWatherDebugger.Script
                     if (CompleteEvent != null) 
                         CompleteEvent(this, new CompleteEventArgs());
                 }
-                catch (Exception fail)
+                catch (System.Exception fail)
                 {
                     Debug.WriteLine("fail");
                 }

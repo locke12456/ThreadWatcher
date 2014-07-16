@@ -41,7 +41,7 @@ namespace libWatherDebugger.Stack
                 _message += trace_msg + "\n";
                 _stack_tarces.Add(trace_msg);
             }
-            catch (Exception fail)
+            catch (System.Exception fail)
             {
                 // no message can read
             }

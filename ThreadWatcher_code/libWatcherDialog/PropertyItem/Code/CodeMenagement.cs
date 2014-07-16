@@ -20,12 +20,9 @@ namespace libWatcherDialog.PropertyItem.Code
         {
             _this = null;
         }
-        public void AddItem(string filename,List<string> target)
-        {
-            GetItem(filename);
-        }
         public override void AddItem(List<string> target)
         {
+            throw ( new NotImplementedException() );
         }
         public List<string> GetItem(string filename)
         {
@@ -35,12 +32,19 @@ namespace libWatcherDialog.PropertyItem.Code
 
         private List<string> _open_file(string filename, ref List<string> file)
         {
-            if (file == null)
+            try
             {
-                file = File.ReadAllLines(filename).ToList();
-                _add_filesKeyValue(filename, file);
+                if (file == null)
+                {
+                    file = File.ReadAllLines(filename).ToList();
+                    _add_filesKeyValue(filename, file);
+                }
+                return file;
             }
-            return file;
+            catch (FileLoadException exp) 
+            {
+                throw( new Exception() );
+            }
         }
 
         private void _add_filesKeyValue(string key, List<string> value)

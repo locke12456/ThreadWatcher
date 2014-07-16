@@ -29,7 +29,7 @@ namespace libWatherDebugger.Script.Mode.VSDebugger
                 _dbg.Go(false);
                 return true;
             }
-            catch (Exception fail) 
+            catch (System.Exception fail) 
             {
                 if (++_try_agian < max_try)
                 {

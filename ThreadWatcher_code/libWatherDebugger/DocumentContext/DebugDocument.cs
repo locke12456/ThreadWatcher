@@ -39,7 +39,7 @@ namespace libWatherDebugger.DocumentContext
                             return filename;
                         }
                 }
-                catch (Exception fail)
+                catch (System.Exception fail)
                 {
                     Debug.WriteLine(fail.Message);
                 }
@@ -77,7 +77,7 @@ namespace libWatherDebugger.DocumentContext
             {
                 _init();
             }
-            catch (Exception fail)
+            catch (System.Exception fail)
             {
 
             }
@@ -147,7 +147,7 @@ namespace libWatherDebugger.DocumentContext
                 {
                     return Code.FileName;
                 }
-                catch (Exception fail)
+                catch (System.Exception fail)
                 {
                     return "";
                 }

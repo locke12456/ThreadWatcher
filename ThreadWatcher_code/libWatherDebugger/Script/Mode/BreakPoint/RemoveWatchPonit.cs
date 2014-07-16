@@ -37,7 +37,7 @@ namespace libWatherDebugger.Script.Mode.BreakPoint
                 if (breakpoint != null)
                     breakpoint.Delete();
             }
-            catch (Exception fail) {
+            catch (System.Exception fail) {
                 Debug.WriteLine(fail.Message);
             }
             return true;

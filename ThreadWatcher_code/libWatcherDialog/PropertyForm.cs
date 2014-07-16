@@ -20,6 +20,7 @@ namespace libWatcherDialog
         protected MenuStatus _propertiesMenu;
         protected MenuStatus _propertiesViewMenu;
         protected MenuStatus _detialMenu;
+        public bool CanDistory { get; set; }
         public PropertyForm()
         {
             _gui = new CrossThreadProtected(this);
@@ -146,7 +147,16 @@ namespace libWatcherDialog
             PropertyView.RequestEmbeddedControl += (PropertyView.SelectedItems[0] as T2).ListViewRequestEmbeddedControl;
             PropertyView.AfterLabelEdit += (PropertyView.SelectedItems[0] as T2).AfterLabelEdit;
         }
-
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (!CanDistory)
+            {
+                Hide();
+                e.Cancel = true;
+                return;
+            }
+            base.OnFormClosing(e);
+        }
     }
 
 }

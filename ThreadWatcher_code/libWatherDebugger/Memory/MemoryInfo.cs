@@ -51,7 +51,7 @@ namespace libWatherDebugger.Memory
                 {
                     return IsPointer && (_is_null_pointer(Value) && _is_null_pointer(Address));
                 }
-                catch (Exception fail)
+                catch (System.Exception fail)
                 {
                     Debug.WriteLine(fail.Message);
                     return true;
@@ -73,7 +73,7 @@ namespace libWatherDebugger.Memory
                     string addrq = _addressQuery;
                     return (IsPointer ? (IsRootIsPointer ? "" : "&") : "&") + addrq;
                 }
-                catch (Exception fail)
+                catch (System.Exception fail)
                 {
 
                     Debug.WriteLine(fail.Message);
