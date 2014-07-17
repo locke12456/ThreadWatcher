@@ -251,12 +251,15 @@ namespace libWatherDebugger.Breakpoint
             }
         }
         /// <summary>
-        /// 若 _breakpointRequest3 為  null 時，呼叫 _try_get_bp_req3 method
+        /// 若 _breakpointRequest3 為 null 時，呼叫 _try_get_bp_req3 method
         /// </summary>
         private void _check_bp_req()
         {
             if (_breakpointRequest3 == null) _try_get_bp_req3();
         }
+        /// <summary>
+        /// 嘗試取得一個 IDebugBreakpointRequest3 物件
+        /// </summary>
         private void _try_get_bp_req3()
         {
             try
@@ -270,16 +273,31 @@ namespace libWatherDebugger.Breakpoint
                 throw (new GetBreakpointRequestFail());
             }
         }
+        /// <summary>
+        /// 用於重新設定 condition
+        /// 當中斷點觸發時，會嘗試觸發這個事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="value"></param>
         private void _reset_condition(object sender, string value)
         {
             DebugBreakpoint bp = sender as DebugBreakpoint;
             bp._reset_condition_event -= _reset_condition;
+            //若有多執行緒使用時，會在此等待同步
             if (DebugScript.HasASyncScript())
                 DebugScript.WaitSync();
+            //開啟另外的執行緒，重新設定中斷點的condition 
             ResetBreakpointCondition reset = new ResetBreakpointCondition(this, value);
+            //ResetBreakpointCondition 是一個 繼承自 WatcherRule 的 class , 詳細流程參閱 WatcherRule 
             reset.RunRules();
             bp._breakpoint = null;
         }
+        /// <summary>
+        /// watchpoint 在設定時，無法設定成trace point
+        /// 所以當第一次被中斷時，會嘗試將被hit到的watchpoint，設成trace point
+        /// </summary>
+        /// <param name="bpt"></param>
+        /// <returns></returns>
         private bool _first_break(DebugBreakpoint bpt)
         {
             EnvDTE.Breakpoints bps = dbg.VSDebugger.Breakpoints;
@@ -288,7 +306,6 @@ namespace libWatherDebugger.Breakpoint
             _get_debug_breakpoint_infos(bpt);
             return true;
         }
-
         private void _get_debug_breakpoint_infos(DebugBreakpoint bpt)
         {
             Breakpoint = bpt.Breakpoint;
@@ -306,6 +323,12 @@ namespace libWatherDebugger.Breakpoint
                 }
             }
         }
+        /// <summary>
+        /// 將被hit到的中斷點設成trace point
+        /// </summary>
+        /// <param name="bpt">hit到的中斷點</param>
+        /// <param name="bps">當前所有的中斷點</param>
+        /// <param name="data">watchpoint的記憶體位置</param>
         private void _set_as_tracepoint(DebugBreakpoint bpt, EnvDTE.Breakpoints bps, string data)
         {
             foreach (var bp_c in bps)
