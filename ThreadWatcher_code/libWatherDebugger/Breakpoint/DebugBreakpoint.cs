@@ -1,13 +1,16 @@
 ﻿using EnvDTE90a;
 using libWatcher.Constants;
 using libWatherDebugger.DocumentContext;
+using libWatherDebugger.Exception.DebugItem;
 using libWatherDebugger.GeneralRules.Mode.BreakPoint;
 using libWatherDebugger.Script;
 using libWatherDebugger.Script.Mode.BreakPoint;
 using libWatherDebugger.Script.Mode.VSDebugger;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -24,7 +27,7 @@ namespace libWatherDebugger.Breakpoint
         //private delegate void _set_condition(string val);
         private delegate void BreakTriggered(object sender, string value);
         private BreakTriggered _reset_condition_event;
-        private Debugger dbg = Debugger.getInstance();
+        private Watcher.Debugger.Debugger dbg = Watcher.Debugger.Debugger.getInstance();
         private IDebugBoundBreakpoint2 _breakpoint;
         private IDebugBreakpointRequest2 _breakpointRequest;
         private IDebugBreakpointRequest3 _breakpointRequest3;
@@ -104,7 +107,9 @@ namespace libWatherDebugger.Breakpoint
         public DebugDocument Document { get; set; }
         public EnvDTE.Breakpoint Information { get; set; }
         /// <summary>
-        /// 
+        /// get or set
+        /// set : 
+        ///     設定一個 IDebugBoundBreakpoint2 並_get_pending_breakpoint method 嘗試初始化 IDebugPendingBreakpoint2
         /// </summary>
         public IDebugBoundBreakpoint2 Breakpoint
         {
@@ -112,12 +117,14 @@ namespace libWatherDebugger.Breakpoint
             set
             {
                 _breakpoint = value;
-                IDebugPendingBreakpoint2 pendingBreakpoint;
-                _breakpoint.GetPendingBreakpoint(out pendingBreakpoint);
-                PendingBreakpoint = pendingBreakpoint;
-                _check_bp_req();
+                _try_get_pending_breakpoint();
             }
         }
+        /// <summary>
+        /// get :
+        ///      precondition : 必須先設定 IDebugBoundBreakpoint2 
+        ///      
+        /// </summary>
         public IDebugBreakpointRequest3 BreakpointRequest
         {
             get
@@ -129,16 +136,20 @@ namespace libWatherDebugger.Breakpoint
 
         public IDebugPendingBreakpoint2 PendingBreakpoint { get; private set; }
         public BP_RESOLUTION_INFO BreakpointInfo { get; set; }
+        /// <summary>
+        /// get :
+        ///      precondition : 必須先設定 IDebugBoundBreakpoint2 
+        ///    取得 BreakpointRequest3 中的所有欄位與資訊 
+        /// </summary>
         public BP_REQUEST_INFO2 RequestInfo
         {
             get
             {
                 _check_bp_req();
-                BP_REQUEST_INFO2[] req = new BP_REQUEST_INFO2[1];
-                _breakpointRequest3.GetRequestInfo2((uint)enum_BPREQI_FIELDS.BPREQI_ALLFIELDS, req);
-                return req[0];
+                return _try_get_breakpoint_request();
             }
         }
+
         public enum_BP_TYPE BreakpointType
         {
             get;
@@ -162,6 +173,9 @@ namespace libWatherDebugger.Breakpoint
                 return BreakpointType == enum_BP_TYPE.BPT_DATA;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get { return Marshal.PtrToStringBSTR(RequestInfo.bpLocation.unionmember3); } }
         public string FileName
         {
@@ -175,11 +189,12 @@ namespace libWatherDebugger.Breakpoint
         {
             get
             {
-
-                //if (Information == null) _init();
                 return Information.FunctionName;
             }
         }
+        /// <summary>
+        /// 設定 watchpoint 的 condition 必須等到程式中斷，因此這邊是註冊一個事件，等到debugger中斷時會重設condition
+        /// </summary>
         public string Condition
         {
             get
@@ -195,14 +210,65 @@ namespace libWatherDebugger.Breakpoint
             }
 
         }
+        /// <summary>
+        /// 嘗試取得 breakpoint 中斷的資訊
+        /// </summary>
+        /// <returns></returns>
+        private BP_REQUEST_INFO2 _try_get_breakpoint_request()
+        {
+            BP_REQUEST_INFO2[] req = new BP_REQUEST_INFO2[1];
+            try
+            {
+                if( VSConstants.S_FALSE == _breakpointRequest3.GetRequestInfo2((uint)enum_BPREQI_FIELDS.BPREQI_ALLFIELDS, req))
+                    throw (new GetBreakpointRequestInfoFail());
+            }
+            catch (System.Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+                throw (exception);
+            }
+            return req[0];
+        }
+        /// <summary>
+        /// 嘗試取得一個 IDebugPendingBreakpoint2 物件
+        /// </summary>
+        private void _try_get_pending_breakpoint()
+        {
+            try
+            {
+                IDebugPendingBreakpoint2 pendingBreakpoint;
+                _breakpoint.GetPendingBreakpoint(out pendingBreakpoint);
+                PendingBreakpoint = pendingBreakpoint;
+            }
+            catch (System.Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+                throw (new GetPendingBreakpointFail());
+            }
+            finally
+            {
+                _check_bp_req();
+            }
+        }
+        /// <summary>
+        /// 若 _breakpointRequest3 為  null 時，呼叫 _try_get_bp_req3 method
+        /// </summary>
         private void _check_bp_req()
         {
-            if (_breakpointRequest3 == null) _get_bp_req3();
+            if (_breakpointRequest3 == null) _try_get_bp_req3();
         }
-        private void _get_bp_req3()
+        private void _try_get_bp_req3()
         {
-            PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
-            _breakpointRequest3 = _breakpointRequest as IDebugBreakpointRequest3;
+            try
+            {
+                PendingBreakpoint.GetBreakpointRequest(out _breakpointRequest);
+                _breakpointRequest3 = _breakpointRequest as IDebugBreakpointRequest3;
+            }
+            catch (System.Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+                throw (new GetBreakpointRequestFail());
+            }
         }
         private void _reset_condition(object sender, string value)
         {
@@ -220,7 +286,6 @@ namespace libWatherDebugger.Breakpoint
             string data = bpt.Name.Replace("0x", "").ToUpper();
             _set_as_tracepoint(bpt, bps, data);
             _get_debug_breakpoint_infos(bpt);
-            //_set_information();
             return true;
         }
 
