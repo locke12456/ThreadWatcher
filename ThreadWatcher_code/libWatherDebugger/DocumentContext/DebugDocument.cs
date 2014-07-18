@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio;
+﻿using libWatherDebugger.Exception.DebugItem;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,42 @@ namespace libWatherDebugger.DocumentContext
         private TEXT_POSITION[] _start;
         private TEXT_POSITION[] _end;
         private string _code_string = "";
+        /// <summary>
+        /// init code information 
+        /// 如果取得資訊失敗，可能當前的stack是不可取得資訊的區域
+        /// 例如: 中斷在外部程式函式庫中
+        /// </summary>
+        public CodeInformation()
+        {
+            try
+            {
+                _init();
+            }
+            catch (DebugDocumentException fail)
+            {
+                Debug.WriteLine(fail.Message);
+            }
+        }
+        /// <summary>
+        /// try to get CodeContext information
+        /// </summary>
+        private void _init()
+        {
+            try
+            {
+                CONTEXT_INFO[] code_info = new CONTEXT_INFO[1];
+                CodeContext.GetInfo((uint)enum_CONTEXT_INFO_FIELDS.CIF_ALLFIELDS, code_info);
+                _code_info = code_info;
+            }
+            catch (System.Exception exception)
+            {
+                Debug.WriteLine(exception.Message);
+                throw (new GetCodeContextInfoFail());
+            }
+        }
+        /// <summary>
+        /// stack 的 function name
+        /// </summary>
         public string FunctionName
         {
             get
@@ -26,6 +63,10 @@ namespace libWatherDebugger.DocumentContext
                 return _code_info == null ? "" : _code_info[0].bstrFunction;
             }
         }
+        /// <summary>
+        /// 嘗試取得程式碼文件名稱
+        /// 若是失敗的話，可能是在外部程式函式褲
+        /// </summary>
         public string FileName
         {
             get
@@ -46,6 +87,13 @@ namespace libWatherDebugger.DocumentContext
                 return "";
             }
         }
+        /// <summary>
+        /// 中斷時的程式碼行號
+        /// e.g.
+        ///  | line|     code
+        ///  ----------------------------------------------------
+        ///  |  5  |  exp = malloc( ... ); << StartPosition = 5 
+        /// </summary>
         public uint StartPosition
         {
             get
@@ -58,6 +106,15 @@ namespace libWatherDebugger.DocumentContext
                 return 1;
             }
         }
+        /// <summary>
+        /// 中斷時的程式碼行號
+        /// e.g.
+        ///  | line|     code            |      comment
+        ///  ----------------------------------------------------
+        ///  |  5  |  exp = new a(  b     << StartPosition = 5
+        ///  |  6  |               ,c
+        ///  |  7  |               ,d  ); << EndPosition   = 7
+        /// </summary>
         public uint EndPosition
         {
             get
@@ -70,25 +127,10 @@ namespace libWatherDebugger.DocumentContext
                 return 1;
             }
         }
-        //public string SourceCodeBlack { get { return _code(); } }
-        public CodeInformation()
-        {
-            try
-            {
-                _init();
-            }
-            catch (System.Exception fail)
-            {
-
-            }
-        }
-        private void _init()
-        {
-
-            CONTEXT_INFO[] code_info = new CONTEXT_INFO[1];
-            CodeContext.GetInfo((uint)enum_CONTEXT_INFO_FIELDS.CIF_ALLFIELDS, code_info);
-            _code_info = code_info;
-        }
+        /// <summary>
+        /// try to get source code in DocumentContext
+        /// </summary>
+        /// <returns></returns>
         private string _code()
         {
             if (_code_string != "") return _code_string;
@@ -104,6 +146,11 @@ namespace libWatherDebugger.DocumentContext
     public class DebugDocument : IDebugItem
     {
         private CodeInformation _code;
+
+        public DebugDocument()
+        {
+            Code = new CodeInformation();
+        }
         public CodeInformation Code
         {
             get
@@ -115,6 +162,9 @@ namespace libWatherDebugger.DocumentContext
                 _code = value;
             }
         }
+        /// <summary>
+        /// set by DebugDocumentFactory when factory creare a object
+        /// </summary>
         public IDebugCodeContext2 CodeContext
         {
             get
@@ -126,7 +176,14 @@ namespace libWatherDebugger.DocumentContext
                 Code.CodeContext = value;
             }
         }
+
+        /// <summary>
+        /// set by DebugDocumentFactory when factory creare a object
+        /// </summary>
         public IDebugDocument2 Document { get; set; }
+        /// <summary>
+        /// set by DebugDocumentFactory when factory creare a object
+        /// </summary>
         public IDebugDocumentContext2 DocumentContext
         {
             get
@@ -138,7 +195,10 @@ namespace libWatherDebugger.DocumentContext
                 Code.DocumentContext = value;
             }
         }
-
+        /// <summary>
+        /// get current stack/breakpoint filename
+        ///  
+        /// </summary>
         public string FileName
         {
             get
@@ -149,13 +209,13 @@ namespace libWatherDebugger.DocumentContext
                 }
                 catch (System.Exception fail)
                 {
-                    return "";
+                    Debug.WriteLine(fail.Message);
                 }
+                finally
+                {
+                }
+                return "";
             }
-        }
-        public DebugDocument()
-        {
-            Code = new CodeInformation();
         }
     }
 }

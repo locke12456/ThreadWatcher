@@ -16,4 +16,34 @@ namespace libWatherDebugger.Exception.DebugItemFactory
             }
         }
     }
+    public class CreateDebugDocumentFail : DebugDocumentFactoryException 
+    {
+        protected override string _message
+        {
+            get
+            {
+                return "create debug document fail .";
+            }
+        }
+    }
+    public class GetDocumentContextFail : DebugDocumentFactoryException 
+    {
+        protected override string _message
+        {
+            get
+            {
+                return "get DocumentContext fail .";
+            }
+        }
+    }
+    public class GetDocumentFail : DebugDocumentFactoryException
+    {
+        protected override string _message
+        {
+            get
+            {
+                return "get Document fail .";
+            }
+        }
+    }
 }
