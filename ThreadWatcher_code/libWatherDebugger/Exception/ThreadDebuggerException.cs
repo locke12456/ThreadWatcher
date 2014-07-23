@@ -8,6 +8,11 @@ namespace libWatherDebugger.Exception
 {
     public abstract class ThreadDebuggerException : System.Exception
     {
+        protected virtual string _base {
+            get {
+                return "ERROR";
+            }
+        } 
         protected virtual string _type
         {
             get
@@ -24,7 +29,7 @@ namespace libWatherDebugger.Exception
         {
             get
             {
-                return "[ ERROR ][" + _type + "][message]" + _message;
+                return "["+_base+"][" + _type + "][message]" + _message;
             }
         }
     }

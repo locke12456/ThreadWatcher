@@ -18,6 +18,13 @@ namespace libWatherDebugger.Exception.DebugItem
     }
     public class GetCodeContextInfoFail : DebugDocumentException
     {
+        protected override string _base
+        {
+            get
+            {
+                return "FAIL";
+            }
+        }
         protected override string _message
         {
             get

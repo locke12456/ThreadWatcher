@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Script.Mode.DebugStep
 {
-    public class StepOut : DebugScript
+    public class StepOut : DebugStep
     {
         public override event DebugScript.EventHandler ASyncCompleteEvent;
         public StepOut()
@@ -22,11 +22,6 @@ namespace libWatherDebugger.Script.Mode.DebugStep
             {
                 return typeof(IDebugReturnValueEvent2);
             }
-        }
-        public StepOut(EnvDTE.Debugger dbg)
-            : base(dbg)
-        {
-            Mode = EnvDTE.dbgDebugMode.dbgBreakMode;
         }
         protected override bool _tyrToControl()
         {

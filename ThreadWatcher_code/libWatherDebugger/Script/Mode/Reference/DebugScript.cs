@@ -14,6 +14,8 @@ namespace libWatherDebugger.Script
     public abstract class DebugScript : IDebugScript
     {
         private static AutoResetEvent _sync;
+        protected EnvDTE.Debugger _dbg;
+        protected Dictionary<dbgDebugMode, Func<bool>> _switchMode;
         protected static Type _sync_type = null;
         protected static DebugScript _sync_script = null;
         public delegate void EventHandler(object obj, ScriptEventArgs e);
@@ -21,8 +23,6 @@ namespace libWatherDebugger.Script
         public event EventHandler CompleteEvent;
         public virtual event EventHandler ASyncCompleteEvent;
         public event EventHandler PendingEvent;
-        protected EnvDTE.Debugger _dbg;
-        protected Dictionary<dbgDebugMode, Func<bool>> _switchMode;
 
         public static Type ASyncEvent { get { return _sync_type; } }
 

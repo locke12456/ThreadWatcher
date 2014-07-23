@@ -1,21 +1,13 @@
 ﻿using EnvDTE;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace libWatherDebugger.Script.Mode.VSDebugger
 {
-    public class DebuggerBreak : DebugScript
+    public class DebuggerBreak : DebuggerControl
     {
         public DebuggerBreak()
             : base()
-        {
-            Mode = EnvDTE.dbgDebugMode.dbgRunMode;
-        }
-        public DebuggerBreak(EnvDTE.Debugger dbg)
-            : base(dbg)
         {
             Mode = EnvDTE.dbgDebugMode.dbgRunMode;
         }

@@ -1,12 +1,6 @@
 ﻿using libWatherDebugger.DocumentContext;
 using libWatherDebugger.Stack;
-using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace libWatherDebugger.Thread
 {

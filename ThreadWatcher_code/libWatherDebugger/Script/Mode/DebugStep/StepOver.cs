@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Script.Mode.DebugStep
 {
-    public class StepOver : DebugScript
+    public class StepOver : DebugStep
     {
         public StepOver() : base()
         {
-            Mode = EnvDTE.dbgDebugMode.dbgBreakMode;
-        }
-        public StepOver(EnvDTE.Debugger dbg) : base(dbg) {
             Mode = EnvDTE.dbgDebugMode.dbgBreakMode;
         }
         protected override bool _tyrToControl()

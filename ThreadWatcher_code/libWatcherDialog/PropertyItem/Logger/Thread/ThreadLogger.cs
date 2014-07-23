@@ -20,12 +20,13 @@ namespace libWatcherDialog.PropertyItem.Logger
             // 
             // Log
             // 
-            this.Log.Size = new System.Drawing.Size(339, 121);
+            this.Log.ItemHeight = 12;
+            this.Log.Size = new System.Drawing.Size(339, 112);
             // 
             // ThreadLogger
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(339, 130);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.ClientSize = new System.Drawing.Size(339, 120);
             this.Name = "ThreadLogger";
             this.ResumeLayout(false);
 

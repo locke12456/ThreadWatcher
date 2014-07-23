@@ -4,18 +4,11 @@ using libWatherDebugger.DocumentContext;
 using libWatherDebugger.Exception.DebugItem;
 using libWatherDebugger.GeneralRules.Mode.BreakPoint;
 using libWatherDebugger.Script;
-using libWatherDebugger.Script.Mode.BreakPoint;
-using libWatherDebugger.Script.Mode.VSDebugger;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Debugger.Interop;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Watcher.Debugger;
 
 namespace libWatherDebugger.Breakpoint
 {
