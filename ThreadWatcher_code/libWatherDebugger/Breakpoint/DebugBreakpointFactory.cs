@@ -11,7 +11,7 @@ using libWatherDebugger.Exception.DebugItem;
 namespace libWatherDebugger.Breakpoint
 {
     /// <summary>
-    /// 
+    /// factory 架構參考 DebugDocumentFactory
     /// </summary>
     public class DebugBreakpointFactory : ItemFactory<DebugBreakpoint>
     {

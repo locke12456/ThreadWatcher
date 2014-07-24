@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Memory
 {
+    /// <summary>
+    /// factory 架構參考 DebugDocumentFactory
+    /// </summary>
     public class MemoryInfoFactory : ItemFactory<MemoryInfo>
     {
         private bool _recursive = false;
@@ -23,6 +26,11 @@ namespace libWatherDebugger.Memory
             _stack = stack;
             _initParentInfo();
         }
+        /// <summary>
+        /// 用於向下查詢子結構
+        /// 預設向下查詢一層 , _recursive = false 表示不向下查詢
+        /// </summary>
+        /// <param name="infos"></param>
         private MemoryInfoFactory(DEBUG_PROPERTY_INFO[] infos)
             : base()
         {
@@ -40,6 +48,9 @@ namespace libWatherDebugger.Memory
         {
             return VSConstants.S_OK;
         }
+        /// <summary>
+        /// 初始化最上層的結構
+        /// </summary>
         private void _initParentInfo()
         {
             uint fetched = 0;
@@ -50,6 +61,9 @@ namespace libWatherDebugger.Memory
                 _propertyInfo.Reset();
             }
         }
+        /// <summary>
+        /// 子物件初始化
+        /// </summary>
         private void _initChildrenInfo()
         {
             Guid FilterLocalsGuid = ThreadWatcher.GUIDs.FilterAllLocalsGuid;

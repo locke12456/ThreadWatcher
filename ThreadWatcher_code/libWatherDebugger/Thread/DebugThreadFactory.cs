@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Thread
 {
+    /// <summary>
+    /// factory 架構參考 DebugDocumentFactory
+    /// </summary>
     public class DebugThreadFactory : ItemFactory<DebugThread>
     {
         private IEnumDebugThreads2 _enumDebugThread;
@@ -57,6 +60,11 @@ namespace libWatherDebugger.Thread
             }
             return result;
         }
+        /// <summary>
+        /// get IEnumDebugThreads2.
+        /// get list of threads in a program.
+        /// </summary>
+        /// <returns></returns>
         private int _getEnumDebugThread()
         {
             int result = VSConstants.S_FALSE;
@@ -66,6 +74,13 @@ namespace libWatherDebugger.Thread
             }
             return result;
         }
+        /// <summary>
+        /// get all threads.
+        /// IDebugThread2 is a thread of execution in a single program.
+        /// MSDN : 
+        /// http://msdn.microsoft.com/zh-tw/library/bb145332(v=vs.110).aspx
+        /// </summary>
+        /// <returns></returns>
         private int _getDebugThreads()
         {
             int result = VSConstants.S_FALSE;

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Message
 {
+    /// <summary>
+    /// 讀取來自trace ponit的訊息
+    /// </summary>
     public class DebugMessage : IDebugItem
     {
         private IDebugMessageEvent2 _event;
@@ -18,9 +21,7 @@ namespace libWatherDebugger.Message
             }
             set {
                 _event = value;
-                string msg;
-                _event.GetMessage(out MessageType, out msg, out TypeId, out HelpFileFame, out HelpId);
-                Message = msg;
+                _init_msg();
             }
         }
         public uint MessageType;
@@ -31,6 +32,13 @@ namespace libWatherDebugger.Message
         public DebugMessage()
         {
 
+        }
+        private void _init_msg()
+        {
+
+            string msg;
+            _event.GetMessage(out MessageType, out msg, out TypeId, out HelpFileFame, out HelpId);
+            Message = msg;
         }
     }
 }

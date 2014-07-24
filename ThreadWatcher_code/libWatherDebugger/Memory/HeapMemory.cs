@@ -9,6 +9,9 @@ using Watcher.Debugger;
 
 namespace libWatherDebugger.Memory
 {
+    /// <summary>
+    /// 用於儲存watchpoint資訊
+    /// </summary>
     public class HeapMemory : MemoryInfo
     {
         public bool InWatchList { get; set; }

@@ -4,6 +4,9 @@ using Microsoft.VisualStudio.Debugger.Interop;
 
 namespace libWatherDebugger.Thread
 {
+    /// <summary>
+    /// 利用DebugThread,可對單個執行緒中所有可查詢的資料作查詢
+    /// </summary>
     public class DebugThread : IDebugItem
     {
         public IDebugThread2 Thread { get; set; }

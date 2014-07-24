@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Stack
 {
+    /// <summary>
+    /// DebugThread 需要使用 DebugStackFrame內的 property 來做為查詢和建立物件 
+    /// </summary>
     public class DebugStackFrame : IDebugItem
     {
         private DebugDocument _doucment;

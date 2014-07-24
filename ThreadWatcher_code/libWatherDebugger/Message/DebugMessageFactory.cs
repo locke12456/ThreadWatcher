@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Message
 {
+    /// <summary>
+    /// factory 架構參考 DebugDocumentFactory
+    /// </summary>
     public class DebugMessageFactory : ItemFactory<DebugMessage>
     {
         public DebugMessageFactory(IDebugMessageEvent2 Event)

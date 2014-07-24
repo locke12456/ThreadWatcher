@@ -11,13 +11,19 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Stack
 {
+    /// <summary>
+    /// factory 架構參考 DebugDocumentFactory
+    /// </summary>
     public class DebugStackFrameFactory : ItemFactory<DebugStackFrame>
     {
         private EnvDTE.Debugger _that = Watcher.Debugger.Debugger.getInstance().VSDebugger;
         private IDebugThread2 _thread;
         private IEnumDebugFrameInfo2 _enumDebugFrameInfo2;
         private uint _currentFrameDepth = 0;
-
+        /// <summary>
+        /// 若有去觀看其他stack，這裡為當前被操作的stack frame
+        /// 沒有的話就是stack top = 0
+        /// </summary>
         public uint CurrentFrameDepth
         {
             get { return _currentFrameDepth; }
@@ -72,24 +78,48 @@ namespace libWatherDebugger.Stack
                 // Depth property is 1-based.
                 _currentFrameDepth = currentFrame2.Depth - 1;
             }
+            int result = _get_frame_info();
+            // Get the current frame.
+            return _getAllStackFrame(_enumDebugFrameInfo2);
+        }
+        /// <summary>
+        /// Get frame info enum interface.
+        /// MSDN :
+        /// IEnumDebugFrameInfo2 
+        /// http://msdn.microsoft.com/zh-tw/library/bb147119(v=vs.110).aspx
+        /// </summary>
+        /// <returns></returns>
+        private int _get_frame_info()
+        {
             // Get frame info enum interface.
             if (VSConstants.S_OK != _getDebugFrameInfo(_currentFrameDepth, out _enumDebugFrameInfo2))
             {
                 return VSConstants.S_FALSE;
             }
-            // Get the current frame.
-            return _getAllStackFrame(_enumDebugFrameInfo2);
+            return VSConstants.S_FALSE;
         }
+        /// <summary>
+        /// Get frame info enum interface.
+        /// </summary>
+        /// <param name="currentFrameDepth"></param>
+        /// <param name="enumDebugFrameInfo2"></param>
+        /// <returns></returns>
         private int _getDebugFrameInfo(uint currentFrameDepth, out IEnumDebugFrameInfo2 enumDebugFrameInfo2)
         {
 
             int result = VSConstants.S_FALSE;
             // Get frame info enum interface.
-            result = _get_frame_info(result, out enumDebugFrameInfo2);
+            result = _enumerate_frame_info(result, out enumDebugFrameInfo2);
             // Skip frames above the current one.
             return _skip_current_one(currentFrameDepth, enumDebugFrameInfo2, ref result);
         }
-
+        /// <summary>
+        /// Skip frames above the current one.
+        /// </summary>
+        /// <param name="currentFrameDepth"></param>
+        /// <param name="enumDebugFrameInfo2"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         private static int _skip_current_one(uint currentFrameDepth, IEnumDebugFrameInfo2 enumDebugFrameInfo2, ref int result)
         {
             result = enumDebugFrameInfo2.Reset();
@@ -102,8 +132,13 @@ namespace libWatherDebugger.Stack
 
             return result;
         }
-
-        private int _get_frame_info(int result, out IEnumDebugFrameInfo2 enumDebugFrameInfo2)
+        /// <summary>
+        /// Get frame info enum interface.
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="enumDebugFrameInfo2"></param>
+        /// <returns></returns>
+        private int _enumerate_frame_info(int result, out IEnumDebugFrameInfo2 enumDebugFrameInfo2)
         {
             if (VSConstants.S_OK != _thread.EnumFrameInfo((uint)enum_FRAMEINFO_FLAGS.FIF_FRAME, 0, out enumDebugFrameInfo2))
             {
@@ -112,6 +147,11 @@ namespace libWatherDebugger.Stack
             }
             return result;
         }
+        /// <summary>
+        /// Get all stack frame from IEnumDebugFrameInfo2
+        /// </summary>
+        /// <param name="enumDebugFrameInfo2"></param>
+        /// <returns></returns>
         private int _getAllStackFrame(IEnumDebugFrameInfo2 enumDebugFrameInfo2)
         {
             // Get all stack frame.

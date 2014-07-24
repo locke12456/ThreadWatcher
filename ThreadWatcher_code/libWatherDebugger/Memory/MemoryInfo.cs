@@ -21,6 +21,9 @@ namespace libWatherDebugger.Memory
         public string Variable { get; set; }
         public string Value { get; set; }
         public string Size { get; set; }
+        /// <summary>
+        /// 是否為結構最頂端
+        /// </summary>
         private bool IsRoot
         {
             get
@@ -28,6 +31,9 @@ namespace libWatherDebugger.Memory
                 return Parent == this;
             }
         }
+        /// <summary>
+        /// 最頂端是否為 指標
+        /// </summary>
         private bool IsRootIsPointer
         {
             get
@@ -63,6 +69,10 @@ namespace libWatherDebugger.Memory
         {
             return Address != null && (Address.IndexOf("0xcccccccc") > 0 /*|| Address.IndexOf("0xcdcdcdcd") > 0*/ || Address.IndexOf("0x00000000") > 0);
         }
+        /// <summary>
+        /// 可以向debugger查詢address的字串
+        /// 判斷自己是不是一個pointer , 若不是的話則加『&』在最前面
+        /// </summary>
         public string AddressQuery
         {
             get
@@ -81,6 +91,12 @@ namespace libWatherDebugger.Memory
                 }
             }
         }
+        /// <summary>
+        /// 可以向debugger查詢address的字串
+        /// e.g.
+        ///     a是父項目 , a 是 pointer
+        ///     則查尋字串為  a->b
+        /// </summary>
         private string _addressQuery
         {
             get
@@ -107,6 +123,19 @@ namespace libWatherDebugger.Memory
             MemoryInfo parent = Parent as MemoryInfo;
             parent._thread = thread;
         }
+        /// <summary>
+        /// 加入子項目
+        /// e.g. 
+        /// ----  debuggee  ----------------
+        ///     struct a {
+        ///         int b,c;
+        ///     };
+        /// --------------------------------    
+        /// ---- memory info factory ------------
+        ///     mem.Add( b ); 
+        ///     mem.Add( c ); 
+        /// </summary>
+        /// <param name="item"></param>
         public void Add(IDebuggerMemory item)
         {
             MemoryInfo child = item as MemoryInfo;
