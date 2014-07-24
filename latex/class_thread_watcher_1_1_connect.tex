@@ -1,0 +1,177 @@
+\hypertarget{class_thread_watcher_1_1_connect}{\section{Thread\+Watcher.\+Connect Class Reference}
+\label{class_thread_watcher_1_1_connect}\index{Thread\+Watcher.\+Connect@{Thread\+Watcher.\+Connect}}
+}
+
+
+用於實作增益集的物件。 
+
+
+Inheritance diagram for Thread\+Watcher.\+Connect\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_thread_watcher_1_1_connect}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_thread_watcher_1_1_connect_a1f2395c8f36b6f8c29bb0e1ee27d55ec}{Connect} ()
+\begin{DoxyCompactList}\small\item\em 針對增益集物件實作建構函式。請將初始化程式碼置於此方法中。\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_a0dbdd7934d44f9b32ffb7e9cdf71f05a}{On\+Connection} (object application, ext\+\_\+\+Connect\+Mode connect\+Mode, object add\+In\+Inst, ref Array custom)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Extensibility2 介面的 On\+Connection 方法。會收到正在載入增益集的告知。\end{DoxyCompactList}\item 
+\hypertarget{class_thread_watcher_1_1_connect_aa5d1d9da7afa9ea4ecb9c98de7e55514}{int {\bfseries Event} (I\+Debug\+Engine2 p\+Engine, I\+Debug\+Process2 p\+Process, I\+Debug\+Program2 p\+Program, I\+Debug\+Thread2 thread, I\+Debug\+Event2 p\+Event, ref Guid riid\+Event, uint dw\+Attrib)}\label{class_thread_watcher_1_1_connect_aa5d1d9da7afa9ea4ecb9c98de7e55514}
+
+\item 
+void \hyperlink{class_thread_watcher_1_1_connect_a07071ffc336ed91957cafb8ee4438c79}{On\+Disconnection} (ext\+\_\+\+Disconnect\+Mode disconnect\+Mode, ref Array custom)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Extensibility2 介面的 On\+Disconnection 方法。會收到正在卸載增益集的告知。\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_ac2b425c7f2bc531841c7f4b88b81e008}{On\+Add\+Ins\+Update} (ref Array custom)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Extensibility2 介面的 On\+Add\+Ins\+Update 方法。增益集的集合變更時會收到告知。\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_aac2211c5c6e6201dfb187c58bfb36bdb}{On\+Startup\+Complete} (ref Array custom)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Extensibility2 介面的 On\+Startup\+Complete 方法。會收到主應用程式載入完成的告知。\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_a88f39a0593bf62c9de2f422ce782188a}{On\+Begin\+Shutdown} (ref Array custom)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Extensibility2 介面的 On\+Begin\+Shutdown 方法。會收到正在卸載主應用程式的告知。\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_a0f13daddeb1fced04dc4d13e0c00b2c6}{Query\+Status} (string command\+Name, vs\+Command\+Status\+Text\+Wanted needed\+Text, ref vs\+Command\+Status status, ref object command\+Text)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Command\+Target 介面的 Query\+Status 方法。這會在命令的可用性更新時呼叫\end{DoxyCompactList}\item 
+void \hyperlink{class_thread_watcher_1_1_connect_a65dea176c7c65eb89d39f46f506c271b}{Exec} (string command\+Name, vs\+Command\+Exec\+Option execute\+Option, ref object var\+In, ref object var\+Out, ref bool handled)
+\begin{DoxyCompactList}\small\item\em 實作 I\+D\+T\+Command\+Target 介面的 Exec 方法。這會在叫用命令時呼叫。\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_thread_watcher_1_1_connect_ace116cb07fefd72cba00fcb6ecd1afe8}{static string {\bfseries address\+Expression\+String}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{class_thread_watcher_1_1_connect_ace116cb07fefd72cba00fcb6ecd1afe8}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+用於實作增益集的物件。
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_thread_watcher_1_1_connect_a1f2395c8f36b6f8c29bb0e1ee27d55ec}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!Connect@{Connect}}
+\index{Connect@{Connect}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{Connect}]{\setlength{\rightskip}{0pt plus 5cm}Thread\+Watcher.\+Connect.\+Connect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a1f2395c8f36b6f8c29bb0e1ee27d55ec}
+
+
+針對增益集物件實作建構函式。請將初始化程式碼置於此方法中。
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_thread_watcher_1_1_connect_a65dea176c7c65eb89d39f46f506c271b}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!Exec@{Exec}}
+\index{Exec@{Exec}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{Exec}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+Exec (
+\begin{DoxyParamCaption}
+\item[{string}]{command\+Name, }
+\item[{vs\+Command\+Exec\+Option}]{execute\+Option, }
+\item[{ref object}]{var\+In, }
+\item[{ref object}]{var\+Out, }
+\item[{ref bool}]{handled}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a65dea176c7c65eb89d39f46f506c271b}
+
+
+實作 I\+D\+T\+Command\+Target 介面的 Exec 方法。這會在叫用命令時呼叫。
+
+要執行的命令名稱。
+
+描述如何執行命令。
+
+從呼叫端傳遞至命令處理常式的參數。
+
+從命令處理常式傳遞至呼叫端的參數。
+
+通知呼叫端是否已處理命令。\hypertarget{class_thread_watcher_1_1_connect_ac2b425c7f2bc531841c7f4b88b81e008}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!On\+Add\+Ins\+Update@{On\+Add\+Ins\+Update}}
+\index{On\+Add\+Ins\+Update@{On\+Add\+Ins\+Update}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{On\+Add\+Ins\+Update}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+On\+Add\+Ins\+Update (
+\begin{DoxyParamCaption}
+\item[{ref Array}]{custom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_ac2b425c7f2bc531841c7f4b88b81e008}
+
+
+實作 I\+D\+T\+Extensibility2 介面的 On\+Add\+Ins\+Update 方法。增益集的集合變更時會收到告知。
+
+主應用程式專屬參數的陣列。\hypertarget{class_thread_watcher_1_1_connect_a88f39a0593bf62c9de2f422ce782188a}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!On\+Begin\+Shutdown@{On\+Begin\+Shutdown}}
+\index{On\+Begin\+Shutdown@{On\+Begin\+Shutdown}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{On\+Begin\+Shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+On\+Begin\+Shutdown (
+\begin{DoxyParamCaption}
+\item[{ref Array}]{custom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a88f39a0593bf62c9de2f422ce782188a}
+
+
+實作 I\+D\+T\+Extensibility2 介面的 On\+Begin\+Shutdown 方法。會收到正在卸載主應用程式的告知。
+
+主應用程式專屬參數的陣列。\hypertarget{class_thread_watcher_1_1_connect_a0dbdd7934d44f9b32ffb7e9cdf71f05a}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!On\+Connection@{On\+Connection}}
+\index{On\+Connection@{On\+Connection}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{On\+Connection}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+On\+Connection (
+\begin{DoxyParamCaption}
+\item[{object}]{application, }
+\item[{ext\+\_\+\+Connect\+Mode}]{connect\+Mode, }
+\item[{object}]{add\+In\+Inst, }
+\item[{ref Array}]{custom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a0dbdd7934d44f9b32ffb7e9cdf71f05a}
+
+
+實作 I\+D\+T\+Extensibility2 介面的 On\+Connection 方法。會收到正在載入增益集的告知。
+
+主應用程式的根物件。
+
+描述如何載入增益集。
+
+代表此增益集的物件。\hypertarget{class_thread_watcher_1_1_connect_a07071ffc336ed91957cafb8ee4438c79}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!On\+Disconnection@{On\+Disconnection}}
+\index{On\+Disconnection@{On\+Disconnection}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{On\+Disconnection}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+On\+Disconnection (
+\begin{DoxyParamCaption}
+\item[{ext\+\_\+\+Disconnect\+Mode}]{disconnect\+Mode, }
+\item[{ref Array}]{custom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a07071ffc336ed91957cafb8ee4438c79}
+
+
+實作 I\+D\+T\+Extensibility2 介面的 On\+Disconnection 方法。會收到正在卸載增益集的告知。
+
+描述如何卸載增益集。
+
+主應用程式專屬參數的陣列。\hypertarget{class_thread_watcher_1_1_connect_aac2211c5c6e6201dfb187c58bfb36bdb}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!On\+Startup\+Complete@{On\+Startup\+Complete}}
+\index{On\+Startup\+Complete@{On\+Startup\+Complete}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{On\+Startup\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+On\+Startup\+Complete (
+\begin{DoxyParamCaption}
+\item[{ref Array}]{custom}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_aac2211c5c6e6201dfb187c58bfb36bdb}
+
+
+實作 I\+D\+T\+Extensibility2 介面的 On\+Startup\+Complete 方法。會收到主應用程式載入完成的告知。
+
+主應用程式專屬參數的陣列。\hypertarget{class_thread_watcher_1_1_connect_a0f13daddeb1fced04dc4d13e0c00b2c6}{\index{Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}!Query\+Status@{Query\+Status}}
+\index{Query\+Status@{Query\+Status}!Thread\+Watcher\+::\+Connect@{Thread\+Watcher\+::\+Connect}}
+\subsubsection[{Query\+Status}]{\setlength{\rightskip}{0pt plus 5cm}void Thread\+Watcher.\+Connect.\+Query\+Status (
+\begin{DoxyParamCaption}
+\item[{string}]{command\+Name, }
+\item[{vs\+Command\+Status\+Text\+Wanted}]{needed\+Text, }
+\item[{ref vs\+Command\+Status}]{status, }
+\item[{ref object}]{command\+Text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_thread_watcher_1_1_connect_a0f13daddeb1fced04dc4d13e0c00b2c6}
+
+
+實作 I\+D\+T\+Command\+Target 介面的 Query\+Status 方法。這會在命令的可用性更新時呼叫
+
+要判斷其狀態的命令名稱。
+
+命令所需的文字。
+
+命令在使用者介面中的狀態。
+
+needed\+Text 參數要求的文字。
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Thread\+Watcher\+\_\+code/\+Thread\+Watcher/Connect.\+cs\end{DoxyCompactItemize}

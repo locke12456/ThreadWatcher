@@ -1,0 +1,83 @@
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information}{\section{lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information Class Reference}
+\label{classlib_wather_debugger_1_1_document_context_1_1_code_information}\index{lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information@{lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1793919ea494d2c9af1f99dcd5f3e324}{Code\+Information} ()
+\begin{DoxyCompactList}\small\item\em init code information 如果取得資訊失敗，可能當前的stack是不可取得資訊的區域 例如\+: 中斷在外部程式函式庫中 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a834a91af13eeea3b2a4920a14229d220}{I\+Debug\+Code\+Context2 {\bfseries Code\+Context}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a834a91af13eeea3b2a4920a14229d220}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a405b6bb7c272756b5adbb14dd7394e5c}{I\+Debug\+Document\+Context2 {\bfseries Document\+Context}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a405b6bb7c272756b5adbb14dd7394e5c}
+
+\item 
+string \hyperlink{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1aaf601fc22c656728294f2c5f80db3c}{Function\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em stack 的 function name \end{DoxyCompactList}\item 
+string \hyperlink{classlib_wather_debugger_1_1_document_context_1_1_code_information_a58a573d3666349cd8f84e68a22f2210d}{File\+Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em 嘗試取得程式碼文件名稱 若是失敗的話，可能是在外部程式函式褲 \end{DoxyCompactList}\item 
+uint \hyperlink{classlib_wather_debugger_1_1_document_context_1_1_code_information_a68ab02f74990ba0b88b32bb02410d749}{Start\+Position}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em 中斷時的程式碼行號 e.\+g. \subsubsection*{$\vert$ line$\vert$ code }
+
+$\vert$ 5 $\vert$ exp = malloc( ... ); $<$$<$ Start\+Position = 5 \end{DoxyCompactList}\item 
+uint \hyperlink{classlib_wather_debugger_1_1_document_context_1_1_code_information_a3e0e6937a9dc244b66fa109806b52d49}{End\+Position}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em 中斷時的程式碼行號 e.\+g. \subsubsection*{$\vert$ line$\vert$ code $\vert$ comment }
+
+$\vert$ 5 $\vert$ exp = new a( b $<$$<$ Start\+Position = 5 $\vert$ 6 $\vert$ ,c $\vert$ 7 $\vert$ ,d ); $<$$<$ End\+Position = 7 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1793919ea494d2c9af1f99dcd5f3e324}{\index{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}!Code\+Information@{Code\+Information}}
+\index{Code\+Information@{Code\+Information}!lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}}
+\subsubsection[{Code\+Information}]{\setlength{\rightskip}{0pt plus 5cm}lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information.\+Code\+Information (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1793919ea494d2c9af1f99dcd5f3e324}
+
+
+init code information 如果取得資訊失敗，可能當前的stack是不可取得資訊的區域 例如\+: 中斷在外部程式函式庫中 
+
+
+
+\subsection{Property Documentation}
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a3e0e6937a9dc244b66fa109806b52d49}{\index{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}!End\+Position@{End\+Position}}
+\index{End\+Position@{End\+Position}!lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}}
+\subsubsection[{End\+Position}]{\setlength{\rightskip}{0pt plus 5cm}uint lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information.\+End\+Position\hspace{0.3cm}{\ttfamily [get]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a3e0e6937a9dc244b66fa109806b52d49}
+
+
+中斷時的程式碼行號 e.\+g. \subsubsection*{$\vert$ line$\vert$ code $\vert$ comment }
+
+$\vert$ 5 $\vert$ exp = new a( b $<$$<$ Start\+Position = 5 $\vert$ 6 $\vert$ ,c $\vert$ 7 $\vert$ ,d ); $<$$<$ End\+Position = 7 
+
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a58a573d3666349cd8f84e68a22f2210d}{\index{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}!File\+Name@{File\+Name}}
+\index{File\+Name@{File\+Name}!lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}}
+\subsubsection[{File\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information.\+File\+Name\hspace{0.3cm}{\ttfamily [get]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a58a573d3666349cd8f84e68a22f2210d}
+
+
+嘗試取得程式碼文件名稱 若是失敗的話，可能是在外部程式函式褲 
+
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1aaf601fc22c656728294f2c5f80db3c}{\index{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}!Function\+Name@{Function\+Name}}
+\index{Function\+Name@{Function\+Name}!lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}}
+\subsubsection[{Function\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information.\+Function\+Name\hspace{0.3cm}{\ttfamily [get]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a1aaf601fc22c656728294f2c5f80db3c}
+
+
+stack 的 function name 
+
+\hypertarget{classlib_wather_debugger_1_1_document_context_1_1_code_information_a68ab02f74990ba0b88b32bb02410d749}{\index{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}!Start\+Position@{Start\+Position}}
+\index{Start\+Position@{Start\+Position}!lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information@{lib\+Wather\+Debugger\+::\+Document\+Context\+::\+Code\+Information}}
+\subsubsection[{Start\+Position}]{\setlength{\rightskip}{0pt plus 5cm}uint lib\+Wather\+Debugger.\+Document\+Context.\+Code\+Information.\+Start\+Position\hspace{0.3cm}{\ttfamily [get]}}}\label{classlib_wather_debugger_1_1_document_context_1_1_code_information_a68ab02f74990ba0b88b32bb02410d749}
+
+
+中斷時的程式碼行號 e.\+g. \subsubsection*{$\vert$ line$\vert$ code }
+
+$\vert$ 5 $\vert$ exp = malloc( ... ); $<$$<$ Start\+Position = 5 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Thread\+Watcher\+\_\+code/lib\+Wather\+Debugger/\+Document\+Context/Debug\+Document.\+cs\end{DoxyCompactItemize}

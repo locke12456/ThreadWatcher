@@ -1,0 +1,35 @@
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service}{\section{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+E\+E\+Visualizer\+Service Interface Reference}
+\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service}\index{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+E\+E\+Visualizer\+Service@{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+E\+E\+Visualizer\+Service}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a3af5b45f0b5d6a9514fd2cbe7181832a}{int {\bfseries Get\+Custom\+Viewer\+Count} (out uint pcelt)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a3af5b45f0b5d6a9514fd2cbe7181832a}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a0f64a3577f0e18259acfe9cd56b4f40e}{int {\bfseries Get\+Custom\+Viewer\+List} (\mbox{[}In\mbox{]} uint celt\+Skip, \mbox{[}In\mbox{]} uint celt\+Requested, \mbox{[}Out, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+D\+E\+B\+U\+G\+\_\+\+C\+U\+S\+T\+O\+M\+\_\+\+V\+I\+E\+W\+E\+R\char`\"{}), Marshal\+As(Unmanaged\+Type.\+L\+P\+Array, Size\+Param\+Index=1)\mbox{]} D\+E\+B\+U\+G\+\_\+\+C\+U\+S\+T\+O\+M\+\_\+\+V\+I\+E\+W\+E\+R\mbox{[}$\,$\mbox{]} rg\+Viewers, out uint pcelt\+Fetched)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a0f64a3577f0e18259acfe9cd56b4f40e}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a06193730d9b7237f7f91d062a14126d5}{int {\bfseries Get\+Property\+Proxy} (\mbox{[}In\mbox{]} uint dw\+I\+D, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Property\+Proxy\+E\+E\+Side proxy)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a06193730d9b7237f7f91d062a14126d5}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a45a95ba5bf5088d6a49f6fdf6334da05}{int {\bfseries Get\+Value\+Display\+String\+Count} (\mbox{[}In\mbox{]} uint Display\+Kind, \mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_field}{I\+Debug\+Field} property\+Or\+Field, out uint pcelt)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a45a95ba5bf5088d6a49f6fdf6334da05}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_ad3c720f4d1b33ab286e22c6beda8f897}{int {\bfseries Get\+Value\+Display\+Strings} (\mbox{[}In, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+Display\+Kind\char`\"{})\mbox{]} enum\+\_\+\+Display\+Kind Display\+Kind, \mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_field}{I\+Debug\+Field} property\+Or\+Field, \mbox{[}In\mbox{]} uint celt\+Skip, \mbox{[}In\mbox{]} uint celt\+Requested, \mbox{[}Out, Marshal\+As(Unmanaged\+Type.\+L\+P\+Array, Array\+Sub\+Type=Unmanaged\+Type.\+B\+Str, Size\+Param\+Index=3)\mbox{]} string\mbox{[}$\,$\mbox{]} rg\+Strings, \mbox{[}Out, Marshal\+As(Unmanaged\+Type.\+L\+P\+Array, Size\+Param\+Index=3)\mbox{]} int\mbox{[}$\,$\mbox{]} rg\+Is\+Expression, out uint pcelt\+Fetched)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_ad3c720f4d1b33ab286e22c6beda8f897}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a7e4ecb7e257379cb559bac310165c6ba}{int {\bfseries Get\+Browsable\+State} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_field}{I\+Debug\+Field} property\+Or\+Field, \mbox{[}Out, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+Browsable\+Kind\char`\"{}), Marshal\+As(Unmanaged\+Type.\+L\+P\+Array)\mbox{]} enum\+\_\+\+Browsable\+Kind\mbox{[}$\,$\mbox{]} Browsable\+Kind)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a7e4ecb7e257379cb559bac310165c6ba}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a25333dd2723e8a7547301dda7614b24d}{int {\bfseries Possibly\+Has\+Inline\+Proxy} (out int may\+Have\+Proxy)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_a25333dd2723e8a7547301dda7614b24d}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_ae27b2595f88d6c0b2146b7eb25ef7a91}{int {\bfseries Create\+Inline\+Proxy} (\mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Debug\+Object proxy, out int Is\+Exception\+Not\+Proxy, \mbox{[}Marshal\+As(Unmanaged\+Type.\+B\+Str)\mbox{]} out string error\+String)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_e_e_visualizer_service_ae27b2595f88d6c0b2146b7eb25ef7a91}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Thread\+Watcher\+\_\+code/\+Thread\+Watcher/Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+cs\end{DoxyCompactItemize}

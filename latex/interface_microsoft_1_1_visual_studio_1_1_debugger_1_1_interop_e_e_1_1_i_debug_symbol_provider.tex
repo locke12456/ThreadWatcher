@@ -1,0 +1,59 @@
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider}{\section{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+Debug\+Symbol\+Provider Interface Reference}
+\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider}\index{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+Debug\+Symbol\+Provider@{Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+Debug\+Symbol\+Provider}}
+}
+Inheritance diagram for Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+I\+Debug\+Symbol\+Provider\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a31b4ad9a21132bca1ccd7db67599f1aa}{int {\bfseries Initialize} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_engine_symbol_provider_services}{I\+Debug\+Engine\+Symbol\+Provider\+Services} p\+Services)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a31b4ad9a21132bca1ccd7db67599f1aa}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a92822e944bcef928cc08d516bf3341cc}{int {\bfseries Uninitialize} ()}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a92822e944bcef928cc08d516bf3341cc}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ab1986bdbb7c7702cc1cac423e8457859}{int {\bfseries Get\+Container\+Field} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_container_field}{I\+Debug\+Container\+Field} pp\+Container\+Field)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ab1986bdbb7c7702cc1cac423e8457859}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_aebd01a0e6521db4e896b11588734f127}{int {\bfseries Get\+Field} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, \mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address\+Cur, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_field}{I\+Debug\+Field} pp\+Field)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_aebd01a0e6521db4e896b11588734f127}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a36fab081a03a856277a3e6d8490d9a88}{int {\bfseries Get\+Addresses\+From\+Position} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} I\+Debug\+Document\+Position2 p\+Doc\+Pos, \mbox{[}In\mbox{]} int f\+Statment\+Only, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Enum\+Debug\+Addresses pp\+Enum\+Beg\+Addresses, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Enum\+Debug\+Addresses pp\+Enum\+End\+Addresses)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a36fab081a03a856277a3e6d8490d9a88}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a0f2933f623d7dc668db8d1a4622751fb}{int {\bfseries Get\+Addresses\+From\+Context} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} I\+Debug\+Document\+Context2 p\+Doc\+Context, \mbox{[}In\mbox{]} int f\+Statment\+Only, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Enum\+Debug\+Addresses pp\+Enum\+Beg\+Addresses, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Enum\+Debug\+Addresses pp\+Enum\+End\+Addresses)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a0f2933f623d7dc668db8d1a4622751fb}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_af1db4872bfac3155b31702849dce40ac}{int {\bfseries Get\+Context\+From\+Address} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out I\+Debug\+Document\+Context2 pp\+Doc\+Context)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_af1db4872bfac3155b31702849dce40ac}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a5c78a22008c87f53552be38129bb9fef}{int {\bfseries Get\+Language} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, out Guid pguid\+Language, out Guid pguid\+Language\+Vendor)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a5c78a22008c87f53552be38129bb9fef}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a3fb62a6a5b5abc5e455207e4abb80977}{int {\bfseries Get\+Global\+Container} (\mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_container_field}{I\+Debug\+Container\+Field} p\+Field)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a3fb62a6a5b5abc5e455207e4abb80977}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_aafbc33a53ac4805faba47c6674184bfa}{int {\bfseries Get\+Method\+Fields\+By\+Name} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+L\+P\+W\+Str)\mbox{]} string psz\+Full\+Name, \mbox{[}In, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H\char`\"{})\mbox{]} N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H name\+Match, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_enum_debug_fields}{I\+Enum\+Debug\+Fields} pp\+Enum)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_aafbc33a53ac4805faba47c6674184bfa}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a2d16e0016e2e9faf96ff884078f34ff8}{int {\bfseries Get\+Class\+Type\+By\+Name} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+L\+P\+W\+Str)\mbox{]} string psz\+Class\+Name, \mbox{[}In, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H\char`\"{})\mbox{]} N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H name\+Match, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_class_field}{I\+Debug\+Class\+Field} pp\+Field)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a2d16e0016e2e9faf96ff884078f34ff8}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a1c3cec211eacee338f6d3368b3a7ae03}{int {\bfseries Get\+Namespaces\+Used\+At\+Address} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_enum_debug_fields}{I\+Enum\+Debug\+Fields} pp\+Enum)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_a1c3cec211eacee338f6d3368b3a7ae03}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ae873c4c85e8d302eaca466ba170928a8}{int {\bfseries Get\+Type\+By\+Name} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+L\+P\+W\+Str)\mbox{]} string psz\+Class\+Name, \mbox{[}In, Com\+Alias\+Name(\char`\"{}Microsoft.\+Visual\+Studio.\+Debugger.\+Interop.\+N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H\char`\"{})\mbox{]} N\+A\+M\+E\+\_\+\+M\+A\+T\+C\+H name\+Match, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_field}{I\+Debug\+Field} pp\+Field)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ae873c4c85e8d302eaca466ba170928a8}
+
+\item 
+\hypertarget{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ace68fa7135ead69e2b0799fc252664b8}{int {\bfseries Get\+Next\+Address} (\mbox{[}In, Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} p\+Address, \mbox{[}In\mbox{]} int f\+Statment\+Only, \mbox{[}Marshal\+As(Unmanaged\+Type.\+Interface)\mbox{]} out \hyperlink{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_address}{I\+Debug\+Address} pp\+Address)}\label{interface_microsoft_1_1_visual_studio_1_1_debugger_1_1_interop_e_e_1_1_i_debug_symbol_provider_ace68fa7135ead69e2b0799fc252664b8}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Thread\+Watcher\+\_\+code/\+Thread\+Watcher/Microsoft.\+Visual\+Studio.\+Debugger.\+Interop\+E\+E.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,90 @@
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info}{\section{lib\+Wather\+Debugger.\+Memory.\+Memory\+Info Class Reference}
+\label{classlib_wather_debugger_1_1_memory_1_1_memory_info}\index{lib\+Wather\+Debugger.\+Memory.\+Memory\+Info@{lib\+Wather\+Debugger.\+Memory.\+Memory\+Info}}
+}
+Inheritance diagram for lib\+Wather\+Debugger.\+Memory.\+Memory\+Info\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classlib_wather_debugger_1_1_memory_1_1_memory_info}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a1007d1f55b8e9579928724a0fe42f52c}{bool {\bfseries Is\+Null\+Pointer} ()}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a1007d1f55b8e9579928724a0fe42f52c}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a072a240dfc246a67118fc8d8c061443b}{void {\bfseries Init} (I\+Debug\+Thread2 thread)}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a072a240dfc246a67118fc8d8c061443b}
+
+\item 
+void \hyperlink{classlib_wather_debugger_1_1_memory_1_1_memory_info_a16fe831b50184b24dccbebf2e4b19288}{Add} (\hyperlink{interfacelib_utilities_1_1_i_debugger_memory}{I\+Debugger\+Memory} item)
+\begin{DoxyCompactList}\small\item\em 加入子項目 e.\+g. -\/--- debuggee -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- struct a \{ int b,c; \subsubsection*{\}; }
+
+-\/--- memory info factory -\/-\/-\/-\/-\/-\/-\/-\/-\/--- mem.\+Add( b ); mem.\+Add( c ); \end{DoxyCompactList}\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a70a148d400f1cd998df214f125585a36}{override string {\bfseries To\+String} ()}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a70a148d400f1cd998df214f125585a36}
+
+\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a13e93fa2426f57f8e3589962fa5ce7a1}{string {\bfseries Address}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a13e93fa2426f57f8e3589962fa5ce7a1}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a59722f0814516f1490ae32001f4282d4}{string {\bfseries Type}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a59722f0814516f1490ae32001f4282d4}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a3768ef6fd786532e1363309541119dc3}{string {\bfseries Thread\+Info}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a3768ef6fd786532e1363309541119dc3}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a8fc2be180cde60fa7d958700047855c5}{string {\bfseries Variable}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a8fc2be180cde60fa7d958700047855c5}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_aaa11d5b8df80b7d704ae5fcf39bd207b}{string {\bfseries Value}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_aaa11d5b8df80b7d704ae5fcf39bd207b}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_aec7bd8b4ae0aa814c8b6ab6aec6ce441}{string {\bfseries Size}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_aec7bd8b4ae0aa814c8b6ab6aec6ce441}
+
+\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_aa450652b78ef15cdc291577d67b6b3b7}{bool {\bfseries Is\+Pointer}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_aa450652b78ef15cdc291577d67b6b3b7}
+
+\item 
+string \hyperlink{classlib_wather_debugger_1_1_memory_1_1_memory_info_a9b27a0acfa775714307ce1e9c6df0e0f}{Address\+Query}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em 可以向debugger查詢address的字串 判斷自己是不是一個pointer , 若不是的話則加『\&』在最前面 \end{DoxyCompactList}\item 
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a3ea5ab77dae624724354ce713fd2ad5f}{List$<$ \hyperlink{interfacelib_utilities_1_1_i_debugger_memory}{I\+Debugger\+Memory} $>$ {\bfseries Members}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a3ea5ab77dae624724354ce713fd2ad5f}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a16fe831b50184b24dccbebf2e4b19288}{\index{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info@{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info}!Add@{Add}}
+\index{Add@{Add}!lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info@{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info}}
+\subsubsection[{Add}]{\setlength{\rightskip}{0pt plus 5cm}void lib\+Wather\+Debugger.\+Memory.\+Memory\+Info.\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Debugger\+Memory}}]{item}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a16fe831b50184b24dccbebf2e4b19288}
+
+
+加入子項目 e.\+g. -\/--- debuggee -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/--- struct a \{ int b,c; \subsubsection*{\}; }
+
+-\/--- memory info factory -\/-\/-\/-\/-\/-\/-\/-\/-\/--- mem.\+Add( b ); mem.\+Add( c ); 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Property Documentation}
+\hypertarget{classlib_wather_debugger_1_1_memory_1_1_memory_info_a9b27a0acfa775714307ce1e9c6df0e0f}{\index{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info@{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info}!Address\+Query@{Address\+Query}}
+\index{Address\+Query@{Address\+Query}!lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info@{lib\+Wather\+Debugger\+::\+Memory\+::\+Memory\+Info}}
+\subsubsection[{Address\+Query}]{\setlength{\rightskip}{0pt plus 5cm}string lib\+Wather\+Debugger.\+Memory.\+Memory\+Info.\+Address\+Query\hspace{0.3cm}{\ttfamily [get]}}}\label{classlib_wather_debugger_1_1_memory_1_1_memory_info_a9b27a0acfa775714307ce1e9c6df0e0f}
+
+
+可以向debugger查詢address的字串 判斷自己是不是一個pointer , 若不是的話則加『\&』在最前面 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Thread\+Watcher\+\_\+code/lib\+Wather\+Debugger/\+Memory/Memory\+Info.\+cs\end{DoxyCompactItemize}
