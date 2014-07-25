@@ -16,7 +16,6 @@ namespace Watcher.Debugger.GeneralRules.Mode.BreakPoint
 {
     public class DeleteDataBreakpoint : WatcherRule, IBreakPoint
     {
-
         public DebugBreakpoint Breakpoint { get; set; }
         public IDebuggerMemory Data { get; set; }
         public DeleteDataBreakpoint() { }
