@@ -133,7 +133,6 @@ namespace libWatcherDialog
         protected Dictionary<DebugScriptItem, Func<bool>> _script_modify_mode;
         protected DebugBreakpoint _breakpoint;
         protected BreakpointMenu _menus;
-
         protected AddDataBreakpointFormScript _addDataFormScript;
         protected AddDataBreakpointToList _addDataToList;
         protected RemoveDataBreakPointFromAPI _removeData;
@@ -148,7 +147,11 @@ namespace libWatcherDialog
             _init_events();
             _init_modes();
         }
-
+        /// <summary>
+        /// 中斷點觸發，收集資訊或繼續進行
+        /// </summary>
+        /// <param name="breakpoint"></param>
+        /// <returns></returns>
         public bool BreakPointTriggered(DebugBreakpoint breakpoint)
         {
             _breakpoint = breakpoint; Func<bool> mode;
@@ -158,19 +161,25 @@ namespace libWatcherDialog
             }
             return true;
         }
-
+        /// <summary>
+        /// 從script中讀取設定的模式
+        /// </summary>
+        /// <returns></returns>
         private bool _script_mode()
         {
+            //判斷是否是在script中預先設定的中斷點
             DebugScriptItem script = _scripts.GetItem(_breakpoint);
             _breakpoints = BreakpointsManagement.getInstance();
             if (script != null)
             {
+                //進行到script載入時所設定的中斷點
                 _malloc_enable();
                 _breakpoints.ConcernedTarget = script;
                 _continue_debugging();
             }
             else
             {
+                //進行到watch api中的malloc
                 if (_breakpoints.ConcernedTarget != null)
                 {
                     _do_script_modify();
@@ -182,31 +191,45 @@ namespace libWatcherDialog
             return true;
 
         }
-
+        /// <summary>
+        /// 移除在watch api中的malloc裡的中斷點
+        /// </summary>
         private static void _malloc_disable()
         {
             SetWatchMalloc malloc = new SetWatchMalloc();
             malloc.Disable();
         }
-
+        /// <summary>
+        /// 在watch api中的malloc的function設定一個breakpoint
+        /// </summary>
         private static void _malloc_enable()
         {
             SetWatchMalloc malloc = new SetWatchMalloc();
             malloc.Enable();
         }
-
+        /// <summary>
+        /// 執行script上的設定，嘗試加入script中所設定的watchpoint
+        /// </summary>
         private void _do_script_modify()
         {
             _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataFormScript;
             _manaul_mode();
             _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataToList;
         }
+        /// <summary>
+        /// 不做任何動作，讓debugger繼續進行
+        /// </summary>
         private void _continue_debugging()
         {
             _breakpoint_mode[APICppFiles.MemoryAlloc] = new NotConcernedPoint();
             _manaul_mode();
             _breakpoint_mode[APICppFiles.MemoryAlloc] = _addDataToList;
         }
+        /// <summary>
+        /// 手動設定模式
+        /// 新的版本未修改到，手動模式需要再修改，需要修正
+        /// </summary>
+        /// <returns></returns>
         private bool _manaul_mode()
         {
             CombineRules.CombineRules mode;
@@ -220,7 +243,11 @@ namespace libWatcherDialog
                 return false;
             return true;
         }
-
+        /// <summary>
+        /// 判斷是否是在watch api文件所觸發的breakpoint
+        /// 若是的話就通知mode中斷點的資訊，將觸發到的breakpoint設定到mode中判斷
+        /// </summary>
+        /// <param name="mode"></param>
         private void _try_set_add_target(CombineRules.CombineRules mode)
         {
             if (!(mode is BreakpointTriggerFromAPI))
@@ -228,6 +255,9 @@ namespace libWatcherDialog
             IBreakPoint bp = mode as IBreakPoint;
             bp.Breakpoint = _breakpoint;
         }
+        /// <summary>
+        /// 初始化mode
+        /// </summary>
         private void _init_modes()
         {
             _modes = new Dictionary<BreakPointsModes, Func<bool>>() {
@@ -243,7 +273,9 @@ namespace libWatcherDialog
                 {Types.Breakpoint       , _code_breakpoint } , 
             };
         }
-
+        /// <summary>
+        /// 註冊事件
+        /// </summary>
         private void _init_events()
         {
             _breakpoints = BreakpointsManagement.getInstance();
@@ -253,7 +285,9 @@ namespace libWatcherDialog
             _addDataFormScript.RuleCompleted += _addDataFormScript_RuleCompleted;
             Disposed += BreakPoints_Disposed;
         }
-
+        /// <summary>
+        /// 創建物件
+        /// </summary>
         private void _create_modes()
         {
             try
@@ -267,13 +301,21 @@ namespace libWatcherDialog
                 System.Diagnostics.Debug.WriteLine(fail.Message);
             }
         }
-
+        /// <summary>
+        /// GUI 設定
+        /// 設定Menu
+        /// </summary>
         protected override void _initContextMenu()
         {
             _menus = new BreakpointMenu();
             Properties.ContextMenuStrip = _menus.ListMenu;
         }
-
+        /// <summary>
+        /// 如果觸發的中斷點是watchpoint時，判定是不是第一次中斷。
+        /// 第一次中斷需要作設定，詳情請參考FirstBreak。
+        /// 不是的話就記錄log。
+        /// </summary>
+        /// <returns></returns>
         private bool _data_breakpoint()
         {
             BreakpointItem item = BreakpointsManagement.getInstance().GetItem(_breakpoint.Name);
@@ -286,7 +328,12 @@ namespace libWatcherDialog
             }
             return true;
         }
-
+        /// <summary>
+        /// 寫log
+        /// </summary>
+        /// <param name="thread"></param>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
         private void _write_log(DebugThread thread, string name, string id)
         {
             ThreadLog log = new ThreadLog();
@@ -296,7 +343,11 @@ namespace libWatcherDialog
             BreakpointItem target = BreakpointsManagement.getInstance().GetItem(log.Name);
             target.HitLocations.BreakpointHit(thread);
         }
-
+        /// <summary>
+        /// 如果是程式碼中的中斷點的模式。
+        /// 一般判斷為值是馬的breakpoint為watchapi中所中斷。
+        /// </summary>
+        /// <returns></returns>
         private bool _code_breakpoint()
         {
             _breakpoints = BreakpointsManagement.getInstance();
@@ -308,7 +359,12 @@ namespace libWatcherDialog
 
             return true;
         }
-
+        /// <summary>
+        /// 當設定完成watchpoint時，需要將當前要設定的ConcernedTarget設成null
+        /// 讓接下來設定的可以繼續進行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _addDataFormScript_RuleCompleted(object sender, RuleEventArgs e)
         {
             _breakpoints = BreakpointsManagement.getInstance();
@@ -327,6 +383,11 @@ namespace libWatcherDialog
         {
             AddProprty(e.Item);
         }
+        /// <summary>
+        /// 移除watchpoint
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removemode_RuleCompleted(object sender, RuleEventArgs e)
         {
             RemoveDataBreakPointFromAPI rule = sender as RemoveDataBreakPointFromAPI;

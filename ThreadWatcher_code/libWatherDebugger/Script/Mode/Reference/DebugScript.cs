@@ -11,6 +11,12 @@ using System.Threading.Tasks;
 
 namespace libWatherDebugger.Script
 {
+    /// <summary>
+    /// DebugScript用於對IDE的操作，若要開新的操作
+    /// 需要複寫以下方法 : 
+    ///     必要 : _tryControl
+    ///     次要 : _init 
+    /// </summary>
     public abstract class DebugScript : IDebugScript
     {
         private static AutoResetEvent _sync;
@@ -19,13 +25,40 @@ namespace libWatherDebugger.Script
         protected static Type _sync_type = null;
         protected static DebugScript _sync_script = null;
         public delegate void EventHandler(object obj, ScriptEventArgs e);
+        public virtual event EventHandler ASyncCompleteEvent;
         public event EventHandler StartEvent;
         public event EventHandler CompleteEvent;
-        public virtual event EventHandler ASyncCompleteEvent;
         public event EventHandler PendingEvent;
-
         public static Type ASyncEvent { get { return _sync_type; } }
-
+        public DebugScript()
+        {
+            _init();
+            _dbg = Watcher.Debugger.Debugger.getInstance().VSDebugger;
+        }
+        public DebugScript(EnvDTE.Debugger dbg)
+        {
+            _init();
+            _dbg = dbg;
+        }
+        /// <summary>
+        /// 執行操作
+        /// </summary>
+        /// <returns></returns>
+        public bool Run()
+        {
+            Func<bool> mode;
+            if (_switchMode.TryGetValue(_dbg.CurrentMode, out mode))
+                return mode();
+            return false;
+        }
+        /// <summary>
+        /// 註冊同步規則
+        /// </summary>
+        public void RegisterASyncEvent()
+        {
+            StartEvent += IntoStartEvent;
+            CompleteEvent += IntoCompleteEvent;
+        }
         public static bool HasASyncScript()
         {
             return _sync_script != null;
@@ -57,30 +90,7 @@ namespace libWatherDebugger.Script
             protected set;
         }
         public virtual Type ASyncEventType { get { return null; } }
-        public DebugScript()
-        {
-            _init();
-            _dbg = Watcher.Debugger.Debugger.getInstance().VSDebugger;
-        }
-        public DebugScript(EnvDTE.Debugger dbg)
-        {
-            _init();
-            _dbg = dbg;
-        }
-
-        public bool Run()
-        {
-            Func<bool> mode;
-            if (_switchMode.TryGetValue(_dbg.CurrentMode, out mode))
-                return mode();
-            return false;
-        }
-
-        public void RegisterASyncEvent()
-        {
-            StartEvent += IntoStartEvent;
-            CompleteEvent += IntoCompleteEvent;
-        }
+        
         protected void IntoStartEvent(object obj, ScriptEvent.ScriptEventArgs e)
         {
             _sync_script = this;

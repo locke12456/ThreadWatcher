@@ -8,6 +8,9 @@ using Microsoft.VisualStudio.Debugger.Interop;
 
 namespace ThreadWatcher.Modes
 {
+    /// <summary>
+    /// no used
+    /// </summary>
     public class DebugMessage : EventMode<IDebugMessageEvent2>
     {
         public DebugMessage() {

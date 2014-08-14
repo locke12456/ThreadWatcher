@@ -15,7 +15,9 @@ namespace ThreadWatcher.Modes
             _init_stackframe();
             _triggered_breakpoint();
         }
-
+        /// <summary>
+        /// 中斷點觸發後，判斷是否該收集資訊
+        /// </summary>
         private void _triggered_breakpoint()
         {
             DebugBreakpointFactory bpFactory = new DebugBreakpointFactory(Event);

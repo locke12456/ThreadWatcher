@@ -24,7 +24,6 @@ namespace ThreadWatcher
         /// <summary>針對增益集物件實作建構函式。請將初始化程式碼置於此方法中。</summary>
         public Connect()
         {
-            addressExpressionString = "";
         }
 
         /// <summary>實作 IDTExtensibility2 介面的 OnConnection 方法。會收到正在載入增益集的告知。</summary>
@@ -87,15 +86,15 @@ namespace ThreadWatcher
 
         private void DebuggerEvents_OnEnterBreakMode(dbgEventReason Reason, ref dbgExecutionAction ExecutionAction)
         {
-            Debug.WriteLine("1");
         }
-
-        private void watch_AddEvent(object sender)
-        {
-            bool handled = true;
-            object obj1 = this, obj2 = sender;
-            Exec((sender as VariablesWatcher).QueryType, vsCommandExecOption.vsCommandExecOptionDoDefault, ref obj1, ref obj2, ref handled);
-        }
+        /// <summary>
+        /// IDebugProcessCreateEvent2 : debuggee 創建 , 目前無任何動作
+        /// IDebugMessageEvent2 : tracepoint , 目前暫時無動作
+        /// IDebugProgramDestroyEvent2 : 結束除錯，回收所有資源，並且將記錄到的log儲存。
+        /// IDebugReturnValueEvent2 : 關聯的debug動作為StepOut,但是目前版本已無用到
+        /// IDebugBreakpointEvent2 : 觸發中斷點。
+        /// IDebugThreadCreateEvent2 : debuggee創建了一條執行緒，觸發時會創建一個thread item，log依此做為歸類。
+        /// </summary>
         private void _init_modes()
         {
             _mode = new Dictionary<Guid, IThreadWatcherMode>() 
@@ -109,6 +108,18 @@ namespace ThreadWatcher
             
             };
         }
+        /// <summary>
+        /// 處理Visual studio中，進入debug模式時的狀態。
+        /// 目前有處理到的狀態如 _init_modes 中 mapping 到的 class.
+        /// </summary>
+        /// <param name="pEngine"></param>
+        /// <param name="pProcess"></param>
+        /// <param name="pProgram"></param>
+        /// <param name="thread"></param>
+        /// <param name="pEvent"></param>
+        /// <param name="riidEvent"></param>
+        /// <param name="dwAttrib"></param>
+        /// <returns></returns>
         public int Event(IDebugEngine2 pEngine, IDebugProcess2 pProcess, IDebugProgram2 pProgram, IDebugThread2 thread, IDebugEvent2 pEvent, ref Guid riidEvent, uint dwAttrib)
         {
             IThreadWatcherMode mode;
@@ -193,17 +204,9 @@ namespace ThreadWatcher
                 
             }
         }
-
-        private IDebugProperty2 DebugProperty;
         private DTE2 _applicationObject;
         private AddIn _addInInstance;
         private Dictionary<Guid, IThreadWatcherMode> _mode;
-        private static AutoResetEvent sync;
-        private static libWatcherDialog.Threads threads;
-        private static BreakPoints breakpoints;
-        private static VariablesWatcher watch;
         private static Watcher.Debugger.Debugger _dbg = null;
-
-        public static string addressExpressionString { get; set; }
     }
 }
